@@ -1,18 +1,18 @@
 #include "filler.h"
 
-int		main(int ac, char **av)
+static void	init_machine(t_machine *machine)
 {
-	char	*line;
+	machine->state = ST_GET_PLAYER;
+}
+
+int			main(int ac, char **av)
+{
+	t_machine	*machine;
 
 	(void)ac;
 	(void)av;
-	line = NULL;
-	get_next_line(STDIN, &line);
-	ft_putendl_fd("");
-	while (get_next_line(STDIN, &line) == TRUE)
-	{
-		ft_putendl_fd(line, 2);
-		ft_strdel(&line);
-	}
+	machine = NULL;
+	init_machine(machine);
+	state_machine(machine);
 	return (EXIT_SUCCESS);
 }

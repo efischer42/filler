@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 
 NAME = efischer.filler
 
@@ -9,6 +9,13 @@ DFLAGS += -fsanitize=address,undefined -g3
 
 PATHSRCS = srcs/
 SRCS += main.c
+SRCS += state_machine.c
+SRCS += get_player.c
+SRCS += get_map.c
+SRCS += get_piece.c
+SRCS += opponent_heat_map.c
+SRCS += player_heat_map.c
+SRCS += play.c
 
 PATHOBJS = objs/
 OBJS = $(patsubst %.c, $(PATHOBJS)%.o, $(SRCS))
