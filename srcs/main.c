@@ -1,18 +1,22 @@
 #include "filler.h"
 
-static void	init_machine(t_machine *machine)
+static t_machine	*init_machine(void)
 {
-	machine->state = ST_GET_PLAYER;
+	t_machine *machine;
+
+	machine = (t_machine*)malloc(sizeof(t_machine));
+	ft_bzero(machine, sizeof(*machine));
+	machine->state = ST_LEXER_PARSER;
+	return (machine);
 }
 
-int			main(int ac, char **av)
+int					main(int ac, char **av)
 {
 	t_machine	*machine;
 
 	(void)ac;
 	(void)av;
-	machine = NULL;
-	init_machine(machine);
+	machine = init_machine();
 	state_machine(machine);
 	return (EXIT_SUCCESS);
 }

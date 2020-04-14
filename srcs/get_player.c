@@ -10,4 +10,5 @@ void	get_player(t_machine *machine)
 	get_next_line(STDIN, &line);
 	ft_putendl_fd(line, 2);
 	ft_strdel(&line);
+	machine->state = ST_GET_MAP;
 }

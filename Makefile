@@ -5,11 +5,16 @@ NAME = efischer.filler
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
-DFLAGS += -fsanitize=address,undefined -g3
+DFLAGS += -fsanitize=address,undefined
+DFLSGS += -g3
 
 PATHSRCS = srcs/
 SRCS += main.c
 SRCS += state_machine.c
+SRCS += lexer_parser.c
+SRCS += get_input.c
+SRCS += lexer.c
+SRCS += parser.c
 SRCS += get_player.c
 SRCS += get_map.c
 SRCS += get_piece.c

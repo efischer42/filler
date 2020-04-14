@@ -1,0 +1,67 @@
+//////////////////////INPUT////////////////////////
+
+$$$ exec p1 : [players/hcao.filler]
+Plateau 15 17:
+01234567890123456
+000 .................
+001 .................
+002 .................
+003 .................
+004 .................
+005 .................
+006 .................
+007 .................
+008 ..O..............
+009 .................
+010 .................
+011 .................
+012 ..............X..
+013 .................
+014 .................
+Piece 2 2:
+*.
+*.
+
+/////////////////////////////LEXER////////////////////////
+
+dollars word word colon op_brace word cl_brace new_line
+
+word nb nb colon new_line
+
+index new_line
+
+index map_line new_line
+
+index map_line new_line
+
+...
+
+word nb nb colon new_line
+
+piece_line new_line
+
+piece new_line
+
+///////////////////////GRAMMAR///////////////////////
+
+dollars = $$$
+word = NULL
+colon = :
+op_brace = [
+cl_brace = ]
+nb = NULL
+new_line = \n
+index = NULL
+map_line = NULL
+piece_line = NULL
+
+//////////////////////PARSER/////////////////////////
+
+start -> dollars, word
+dollars -> word
+word -> word, colon, nb, cl_brace, new_line
+colon -> op_brace, new_line
+cl_brace -> new_line
+new_line -> word, end
+nb -> nb, colon
+end -> NULL
