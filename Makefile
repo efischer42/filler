@@ -14,6 +14,7 @@ SRCS += state_machine.c
 SRCS += lexer_parser.c
 SRCS += get_input.c
 SRCS += lexer.c
+SRCS += get_word.c
 SRCS += parser.c
 SRCS += get_player.c
 SRCS += get_map.c
@@ -21,6 +22,8 @@ SRCS += get_piece.c
 SRCS += opponent_heat_map.c
 SRCS += player_heat_map.c
 SRCS += play.c
+SRCS += debug.c
+SRCS += del.c
 
 PATHOBJS = objs/
 OBJS = $(patsubst %.c, $(PATHOBJS)%.o, $(SRCS))

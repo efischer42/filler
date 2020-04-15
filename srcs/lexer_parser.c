@@ -11,8 +11,10 @@ void	lexer_parser(t_machine *machine)
 	{
 		ft_putstr_fd(machine->input, 2);
 		lexer(machine, &lst);
+		debug(lst);
 		if (machine->state != ST_ERROR)
 			parser(machine, lst);
 	}
+	ft_lstdel(&lst, del);
 	machine->state = ST_END_TURN;
 }

@@ -4,7 +4,7 @@
 # include "libft.h"
 
 # define STDIN					0
-# define NB_TOKEN				17
+# define NB_TOKEN				15
 # define NB_FCT					7
 # define ST_LEXER_PARSER		0
 # define ST_GET_PLAYER			1
@@ -26,37 +26,36 @@ typedef struct	s_machine
 	size_t		piece_width;
 }				t_machine;
 
-enum e_token	token
+enum e_token
 {
 	DOLLARS,
 	EXEC,
 	P1,
 	P2,
 	COLON,
-	OP_BRACKET,
-	CL_BRACKET,
 	NEW_LINE,
 	PLATEAU,
 	PIECE,
+	SPACE,
+	ERROR,
 	START,
 	END,
 	PLAYER_NAME,
 	NB,
-	INDEX,
-	MAP_LINE,
-	PIECE_LINE
+	LINE
 };
 
 typedef struct	s_token
 {
-	enum		type;
-	char		*value;
+	enum e_token	type;
+	char			*value;
 }				t_token;
 
 void	state_machine(t_machine *machine);
 void	lexer_parser(t_machine *machine);
 int		get_input(t_machine *machine);
 void	lexer(t_machine *machine, t_list **lst);
+void	get_word(t_machine *machine, t_token *token, size_t *pos);
 void	parser(t_machine *machine, t_list *lst);
 void	get_player(t_machine *machine);
 void	get_map(t_machine *machine);
@@ -64,5 +63,7 @@ void	get_piece(t_machine *machine);
 void	opponent_heat_map(t_machine *machine);
 void	player_heat_map(t_machine *machine);
 void	play(t_machine *machine);
+void	debug(t_list *lst);
+void	del(void *content, size_t content_size);
 
 #endif
