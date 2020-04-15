@@ -11,7 +11,6 @@ static void init_token_tab(char **token_tab)
 	token_tab[PLATEAU] = "PLATEAU";
 	token_tab[PIECE] = "PIECE";
 	token_tab[SPACE] = "SPACE";
-	token_tab[ERROR] = "ERROR";
 	token_tab[START] = "START";
 	token_tab[END] = "END";
 	token_tab[PLAYER_NAME] = "PLAYER_NAME";

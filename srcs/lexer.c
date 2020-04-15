@@ -2,16 +2,15 @@
 
 static void	init_grammar(char **grammar)
 {
-	grammar[DOLLARS] = "$$$";
-	grammar[EXEC] = "exec";
-	grammar[P1] = "p1";
-	grammar[P2] = "p2";
+	grammar[DOLLARS] = "$$$ ";
+	grammar[EXEC] = "exec ";
+	grammar[P1] = "p1 ";
+	grammar[P2] = "p2 ";
 	grammar[COLON] = ":";
 	grammar[NEW_LINE] = "\n";
-	grammar[PLATEAU] = "Plateau";
-	grammar[PIECE] = "Piece";
+	grammar[PLATEAU] = "Plateau ";
+	grammar[PIECE] = "Piece ";
 	grammar[SPACE] = " ";
-	grammar[ERROR] = NULL;
 	grammar[START] = NULL;
 	grammar[END] = NULL;
 	grammar[PLAYER_NAME] = NULL;

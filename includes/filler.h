@@ -4,7 +4,8 @@
 # include "libft.h"
 
 # define STDIN					0
-# define NB_TOKEN				15
+# define TAB_END				-1
+# define NB_TOKEN				14
 # define NB_FCT					7
 # define ST_LEXER_PARSER		0
 # define ST_GET_PLAYER			1
@@ -37,7 +38,6 @@ enum e_token
 	PLATEAU,
 	PIECE,
 	SPACE,
-	ERROR,
 	START,
 	END,
 	PLAYER_NAME,

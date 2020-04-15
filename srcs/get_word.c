@@ -42,5 +42,5 @@ void	get_word(t_machine *machine, t_token *token, size_t *pos)
 		*pos += i;
 	}
 	else
-		token->type = ERROR;
+		machine->state = ST_ERROR;
 }
