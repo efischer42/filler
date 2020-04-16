@@ -16,7 +16,11 @@ int					main(int ac, char **av)
 
 	(void)ac;
 	(void)av;
-	machine = init_machine();
-	state_machine(machine);
+	while (1)
+	{
+		machine = init_machine();
+		state_machine(machine);
+		ft_putstr("0 0\n");
+	}
 	return (EXIT_SUCCESS);
 }

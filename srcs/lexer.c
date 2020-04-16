@@ -31,16 +31,18 @@ static void	init_token_lst(t_list **lst, enum e_token type)
 }
 
 static void	get_next_token(t_machine *machine, t_token *token, size_t *pos,
-				char **grammar)
+				char *input)
 {
+	static char	*grammar[NB_TOKEN];
 	size_t	len;
 	size_t	i;
 
 	i = 0;
+	init_grammar(grammar);
 	while (i < NB_TOKEN)
 	{
 		len = ft_strlen(grammar[i]);
-		if (ft_strnequ(machine->input + *pos, grammar[i], len) == TRUE)
+		if (ft_strnequ(input + *pos, grammar[i], len) == TRUE)
 		{
 			token->type = i;
 			(*pos) += len;
@@ -49,26 +51,24 @@ static void	get_next_token(t_machine *machine, t_token *token, size_t *pos,
 		i++;
 	}
 	if (i == NB_TOKEN)
-		get_word(machine, token, pos);
+		get_word(machine, input, token, pos);
 }
 
-void		lexer(t_machine *machine, t_list **lst)
+void		lexer(t_machine *machine, char *input)
 {
-	char	*grammar[NB_TOKEN];
-	t_token	token;
-	t_list	*lst_new;
-	size_t	pos;
+	t_token		token;
+	t_list		*lst_new;
+	size_t		pos;
 
 	pos = 0;
-	init_grammar(grammar);
-	init_token_lst(lst, START);
-	while (machine->input[pos] != '\0')
+	init_token_lst(&machine->lst, START);
+	while (input[pos] != '\0')
 	{
 		ft_bzero(&token, sizeof(token));
-		get_next_token(machine, &token, &pos, grammar);
+		get_next_token(machine, &token, &pos, input);
 		lst_new = ft_lstnew(&token, sizeof(token));
 		if (lst_new != NULL)
-			ft_lstaddend(lst, lst_new);
+			ft_lstaddend(&machine->lst, lst_new);
 	}
-	init_token_lst(lst, END);
+	init_token_lst(&machine->lst, END);
 }

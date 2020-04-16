@@ -50,20 +50,19 @@ static int	check_tokens(enum e_token *enum_tab, enum e_token type)
 	return (ret);
 }
 
-void		parser(t_machine *machine, t_list *lst)
+void		parser(t_machine *machine)
 {
 	static enum e_token	*enum_tab[NB_TOKEN] = {NULL};
 	enum e_token		last_type;
 
 	if (enum_tab[0] == NULL)
 		init_enum_tab(enum_tab);
-	machine->state = ST_GET_PLAYER;
-	while (((t_token*)(lst->content))->type != END)
+	while (((t_token*)(machine->lst->content))->type != END)
 	{
-		last_type = ((t_token*)(lst->content))->type;
-		lst = lst->next;
+		last_type = ((t_token*)(machine->lst->content))->type;
+		machine->lst = machine->lst->next;
 		if (check_tokens(enum_tab[last_type],
-			((t_token*)(lst->content))->type) == FAILURE)
+			((t_token*)(machine->lst->content))->type) == FAILURE)
 		{
 			ft_putendl_fd("Parse error", 2);
 			machine->state = ST_ERROR;

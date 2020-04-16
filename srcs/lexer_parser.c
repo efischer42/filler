@@ -2,19 +2,29 @@
 
 void	lexer_parser(t_machine *machine)
 {
-	t_list	*lst;
+	t_list	*head;
+	char	*input;
 
-	lst = NULL;
-	if (get_input(machine) == FAILURE)
-		machine->state = ST_ERROR;
-	else
+	input = NULL;
+	if (get_input(&input) == SUCCESS)
 	{
-		ft_putstr_fd(machine->input, 2);
-		lexer(machine, &lst);
-		debug(lst);
+		ft_putstr_fd(input, 2);
+		lexer(machine, input);
 		if (machine->state != ST_ERROR)
-			parser(machine, lst);
+		{
+			head = machine->lst;
+			parser(machine);
+			machine->lst = head;
+			if (machine->state != ST_ERROR)
+			{
+				if (((t_token*)(machine->lst->next->content))->type == PLATEAU)
+					machine->state = ST_GET_MAP;
+				else
+					machine->state = ST_GET_PLAYER;
+			}
+		}
 	}
-	ft_lstdel(&lst, del);
-	machine->state = ST_END_TURN;
+	else
+		machine->state = ST_ERROR;
+	ft_strdel(&input);
 }

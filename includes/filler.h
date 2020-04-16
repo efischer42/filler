@@ -20,7 +20,8 @@
 typedef struct	s_machine
 {
 	uint64_t	state;
-	char		*input;
+	t_list		*lst;
+	size_t		i_input;
 	size_t		map_height;
 	size_t		map_width;
 	size_t		piece_height;
@@ -53,10 +54,10 @@ typedef struct	s_token
 
 void	state_machine(t_machine *machine);
 void	lexer_parser(t_machine *machine);
-int		get_input(t_machine *machine);
-void	lexer(t_machine *machine, t_list **lst);
-void	get_word(t_machine *machine, t_token *token, size_t *pos);
-void	parser(t_machine *machine, t_list *lst);
+int		get_input(char **input);
+void	lexer(t_machine *machine, char *input);
+void	get_word(t_machine *machine, char *input, t_token *token, size_t *pos);
+void	parser(t_machine *machine);
 void	get_player(t_machine *machine);
 void	get_map(t_machine *machine);
 void	get_piece(t_machine *machine);
