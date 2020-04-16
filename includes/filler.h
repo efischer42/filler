@@ -4,6 +4,11 @@
 # include "libft.h"
 
 # define STDIN					0
+# define EXEC_NAME				"efischer.filler"
+# define P1_CHAR				'O'
+# define P1_CHAR_LAST			'o'
+# define P2_CHAR				'X'
+# define P2_CHAR_LAST			'x'
 # define TAB_END				-1
 # define NB_TOKEN				14
 # define NB_FCT					7
@@ -21,11 +26,16 @@ typedef struct	s_machine
 {
 	uint64_t	state;
 	t_list		*lst;
+	t_list		*head;
 	size_t		i_input;
 	size_t		map_height;
 	size_t		map_width;
 	size_t		piece_height;
 	size_t		piece_width;
+	char		player;
+	char		player_last;
+	char		opponent;
+	char		opponent_last;
 }				t_machine;
 
 enum e_token

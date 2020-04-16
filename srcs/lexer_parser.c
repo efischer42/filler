@@ -2,7 +2,6 @@
 
 void	lexer_parser(t_machine *machine)
 {
-	t_list	*head;
 	char	*input;
 
 	input = NULL;
@@ -12,9 +11,9 @@ void	lexer_parser(t_machine *machine)
 		lexer(machine, input);
 		if (machine->state != ST_ERROR)
 		{
-			head = machine->lst;
+			machine->head = machine->lst;
 			parser(machine);
-			machine->lst = head;
+			machine->lst = machine->head;
 			if (machine->state != ST_ERROR)
 			{
 				if (((t_token*)(machine->lst->next->content))->type == PLATEAU)
