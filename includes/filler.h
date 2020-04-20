@@ -9,6 +9,7 @@
 # define P1_CHAR_LAST			'o'
 # define P2_CHAR				'X'
 # define P2_CHAR_LAST			'x'
+# define INDEX_HEIGHT_FORMAT	3
 # define P1_PLAY				0x1
 # define P2_PLAY				0x2
 # define LAST_PLAY				0x4
@@ -89,12 +90,13 @@ void	get_map(t_machine *machine);
 void	get_map_dimensions(t_machine *machine);
 int		check_index_width(t_machine *machine);
 void	generate_map(t_machine *machine);
-void	debug_map(t_map *map);
+void	fill_map(t_machine *machine);
 void	get_piece(t_machine *machine);
 void	opponent_heat_map(t_machine *machine);
 void	player_heat_map(t_machine *machine);
 void	play(t_machine *machine);
-void	debug(t_list *lst);
 void	del(void *content, size_t content_size);
+void	debug(t_list *lst);
+void	debug_map(t_map *map);
 
 #endif
