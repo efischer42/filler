@@ -17,12 +17,16 @@ SRCS += lexer.c
 SRCS += get_word.c
 SRCS += parser.c
 SRCS += get_player.c
+SRCS += get_dimensions.c
+SRCS += check_index.c
 SRCS += get_map.c
+SRCS += generate_map.c
 SRCS += get_piece.c
 SRCS += opponent_heat_map.c
 SRCS += player_heat_map.c
 SRCS += play.c
 SRCS += debug.c
+SRCS += debug_map.c
 SRCS += del.c
 
 PATHOBJS = objs/

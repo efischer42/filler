@@ -9,6 +9,9 @@
 # define P1_CHAR_LAST			'o'
 # define P2_CHAR				'X'
 # define P2_CHAR_LAST			'x'
+# define P1_PLAY				0x1
+# define P2_PLAY				0x2
+# define LAST_PLAY				0x4
 # define TAB_END				-1
 # define NB_TOKEN				14
 # define NB_FCT					7
@@ -22,9 +25,22 @@
 # define ST_END_TURN			7
 # define ST_ERROR				8
 
+typedef struct	s_map
+{
+	struct s_map	*left;
+	struct s_map	*right;
+	struct s_map	*up;
+	struct s_map	*down;
+	size_t			x;
+	size_t			y;
+	uint64_t		played;
+}				t_map;
+
 typedef struct	s_machine
 {
 	uint64_t	state;
+	t_map		*map;
+	t_map		*map_head;
 	t_list		*lst;
 	t_list		*head;
 	size_t		i_input;
@@ -70,6 +86,10 @@ void	get_word(t_machine *machine, char *input, t_token *token, size_t *pos);
 void	parser(t_machine *machine);
 void	get_player(t_machine *machine);
 void	get_map(t_machine *machine);
+void	get_map_dimensions(t_machine *machine);
+int		check_index_width(t_machine *machine);
+void	generate_map(t_machine *machine);
+void	debug_map(t_map *map);
 void	get_piece(t_machine *machine);
 void	opponent_heat_map(t_machine *machine);
 void	player_heat_map(t_machine *machine);

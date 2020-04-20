@@ -30,19 +30,17 @@ static int	check_player_name(t_machine *machine)
 
 void		get_player(t_machine *machine)
 {
-	char	*print;
-
-	print = NULL;
 	ft_putendl_fd("Get player character", 2);
-	while (((t_token*)(machine->lst->content))->type != PLAYER_NAME)
+	machine->state = ST_ERROR;
+	while (((t_token*)(machine->lst->content))->type != NEW_LINE)
 	{
 		set_player_nb(machine);
+		if (((t_token*)(machine->lst->content))->type == PLAYER_NAME)
+		{
+			if (check_player_name(machine) == SUCCESS)
+				machine->state = ST_GET_MAP;
+		}
 		machine->lst = machine->lst->next;
 	}
-	if (check_player_name(machine) == SUCCESS)
-		machine->state = ST_GET_MAP;
-	else
-		machine->state = ST_ERROR;
-	print = ft_asprintf("player: %c, player_last: %c, opponent: %c, opponent_last: %c", machine->player, machine->player_last, machine->opponent, machine->opponent_last);
-	ft_putendl_fd(print, 2);
+	machine->lst = machine->lst->next;
 }
