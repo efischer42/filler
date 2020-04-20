@@ -24,3 +24,28 @@ void		get_map_dimensions(t_machine *machine)
 	}
 	machine->lst = machine->lst->next;
 }
+
+static void	set_piece_dimensions(t_machine *machine, int nb_count)
+{
+	if (nb_count == 0)
+		machine->piece_height = ft_atoi(((t_token*)(machine->lst->content))->value);
+	else
+		machine->piece_width = ft_atoi(((t_token*)(machine->lst->content))->value);
+}
+
+void		get_piece_dimensions(t_machine *machine)
+{
+	int		nb_count;
+
+	nb_count = 0;
+	while (((t_token*)(machine->lst->content))->type != NEW_LINE)
+	{
+		if (((t_token*)(machine->lst->content))->type == NB)
+		{
+			set_piece_dimensions(machine, nb_count);
+			nb_count++;
+		}
+		machine->lst = machine->lst->next;
+	}
+	machine->lst = machine->lst->next;
+}

@@ -49,6 +49,7 @@ typedef struct	s_machine
 	size_t		map_width;
 	size_t		piece_height;
 	size_t		piece_width;
+	char		**piece;
 	char		player;
 	char		player_last;
 	char		opponent;
@@ -92,6 +93,7 @@ int		check_index_width(t_machine *machine);
 void	generate_map(t_machine *machine);
 void	fill_map(t_machine *machine);
 void	get_piece(t_machine *machine);
+void	get_piece_dimensions(t_machine *machine);
 void	opponent_heat_map(t_machine *machine);
 void	player_heat_map(t_machine *machine);
 void	play(t_machine *machine);
