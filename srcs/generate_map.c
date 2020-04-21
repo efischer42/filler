@@ -52,6 +52,18 @@ static void	generate_line(t_map **new_line, t_map *last_line, size_t y, size_t w
 	}
 }
 
+static void	set_corners(t_machine *machine)
+{
+	machine->up_left_corner->x = 0;
+	machine->up_left_corner->y = 0;
+	machine->up_right_corner->x = machine->map_width;
+	machine->up_right_corner->y = 0;
+	machine->bottom_left_corner->x = 0;
+	machine->bottom_left_corner->y = machine->map_height;
+	machine->bottom_right_corner->x = machine->map_width;
+	machine->bottom_right_corner->y = machine->map_height;
+}
+
 void		generate_map(t_machine *machine)
 {
 	t_map	*new_line;
@@ -73,4 +85,5 @@ void		generate_map(t_machine *machine)
 		last_line = new_line;
 		i++;
 	}
+	set_corners(machine);
 }

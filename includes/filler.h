@@ -15,16 +15,24 @@
 # define LAST_PLAY				0x4
 # define TAB_END				-1
 # define NB_TOKEN				14
-# define NB_FCT					7
-# define ST_LEXER_PARSER		0
-# define ST_GET_PLAYER			1
-# define ST_GET_MAP				2
-# define ST_GET_PIECE			3
-# define ST_OPPONENT_HEAT_MAP	4
-# define ST_PLAYER_HEAT_MAP		5
-# define ST_PLAY				6
-# define ST_END_TURN			7
-# define ST_ERROR				8
+# define NB_FCT					5
+
+enum	e_functions
+{
+	ST_LEXER_PARSER,
+	ST_GET_PLAYER,
+	ST_GET_MAP,
+	ST_GET_PIECE,
+	ST_PLAY,
+	ST_END_TURN,
+	ST_ERROR,
+};
+
+typedef	struct	s_point
+{
+	size_t		x;
+	size_t		y;
+}				t_point;
 
 typedef struct	s_map
 {
@@ -42,6 +50,10 @@ typedef struct	s_machine
 	uint64_t	state;
 	t_map		*map;
 	t_map		*map_head;
+	t_point		*up_left_corner;
+	t_point		*up_right_corner;
+	t_point		*bottom_left_corner;
+	t_point		*bottom_right_corner;
 	t_list		*lst;
 	t_list		*head;
 	size_t		i_input;
@@ -94,8 +106,6 @@ void	generate_map(t_machine *machine);
 void	fill_map(t_machine *machine);
 void	get_piece(t_machine *machine);
 void	get_piece_dimensions(t_machine *machine);
-void	opponent_heat_map(t_machine *machine);
-void	player_heat_map(t_machine *machine);
 void	play(t_machine *machine);
 void	del(void *content, size_t content_size);
 void	debug(t_list *lst);

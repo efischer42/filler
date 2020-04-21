@@ -57,5 +57,5 @@ void		get_piece(t_machine *machine)
 		machine->lst = machine->lst->next;
 	}
 	if (machine->state != ST_ERROR)
-		machine->state = ST_OPPONENT_HEAT_MAP;
+		machine->state = ST_PLAY;
 }
