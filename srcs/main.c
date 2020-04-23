@@ -10,12 +10,17 @@ static t_point		*init_point(void)
 	return (point);
 }
 
-static void			init_corners(t_machine *machine)
+static void			init_points(t_machine *machine)
 {
+	machine->start = init_point();
+	machine->opponent_start = init_point();
 	machine->up_left_corner = init_point();
 	machine->up_right_corner = init_point();
 	machine->bottom_left_corner = init_point();
 	machine->bottom_right_corner = init_point();
+	machine->objective1 = init_point();
+	machine->objective2 = init_point();
+	machine->objective3 = init_point();
 }
 
 static t_machine	*init_machine(void)
@@ -24,7 +29,7 @@ static t_machine	*init_machine(void)
 
 	machine = (t_machine*)malloc(sizeof(t_machine));
 	ft_bzero(machine, sizeof(*machine));
-	init_corners(machine);
+	init_points(machine);
 	machine->state = ST_LEXER_PARSER;
 	return (machine);
 }

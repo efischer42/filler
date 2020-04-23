@@ -50,10 +50,15 @@ typedef struct	s_machine
 	uint64_t	state;
 	t_map		*map;
 	t_map		*map_head;
+	t_point		*start;
+	t_point		*opponent_start;
 	t_point		*up_left_corner;
 	t_point		*up_right_corner;
 	t_point		*bottom_left_corner;
 	t_point		*bottom_right_corner;
+	t_point		*objective1;
+	t_point		*objective2;
+	t_point		*objective3;
 	t_list		*lst;
 	t_list		*head;
 	size_t		i_input;
