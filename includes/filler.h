@@ -15,24 +15,40 @@
 # define LAST_PLAY				0x4
 # define TAB_END				-1
 # define NB_TOKEN				14
-# define NB_FCT					5
+# define NB_FCT					7
+# define NB_DIR					8
 
 enum	e_functions
 {
 	ST_LEXER_PARSER,
 	ST_GET_PLAYER,
 	ST_GET_MAP,
+	ST_SET_OBJECTIVES,
+	ST_PATH,
 	ST_GET_PIECE,
 	ST_PLAY,
 	ST_END_TURN,
 	ST_ERROR,
 };
 
-typedef	struct	s_point
+enum	e_id
 {
-	size_t		x;
-	size_t		y;
-}				t_point;
+	O1,
+	O2,
+	O3
+};
+
+enum	e_direction
+{
+	UP,
+	UP_LEFT,
+	UP_RIGHT,
+	LEFT,
+	RIGHT,
+	DOWN_LEFT,
+	DOWN_RIGHT,
+	DOWN
+};
 
 typedef struct	s_map
 {
@@ -43,24 +59,32 @@ typedef struct	s_map
 	size_t			x;
 	size_t			y;
 	uint64_t		played;
+	enum e_id		id;
 }				t_map;
+
+typedef struct	s_path
+{
+	t_map			map;
+	enum e_id		id;
+	struct s_path	*next;
+}				t_path;
 
 typedef struct	s_machine
 {
 	uint64_t	state;
 	t_map		*map;
-	t_map		*map_head;
-	t_point		*start;
-	t_point		*opponent_start;
-	t_point		*up_left_corner;
-	t_point		*up_right_corner;
-	t_point		*bottom_left_corner;
-	t_point		*bottom_right_corner;
-	t_point		*objective1;
-	t_point		*objective2;
-	t_point		*objective3;
-	t_list		*lst;
+	t_map		*start;
+	t_map		*opponent_start;
+	t_map		*up_left_corner;
+	t_map		*up_right_corner;
+	t_map		*bottom_left_corner;
+	t_map		*bottom_right_corner;
+	t_map		*objective1;
+	t_map		*objective2;
+	t_map		*objective3;
+	t_list		*token_lst;
 	t_list		*head;
+	t_list		*path_lst;
 	size_t		i_input;
 	size_t		map_height;
 	size_t		map_width;
@@ -109,6 +133,8 @@ void	get_map_dimensions(t_machine *machine);
 int		check_index_width(t_machine *machine);
 void	generate_map(t_machine *machine);
 void	fill_map(t_machine *machine);
+void	set_objectives(t_machine *machine);
+void	path(t_machine *machine);
 void	get_piece(t_machine *machine);
 void	get_piece_dimensions(t_machine *machine);
 void	play(t_machine *machine);

@@ -31,15 +31,15 @@ int			check_index_width(t_machine *machine)
 	int		ret;
 
 	ret = FALSE;
-	while (((t_token*)(machine->lst->content))->type != NEW_LINE)
+	while (((t_token*)(machine->token_lst->content))->type != NEW_LINE)
 	{
-		if (((t_token*)(machine->lst->content))->type == NB)
+		if (((t_token*)(machine->token_lst->content))->type == NB)
 		{
-			index_line = ((t_token*)(machine->lst->content))->value;
+			index_line = ((t_token*)(machine->token_lst->content))->value;
 			ret = is_index_width_ok(machine, index_line);
 		}
-		machine->lst = machine->lst->next;
+		machine->token_lst = machine->token_lst->next;
 	}
-	machine->lst = machine->lst->next;
+	machine->token_lst = machine->token_lst->next;
 	return (ret);
 }

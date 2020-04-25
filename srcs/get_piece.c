@@ -43,18 +43,18 @@ void		get_piece(t_machine *machine)
 	allocate_piece(machine);
 	while (i < machine->piece_height)
 	{
-		if (((t_token*)(machine->lst->content))->type == LINE)
+		if (((t_token*)(machine->token_lst->content))->type == LINE)
 		{
-			ret = check_piece_line(((t_token*)(machine->lst->content))->value);
+			ret = check_piece_line(((t_token*)(machine->token_lst->content))->value);
 			if (ret == FALSE)
 			{
 				machine->state = ST_ERROR;
 				break ;
 			}
-			machine->piece[i] = ft_strdup(((t_token*)(machine->lst->content))->value);
+			machine->piece[i] = ft_strdup(((t_token*)(machine->token_lst->content))->value);
 			i++;
 		}
-		machine->lst = machine->lst->next;
+		machine->token_lst = machine->token_lst->next;
 	}
 	if (machine->state != ST_ERROR)
 		machine->state = ST_PLAY;

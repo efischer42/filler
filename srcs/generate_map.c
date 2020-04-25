@@ -32,36 +32,54 @@ static void	add_map(t_map **line, t_map *new_map)
 	}
 }
 
-static void	generate_line(t_map **new_line, t_map *last_line, size_t y, size_t width)
+static void	set_corners(t_machine *machine, t_map *map, size_t y, size_t x)
+{
+	char	*print;
+
+	if (y == 0 && x == 0)
+	{
+		machine->up_left_corner = map;
+		print = ft_asprintf("ul x: %d y: %d", map->x, map->y);
+	}
+	else if (y == 0 && x == machine->map_width - 1)
+	{
+		machine->up_right_corner = map;
+		print = ft_asprintf("ur x: %d y: %d", map->x, map->y);
+	}
+	else if (y == machine->map_height - 1 && x == 0)
+	{
+		machine->bottom_left_corner = map;
+		print = ft_asprintf("bl x: %d y: %d", map->x, map->y);
+	}
+	else if (y == machine->map_height - 1 && x == machine->map_width - 1)
+	{
+		machine->bottom_right_corner = map;
+		print = ft_asprintf("br x: %d y: %d", map->x, map->y);
+	}
+	ft_putendl_fd(print, 2);
+	ft_strdel(&print);
+}
+
+static void	generate_line(t_map **new_line, t_map *last_line, size_t y,
+					t_machine *machine)
 {
 	t_map	*new_map;
 	size_t	i;
 
 	i = 0;
-	while (i < width)
+	while (i < machine->map_width)
 	{
 		new_map = (t_map*)malloc(sizeof(t_map));
 		if (new_map != NULL)
 		{
 			data_map(new_map, last_line, y, i);
+			set_corners(machine, new_map, y, i);
 			if (last_line != NULL)
 				last_line = last_line->right;
 			add_map(new_line, new_map);
 		}
 		i++;
 	}
-}
-
-static void	set_corners(t_machine *machine)
-{
-	machine->up_left_corner->x = 0;
-	machine->up_left_corner->y = 0;
-	machine->up_right_corner->x = machine->map_width;
-	machine->up_right_corner->y = 0;
-	machine->bottom_left_corner->x = 0;
-	machine->bottom_left_corner->y = machine->map_height;
-	machine->bottom_right_corner->x = machine->map_width;
-	machine->bottom_right_corner->y = machine->map_height;
 }
 
 void		generate_map(t_machine *machine)
@@ -72,18 +90,12 @@ void		generate_map(t_machine *machine)
 
 	i = 0;
 	last_line = NULL;
-	ft_putendl_fd("create_map", 2);
 	while (i < machine->map_height)
 	{
 		new_line = NULL;
-		generate_line(&new_line, last_line, i, machine->map_width);
-		if (machine->map == NULL)
-		{
-			machine->map = new_line;
-			machine->map_head = machine->map;
-		}
+		generate_line(&new_line, last_line, i, machine);
 		last_line = new_line;
 		i++;
 	}
-	set_corners(machine);
+	machine->map = machine->up_left_corner;
 }

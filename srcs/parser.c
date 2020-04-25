@@ -57,12 +57,12 @@ void		parser(t_machine *machine)
 
 	if (enum_tab[0] == NULL)
 		init_enum_tab(enum_tab);
-	while (((t_token*)(machine->lst->content))->type != END)
+	while (((t_token*)(machine->token_lst->content))->type != END)
 	{
-		last_type = ((t_token*)(machine->lst->content))->type;
-		machine->lst = machine->lst->next;
+		last_type = ((t_token*)(machine->token_lst->content))->type;
+		machine->token_lst = machine->token_lst->next;
 		if (check_tokens(enum_tab[last_type],
-			((t_token*)(machine->lst->content))->type) == FAILURE)
+			((t_token*)(machine->token_lst->content))->type) == FAILURE)
 		{
 			ft_putendl_fd("Parse error", 2);
 			machine->state = ST_ERROR;

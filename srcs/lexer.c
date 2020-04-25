@@ -18,7 +18,7 @@ static void	init_grammar(char **grammar)
 	grammar[LINE] = NULL;
 }
 
-static void	init_token_lst(t_list **lst, enum e_token type)
+static void	init_token_lst(t_list **token_lst, enum e_token type)
 {
 	t_token	token;
 	t_list	*lst_new;
@@ -27,7 +27,7 @@ static void	init_token_lst(t_list **lst, enum e_token type)
 	token.type = type;
 	lst_new = ft_lstnew(&token, sizeof(token));
 	if (lst_new != NULL)
-		ft_lstaddend(lst, lst_new);
+		ft_lstaddend(token_lst, lst_new);
 }
 
 static void	get_next_token(t_machine *machine, t_token *token, size_t *pos,
@@ -61,14 +61,14 @@ void		lexer(t_machine *machine, char *input)
 	size_t		pos;
 
 	pos = 0;
-	init_token_lst(&machine->lst, START);
+	init_token_lst(&machine->token_lst, START);
 	while (input[pos] != '\0')
 	{
 		ft_bzero(&token, sizeof(token));
 		get_next_token(machine, &token, &pos, input);
 		lst_new = ft_lstnew(&token, sizeof(token));
 		if (lst_new != NULL)
-			ft_lstaddend(&machine->lst, lst_new);
+			ft_lstaddend(&machine->token_lst, lst_new);
 	}
-	init_token_lst(&machine->lst, END);
+	init_token_lst(&machine->token_lst, END);
 }

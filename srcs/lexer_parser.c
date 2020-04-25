@@ -11,12 +11,12 @@ void	lexer_parser(t_machine *machine)
 		lexer(machine, input);
 		if (machine->state != ST_ERROR)
 		{
-			machine->head = machine->lst;
+			machine->head = machine->token_lst;
 			parser(machine);
-			machine->lst = machine->head;
+			machine->token_lst = machine->head;
 			if (machine->state != ST_ERROR)
 			{
-				if (((t_token*)(machine->lst->next->content))->type == PLATEAU)
+				if (((t_token*)(machine->token_lst->next->content))->type == PLATEAU)
 					machine->state = ST_GET_MAP;
 				else
 					machine->state = ST_GET_PLAYER;
