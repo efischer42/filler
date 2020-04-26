@@ -34,30 +34,14 @@ static void	add_map(t_map **line, t_map *new_map)
 
 static void	set_corners(t_machine *machine, t_map *map, size_t y, size_t x)
 {
-	char	*print;
-
 	if (y == 0 && x == 0)
-	{
 		machine->up_left_corner = map;
-		print = ft_asprintf("ul x: %d y: %d", map->x, map->y);
-	}
 	else if (y == 0 && x == machine->map_width - 1)
-	{
 		machine->up_right_corner = map;
-		print = ft_asprintf("ur x: %d y: %d", map->x, map->y);
-	}
 	else if (y == machine->map_height - 1 && x == 0)
-	{
 		machine->bottom_left_corner = map;
-		print = ft_asprintf("bl x: %d y: %d", map->x, map->y);
-	}
 	else if (y == machine->map_height - 1 && x == machine->map_width - 1)
-	{
 		machine->bottom_right_corner = map;
-		print = ft_asprintf("br x: %d y: %d", map->x, map->y);
-	}
-	ft_putendl_fd(print, 2);
-	ft_strdel(&print);
 }
 
 static void	generate_line(t_map **new_line, t_map *last_line, size_t y,

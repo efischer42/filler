@@ -5,7 +5,9 @@ static char	*get_play(uint64_t played)
 	char	*play;
 
 	play = ".";
-	if ((played & LAST_PLAY) == LAST_PLAY)
+	if ((played & PATH) == PATH)
+		play = ">";
+	else if ((played & LAST_PLAY) == LAST_PLAY)
 	{
 		if ((played & P1_PLAY) == P1_PLAY)
 			play = "o";

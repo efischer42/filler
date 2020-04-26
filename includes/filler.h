@@ -13,6 +13,7 @@
 # define P1_PLAY				0x1
 # define P2_PLAY				0x2
 # define LAST_PLAY				0x4
+# define PATH					0x8
 # define TAB_END				-1
 # define NB_TOKEN				14
 # define NB_FCT					7
@@ -41,13 +42,13 @@ enum	e_id
 enum	e_direction
 {
 	UP,
-	UP_LEFT,
 	UP_RIGHT,
-	LEFT,
 	RIGHT,
-	DOWN_LEFT,
 	DOWN_RIGHT,
-	DOWN
+	DOWN,
+	DOWN_LEFT,
+	LEFT,
+	UP_LEFT
 };
 
 typedef struct	s_map
@@ -135,11 +136,13 @@ void	generate_map(t_machine *machine);
 void	fill_map(t_machine *machine);
 void	set_objectives(t_machine *machine);
 void	path(t_machine *machine);
+void	set_dir(enum e_direction *dir, t_map *map, t_map *objective);
 void	get_piece(t_machine *machine);
 void	get_piece_dimensions(t_machine *machine);
 void	play(t_machine *machine);
 void	del(void *content, size_t content_size);
 void	debug(t_list *lst);
 void	debug_map(t_map *map);
+void	debug_dir(enum e_direction *dir);
 
 #endif

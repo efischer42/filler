@@ -24,6 +24,7 @@ SRCS += generate_map.c
 SRCS += fill_map.c
 SRCS += set_objectives.c
 SRCS += path.c
+SRCS += set_dir.c
 SRCS += get_piece.c
 SRCS += play.c
 SRCS += del.c

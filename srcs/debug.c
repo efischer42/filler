@@ -40,3 +40,35 @@ void		debug(t_list *lst)
 	}
 	ft_strdel(&print);
 }
+
+static void	init_dir_tab(char **dir_tab)
+{
+	dir_tab[UP] = "UP";
+	dir_tab[UP_RIGHT] = "UP_RIGHT";
+	dir_tab[RIGHT] = "RIGHT";
+	dir_tab[DOWN_RIGHT] = "DOWN_RIGHT";
+	dir_tab[DOWN] = "DOWN";
+	dir_tab[DOWN_LEFT] = "DOWN_LEFT";
+	dir_tab[LEFT] = "LEFT";
+	dir_tab[UP_LEFT] = "UP_LEFT";
+}
+
+void		debug_dir(enum e_direction *dir)
+{
+	enum e_direction	i;
+	char				*dir_tab[NB_DIR];
+	char				*print;
+	char				*tmp;
+
+	i = 0;
+	print = NULL;
+	init_dir_tab(dir_tab);
+	while (i < NB_DIR)
+	{
+		tmp = ft_asprintf("dir[%d]: %s\n", i, dir_tab[dir[i]]);
+		print = ft_join_free(print, tmp, 3);
+		i++;
+	}
+	ft_putstr_fd(print, 2);
+	ft_strdel(&print);
+}
