@@ -9,9 +9,9 @@ static void	set_starts(t_machine *machine)
 		line_head = machine->map;
 		while (machine->map != NULL)
 		{
-			if ((machine->map->played & P1_PLAY) == P1_PLAY)
+			if ((machine->map->data & P1_PLAY) == P1_PLAY)
 				machine->start = machine->map;
-			else if ((machine->map->played & P2_PLAY) == P2_PLAY)
+			else if ((machine->map->data & P2_PLAY) == P2_PLAY)
 				machine->opponent_start = machine->map;
 			machine->map = machine->map->right;
 		}

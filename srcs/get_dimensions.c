@@ -23,6 +23,7 @@ void		get_map_dimensions(t_machine *machine)
 		machine->token_lst = machine->token_lst->next;
 	}
 	machine->token_lst = machine->token_lst->next;
+	machine->dist = (machine->map_height + machine->map_width) * 1 / 10 + 1;
 }
 
 static void	set_piece_dimensions(t_machine *machine, int nb_count)

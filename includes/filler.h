@@ -12,12 +12,13 @@
 # define INDEX_HEIGHT_FORMAT	3
 # define P1_PLAY				0x1
 # define P2_PLAY				0x2
-# define LAST_PLAY				0x4
+# define DANGER_ZONE			0x4
 # define PATH					0x8
 # define TAB_END				-1
 # define NB_TOKEN				14
 # define NB_FCT					7
 # define NB_DIR					8
+# define NB_MAIN_DIR			4
 
 enum	e_functions
 {
@@ -57,9 +58,9 @@ typedef struct	s_map
 	struct s_map	*right;
 	struct s_map	*up;
 	struct s_map	*down;
+	uint64_t		data;
 	size_t			x;
 	size_t			y;
-	uint64_t		played;
 	enum e_id		id;
 }				t_map;
 
@@ -91,6 +92,7 @@ typedef struct	s_machine
 	size_t		map_width;
 	size_t		piece_height;
 	size_t		piece_width;
+	size_t		dist;
 	char		**piece;
 	char		player;
 	char		player_last;
@@ -134,6 +136,7 @@ void	get_map_dimensions(t_machine *machine);
 int		check_index_width(t_machine *machine);
 void	generate_map(t_machine *machine);
 void	fill_map(t_machine *machine);
+int		fill_line(t_machine *machine);
 void	set_objectives(t_machine *machine);
 void	path(t_machine *machine);
 void	set_dir(enum e_direction *dir, t_map *map, t_map *objective);

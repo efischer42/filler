@@ -2,18 +2,18 @@
 
 static void	init_enum_tab(enum e_token **enum_tab)
 {
-	enum e_token	token_dollars[] = {EXEC, TAB_END};
-	enum e_token	token_exec[] = {P1, P2, TAB_END};
-	enum e_token	token_player_number[] = {COLON, TAB_END};
-	enum e_token	token_colon[] = {SPACE, NEW_LINE, TAB_END};
-	enum e_token	token_new_line[] = {PLATEAU, SPACE, NB, PIECE, LINE, END,
+	static enum e_token	token_dollars[] = {EXEC, TAB_END};
+	static enum e_token	token_exec[] = {P1, P2, TAB_END};
+	static enum e_token	token_player_number[] = {COLON, TAB_END};
+	static enum e_token	token_colon[] = {SPACE, NEW_LINE, TAB_END};
+	static enum e_token	token_new_line[] = {PLATEAU, SPACE, NB, PIECE, LINE, END,
 								TAB_END};
-	enum e_token	token_map[] = {NB, TAB_END};
-	enum e_token	token_space[] = {PLAYER_NAME, NB, LINE, SPACE, TAB_END};
-	enum e_token	token_start[] = {DOLLARS, PLATEAU, TAB_END};
-	enum e_token	token_player_name[] = {NEW_LINE, TAB_END};
-	enum e_token	token_nb[] = {SPACE, COLON, NEW_LINE, TAB_END};
-	enum e_token	token_line[] = {NEW_LINE, TAB_END};
+	static enum e_token	token_map[] = {NB, TAB_END};
+	static enum e_token	token_space[] = {PLAYER_NAME, NB, LINE, SPACE, TAB_END};
+	static enum e_token	token_start[] = {DOLLARS, PLATEAU, TAB_END};
+	static enum e_token	token_player_name[] = {NEW_LINE, TAB_END};
+	static enum e_token	token_nb[] = {SPACE, COLON, NEW_LINE, TAB_END};
+	static enum e_token	token_line[] = {NEW_LINE, TAB_END};
 
 	enum_tab[DOLLARS] = token_dollars;
 	enum_tab[EXEC] = token_exec;

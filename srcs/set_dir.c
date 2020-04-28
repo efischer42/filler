@@ -53,7 +53,7 @@ void		set_dir(enum e_direction *dir, t_map *map, t_map *objective)
 	size_t	diff_x;
 	size_t	diff_y;
 
-	if (map != objective)
+	if (map != NULL)
 	{
 		diff_x = ft_abs(map->x - objective->x);
 		diff_y = ft_abs(map->y - objective->y);
