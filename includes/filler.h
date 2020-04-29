@@ -9,11 +9,14 @@
 # define P1_CHAR_LAST			'o'
 # define P2_CHAR				'X'
 # define P2_CHAR_LAST			'x'
+# define PIECE_CHAR				'*'
 # define INDEX_HEIGHT_FORMAT	3
 # define P1_PLAY				0x1
 # define P2_PLAY				0x2
 # define DANGER_ZONE			0x4
 # define PATH					0x8
+# define PIECE_PART				0x10
+# define DEBUG					0x20
 # define TAB_END				-1
 # define NB_TOKEN				14
 # define NB_FCT					7
@@ -66,9 +69,8 @@ typedef struct	s_map
 
 typedef struct	s_path
 {
-	t_map			map;
+	t_map			*map;
 	enum e_id		id;
-	struct s_path	*next;
 }				t_path;
 
 typedef struct	s_machine
@@ -84,6 +86,8 @@ typedef struct	s_machine
 	t_map		*objective1;
 	t_map		*objective2;
 	t_map		*objective3;
+	t_map		*piece;
+	t_map		*head_piece;
 	t_list		*token_lst;
 	t_list		*head;
 	t_list		*path_lst;
@@ -93,7 +97,6 @@ typedef struct	s_machine
 	size_t		piece_height;
 	size_t		piece_width;
 	size_t		dist;
-	char		**piece;
 	char		player;
 	char		player_last;
 	char		opponent;
@@ -135,6 +138,8 @@ void	get_map(t_machine *machine);
 void	get_map_dimensions(t_machine *machine);
 int		check_index_width(t_machine *machine);
 void	generate_map(t_machine *machine);
+void	data_map(t_map *map, t_map *line, size_t y, size_t x);
+void	add_map(t_map **line, t_map *new_map);
 void	fill_map(t_machine *machine);
 int		fill_line(t_machine *machine);
 void	set_objectives(t_machine *machine);
@@ -142,6 +147,8 @@ void	path(t_machine *machine);
 void	set_dir(enum e_direction *dir, t_map *map, t_map *objective);
 void	get_piece(t_machine *machine);
 void	get_piece_dimensions(t_machine *machine);
+void	generate_piece(t_machine *machine);
+void	fill_piece(t_machine *machine);
 void	play(t_machine *machine);
 void	del(void *content, size_t content_size);
 void	debug(t_list *lst);

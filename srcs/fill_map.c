@@ -19,6 +19,7 @@ static int	check_index_height(t_list *token_lst, size_t i)
 	}
 	return (ret);
 }
+
 static void	process_line(t_machine *machine, size_t i)
 {
 	while (((t_token*)(machine->token_lst->content))->type != NEW_LINE)

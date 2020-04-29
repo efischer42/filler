@@ -1,17 +1,22 @@
 #include "filler.h"
 
-static char	*get_play(uint64_t data)
+static char	*get_play(uint64_t *data)
 {
 	char	*play;
 
 	play = ".";
-	if ((data & PATH) == PATH)
+	if ((*data & DEBUG) == DEBUG)
+	{
 		play = ">";
-	else if ((data & DANGER_ZONE) == DANGER_ZONE)
+		*data &= ~DEBUG;
+	}
+	else if ((*data & PIECE_PART) == PIECE_PART)
+		play = "*";
+	else if ((*data & DANGER_ZONE) == DANGER_ZONE)
 			play = "!";
-	else if ((data & P1_PLAY) == P1_PLAY)
+	else if ((*data & P1_PLAY) == P1_PLAY)
 			play = "O";
-	else if ((data & P2_PLAY) == P2_PLAY)
+	else if ((*data & P2_PLAY) == P2_PLAY)
 			play = "X";
 	return (play);
 }
@@ -30,7 +35,7 @@ void		debug_map(t_map *map)
 		head_line = map;
 		while (map != NULL)
 		{
-			play = get_play(map->data);
+			play = get_play(&map->data);
 			tmp = ft_asprintf("%s ", play);
 			print = ft_join_free(print, tmp, 3);
 			map = map->right;

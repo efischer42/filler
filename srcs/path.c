@@ -27,14 +27,6 @@
 
 static void		init_map_dir(t_map **map_dir, t_map *map)
 {
-	char	*print;
-
-	print = ft_asprintf("down add: %p", map->down);
-	ft_putendl_fd(print, 2);
-	ft_strdel(&print);
-//	print = ft_asprintf("down right add: %p", map->down->right);
-//	ft_putendl_fd(print, 2);
-//	ft_strdel(&print);
 	ft_bzero(map_dir, sizeof(*map_dir));
 	map_dir[UP] = map->up;
 	map_dir[RIGHT] = map->right;
@@ -45,9 +37,6 @@ static void		init_map_dir(t_map **map_dir, t_map *map)
 		map_dir[UP_RIGHT] = map->up->right;
 		map_dir[UP_LEFT] = map->up->left;
 	}
-	print = ft_asprintf("down add: %p", map->down);
-	ft_putendl_fd(print, 2);
-	ft_strdel(&print);
 	if (map->down != NULL)
 	{
 		if (map->down->right != NULL)
@@ -61,57 +50,58 @@ static int	check_danger_zone(t_map *map)
 	int			ret;
 
 	ret = TRUE;
-	if (map != NULL && (map->data & DANGER_ZONE) == DANGER_ZONE)
+	if (map != NULL && ((map->data & DANGER_ZONE) == DANGER_ZONE
+			||(map->data & PATH) == PATH))
 		ret = FALSE;
 	return (ret);
 }
 
-int			find_path(t_map *map, t_map *objective, t_path *new_path)
+int			find_path(t_map *map, t_map *objective, t_list **path)
 {
 	enum e_direction	dir[NB_DIR];
 	enum e_direction	i;
 	t_map				*map_dir[NB_DIR];
-	//char				*print;
+	t_path				new_path;
+	t_list				*lst_new;
 
-	(void)new_path;
 	i = 0;
+	ft_bzero(&new_path, sizeof(new_path));
 	if (map == objective)
 	{
-		map->data |= PATH;
+		map->data |= DEBUG;
 		return (TRUE);
 	}
 	if (map == NULL)
 		return (TRUE);
-	//print = ft_asprintf("map x: %u, map y: %u", map->x, map->y);
-	//ft_putendl_fd(print, 2);
-	//ft_strdel(&print);
 	if (check_danger_zone(map) == FALSE)
 		return (FALSE);
-	//ft_putendl_fd("Im here", 2);
 	set_dir(dir, map, objective);
 	init_map_dir(map_dir, map);
-	map->data |= DANGER_ZONE;
-	//ft_putendl_fd("Overflow here", 2);
+	map->data |= PATH;
 	while (i < NB_DIR)
 	{
-		if (find_path(map_dir[dir[i]], objective, new_path) == TRUE)
+		if (find_path(map_dir[dir[i]], objective, path) == TRUE)
 			break ;
 		i++;
 	}
-	map->data |= PATH;
+	map->data |= DEBUG;
+	new_path.map = map;
+	new_path.id = objective->id;
+	lst_new = ft_lstnew(&new_path, sizeof(new_path));
+	ft_lstadd(path, lst_new);
 	return (TRUE);
 }
 
 static void	set_path(t_machine *machine, t_map *objective)
 {
-//	t_lst	*lst_new;
-	t_path	*new_path;
+	t_list	*lst_new;
+	t_list	*path;
 
 	(void)machine;
-	new_path = NULL;
-	find_path(machine->start, objective, new_path);
-//	lst_new = ft_lstnew(new_path, sizeof(*new_path));
-//	ft_lstaddend(&machine->path_lst, lst_new);
+	path = NULL;
+	find_path(machine->start, objective, &path);
+	lst_new = ft_lstnew(path, sizeof(*path));
+	ft_lstaddend(&machine->path_lst, lst_new);
 }
 
 void		path(t_machine *machine)

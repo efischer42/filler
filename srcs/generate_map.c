@@ -1,6 +1,6 @@
 #include "filler.h"
 
-static void	data_map(t_map *map, t_map *line, size_t y, size_t x)
+void		data_map(t_map *map, t_map *line, size_t y, size_t x)
 {
 	ft_bzero(map, sizeof(*map));
 	map->x = x;
@@ -12,7 +12,7 @@ static void	data_map(t_map *map, t_map *line, size_t y, size_t x)
 	}
 }
 
-static void	add_map(t_map **line, t_map *new_map)
+void		add_map(t_map **line, t_map *new_map)
 {
 	t_map	*head;
 
