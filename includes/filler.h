@@ -4,6 +4,10 @@
 # include "libft.h"
 
 # define STDIN					0
+# define FROM_LEFT				0x1
+# define FROM_RIGHT				0x2
+# define FROM_UP				0x4
+# define FROM_DOWN				0x8
 # define EXEC_NAME				"efischer.filler"
 # define P1_CHAR				'O'
 # define P1_CHAR_LAST			'o'
@@ -38,7 +42,7 @@ enum	e_functions
 
 enum	e_id
 {
-	O1,
+	O1 = 1,
 	O2,
 	O3
 };
