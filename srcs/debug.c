@@ -72,3 +72,17 @@ void		debug_dir(enum e_direction *dir)
 	ft_putstr_fd(print, 2);
 	ft_strdel(&print);
 }
+
+void		debug_path(t_list *lst)
+{
+	char	*print;
+
+	while (lst != NULL)
+	{
+		print = ft_asprintf("path x: %d y: %d", ((t_map*)(lst->content))->x,
+					((t_map*)(lst->content))->y);
+		ft_putendl_fd(print, 2);
+		ft_strdel(&print);
+		lst = lst->next;
+	}
+}

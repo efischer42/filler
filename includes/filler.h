@@ -73,7 +73,7 @@ typedef struct	s_map
 
 typedef struct	s_path
 {
-	t_map			*map;
+	t_list			*lst;
 	enum e_id		id;
 }				t_path;
 
@@ -154,9 +154,12 @@ void	get_piece_dimensions(t_machine *machine);
 void	generate_piece(t_machine *machine);
 void	fill_piece(t_machine *machine);
 void	play(t_machine *machine);
+t_map	*path_play(t_list *path_lst, enum e_id objective);
+int		find_path(t_map *map, t_map *objective, t_list **path);
 void	del(void *content, size_t content_size);
 void	debug(t_list *lst);
 void	debug_map(t_map *map);
 void	debug_dir(enum e_direction *dir);
+void	debug_path(t_list *lst);
 
 #endif
