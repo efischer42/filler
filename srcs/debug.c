@@ -7,7 +7,6 @@ static void init_token_tab(char **token_tab)
 	token_tab[P1] = "P1";
 	token_tab[P2] = "P2";
 	token_tab[COLON] = "COLON";
-	token_tab[NEW_LINE] = "NEW_LINE";
 	token_tab[PLATEAU] = "PLATEAU";
 	token_tab[PIECE] = "PIECE";
 	token_tab[SPACE] = "SPACE";

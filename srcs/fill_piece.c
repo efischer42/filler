@@ -43,7 +43,7 @@ static int	fill_piece_line(t_machine *machine)
 
 static void	process_line(t_machine *machine)
 {
-	while (((t_token*)(machine->token_lst->content))->type != NEW_LINE)
+	while (((t_token*)(machine->token_lst->content))->type != END)
 	{
 		if (((t_token*)(machine->token_lst->content))->type == LINE)
 			fill_piece_line(machine);

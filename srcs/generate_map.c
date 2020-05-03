@@ -74,6 +74,7 @@ void		generate_map(t_machine *machine)
 
 	i = 0;
 	last_line = NULL;
+	get_map_dimensions(machine, machine->token_lst);
 	while (i < machine->map_height)
 	{
 		new_line = NULL;

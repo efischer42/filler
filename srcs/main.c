@@ -1,25 +1,21 @@
 #include "filler.h"
 
-static t_machine	*init_machine(void)
-{
-	t_machine	*machine;
-
-	machine = (t_machine*)malloc(sizeof(t_machine));
-	ft_bzero(machine, sizeof(*machine));
-	machine->state = ST_LEXER_PARSER;
-	return (machine);
-}
-
 int					main(int ac, char **av)
 {
-	t_machine	*machine;
+	t_machine	machine;
+	char		*line;
+	void		(*f_tab[NB_FCT])(t_machine *) = {get_player, get_map,
+					set_objectives, path, get_piece, play, error};
 
 	(void)ac;
-	(void)av;
-	while (1)
+	line = NULL;
+	ft_bzero(&machine, sizeof(machine));
+	machine.player_name = av[0];
+	machine.state = ST_GET_PLAYER;
+	while (get_next_line(STDIN_FILENO, &line) > 0)
 	{
-		machine = init_machine();
-		state_machine(machine);
+		machine.input = line;
+		f_tab[machine.state](&machine);
 	}
 	return (EXIT_SUCCESS);
 }

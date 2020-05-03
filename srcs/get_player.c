@@ -18,29 +18,20 @@ static void	set_player_nb(t_machine *machine)
 	}
 }
 
-static int	check_player_name(t_machine *machine)
-{
-	int		ret;
-
-	ret = FAILURE;
-	if (ft_strstr(((t_token*)(machine->token_lst->content))->value, EXEC_NAME) != NULL)
-		ret = SUCCESS;
-	return (ret);
-}
-
 void		get_player(t_machine *machine)
 {
-//	ft_putendl_fd("Get player character", 2);
-	machine->state = ST_ERROR;
-	while (((t_token*)(machine->token_lst->content))->type != NEW_LINE)
+	t_list	*head;
+
+	lexer_parser(machine);
+	if (machine->state != ST_ERROR)
 	{
-		set_player_nb(machine);
-		if (((t_token*)(machine->token_lst->content))->type == PLAYER_NAME)
+		head = machine->token_lst;
+		while (((t_token*)(machine->token_lst->content))->type != END)
 		{
-			if (check_player_name(machine) == SUCCESS)
-				machine->state = ST_GET_MAP;
+			set_player_nb(machine);
+			machine->token_lst = machine->token_lst->next;
 		}
-		machine->token_lst = machine->token_lst->next;
+		machine->state = ST_GET_MAP;
 	}
-	machine->token_lst = machine->token_lst->next;
+	ft_lstdel(&head, del_lst);
 }

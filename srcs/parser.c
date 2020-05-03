@@ -5,22 +5,20 @@ static void	init_enum_tab(enum e_token **enum_tab)
 	static enum e_token	token_dollars[] = {EXEC, TAB_END};
 	static enum e_token	token_exec[] = {P1, P2, TAB_END};
 	static enum e_token	token_player_number[] = {COLON, TAB_END};
-	static enum e_token	token_colon[] = {SPACE, NEW_LINE, TAB_END};
-	static enum e_token	token_new_line[] = {PLATEAU, SPACE, NB, PIECE, LINE, END,
-								TAB_END};
+	static enum e_token	token_colon[] = {SPACE, END, TAB_END};
 	static enum e_token	token_map[] = {NB, TAB_END};
 	static enum e_token	token_space[] = {PLAYER_NAME, NB, LINE, SPACE, TAB_END};
-	static enum e_token	token_start[] = {DOLLARS, PLATEAU, TAB_END};
-	static enum e_token	token_player_name[] = {NEW_LINE, TAB_END};
-	static enum e_token	token_nb[] = {SPACE, COLON, NEW_LINE, TAB_END};
-	static enum e_token	token_line[] = {NEW_LINE, TAB_END};
+	static enum e_token	token_start[] = {DOLLARS, PLATEAU, SPACE, NB, PIECE,
+								LINE, TAB_END};
+	static enum e_token	token_player_name[] = {END, TAB_END};
+	static enum e_token	token_nb[] = {SPACE, COLON, END, TAB_END};
+	static enum e_token	token_line[] = {END, TAB_END};
 
 	enum_tab[DOLLARS] = token_dollars;
 	enum_tab[EXEC] = token_exec;
 	enum_tab[P1] = token_player_number;
 	enum_tab[P2] = token_player_number;
 	enum_tab[COLON] = token_colon;
-	enum_tab[NEW_LINE] = token_new_line;
 	enum_tab[PLATEAU] = token_map;
 	enum_tab[PIECE] =  token_map;
 	enum_tab[SPACE] = token_space;
@@ -50,19 +48,19 @@ static int	check_tokens(enum e_token *enum_tab, enum e_token type)
 	return (ret);
 }
 
-void		parser(t_machine *machine)
+void		parser(t_machine *machine, t_list *token_lst)
 {
 	static enum e_token	*enum_tab[NB_TOKEN] = {NULL};
 	enum e_token		last_type;
 
 	if (enum_tab[0] == NULL)
 		init_enum_tab(enum_tab);
-	while (((t_token*)(machine->token_lst->content))->type != END)
+	while (((t_token*)(token_lst->content))->type != END)
 	{
-		last_type = ((t_token*)(machine->token_lst->content))->type;
-		machine->token_lst = machine->token_lst->next;
+		last_type = ((t_token*)(token_lst->content))->type;
+		token_lst = token_lst->next;
 		if (check_tokens(enum_tab[last_type],
-			((t_token*)(machine->token_lst->content))->type) == FAILURE)
+			((t_token*)(token_lst->content))->type) == FAILURE)
 		{
 			ft_putendl_fd("Parse error", 2);
 			machine->state = ST_ERROR;

@@ -41,5 +41,4 @@ void			play(t_machine *machine)
 	path_play(machine, machine->path_lst, objective->id);
 	get_opt(machine, objective);
 	play_piece(machine);
-	machine->state = ST_END_TURN;
 }

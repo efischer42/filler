@@ -10,9 +10,7 @@ DFLSGS += -g3
 
 PATHSRCS = srcs/
 SRCS += main.c
-SRCS += state_machine.c
 SRCS += lexer_parser.c
-SRCS += get_input.c
 SRCS += lexer.c
 SRCS += get_word.c
 SRCS += parser.c
@@ -34,6 +32,7 @@ SRCS += path_play.c
 SRCS += piece_placement.c
 SRCS += find_path.c
 SRCS += del.c
+SRCS += error.c
 SRCS += debug.c
 SRCS += debug_map.c
 

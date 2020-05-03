@@ -7,7 +7,6 @@
 # define FROM_RIGHT				0x2
 # define FROM_UP				0x4
 # define FROM_DOWN				0x8
-# define EXEC_NAME				"efischer.filler"
 # define P1_CHAR				'O'
 # define P1_CHAR_LAST			'o'
 # define P2_CHAR				'X'
@@ -21,21 +20,19 @@
 # define PIECE_PART				0x10
 # define DEBUG					0x20
 # define TAB_END				-1
-# define NB_TOKEN				14
+# define NB_TOKEN				13
 # define NB_FCT					7
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
 
 enum	e_functions
 {
-	ST_LEXER_PARSER,
 	ST_GET_PLAYER,
 	ST_GET_MAP,
 	ST_SET_OBJECTIVES,
 	ST_PATH,
 	ST_GET_PIECE,
 	ST_PLAY,
-	ST_END_TURN,
 	ST_ERROR,
 };
 
@@ -94,7 +91,6 @@ typedef struct	s_machine
 	t_map		*piece;
 	t_map		*head_piece;
 	t_list		*token_lst;
-	t_list		*head;
 	t_list		*path_lst;
 	size_t		i_input;
 	size_t		map_height;
@@ -102,6 +98,8 @@ typedef struct	s_machine
 	size_t		piece_height;
 	size_t		piece_width;
 	size_t		dist;
+	char		*input;
+	char		*player_name;
 	int			play_x;
 	int			play_y;
 	char		player;
@@ -117,7 +115,6 @@ enum e_token
 	P1,
 	P2,
 	COLON,
-	NEW_LINE,
 	PLATEAU,
 	PIECE,
 	SPACE,
@@ -134,16 +131,14 @@ typedef struct	s_token
 	char			*value;
 }				t_token;
 
-void	state_machine(t_machine *machine);
 void	lexer_parser(t_machine *machine);
-int		get_input(char **input);
-void	lexer(t_machine *machine, char *input);
+void	lexer(t_machine *machine);
 void	get_word(t_machine *machine, char *input, t_token *token, size_t *pos);
-void	parser(t_machine *machine);
+void	parser(t_machine *machine, t_list *token_lst);
 void	get_player(t_machine *machine);
 void	get_map(t_machine *machine);
-void	get_map_dimensions(t_machine *machine);
-int		check_index_width(t_machine *machine);
+void	get_map_dimensions(t_machine *machine, t_list *token_lst);
+void	check_index_width(t_machine *machine, t_list *token_lst);
 void	generate_map(t_machine *machine);
 void	data_map(t_map *map, t_map *line, size_t y, size_t x);
 void	add_map(t_map **line, t_map *new_map);
@@ -160,7 +155,10 @@ void	play(t_machine *machine);
 void	path_play(t_machine *machine, t_list *path_lst, enum e_id objective);
 void	piece_placement(t_machine *machine, t_map *piece, uint64_t opt);
 int		find_path(t_map *map, t_map *objective, t_list **path);
-void	del(void *content, size_t content_size);
+void	del_lst(void *content, size_t content_size);
+void	error(t_machine *machine);
+void	del_line(t_map **map);
+void	del_map(t_map **map);
 void	debug(t_list *lst);
 void	debug_map(t_map *map);
 void	debug_dir(enum e_direction *dir);

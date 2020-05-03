@@ -2,19 +2,20 @@
 
 void		get_map(t_machine *machine)
 {
-//	ft_putendl_fd("Get map", 2);
-	get_map_dimensions(machine);
-	if (check_index_width(machine) == TRUE)
+	lexer_parser(machine);
+	if (machine->state != ST_ERROR)
 	{
-		if (machine->map == NULL)
+		if (((t_token*)(machine->token_lst->next->content))->type == PLATEAU)
 		{
-			machine->state = ST_SET_OBJECTIVES;
-			generate_map(machine);
+			if (machine->map == NULL)
+				generate_map(machine);
+//			else
+//				check_map_dimensions(machine->map_width, machine->map_height);
 		}
-		if (machine->map == NULL)
-			machine->state = ST_ERROR;
-		fill_map(machine);
+		else if (((t_token*)(machine->token_lst->next->content))->type == SPACE)
+			check_index_width(machine, machine->token_lst);
+		else if (((t_token*)(machine->token_lst->next->content))->type == NB)
+			fill_map(machine);
 	}
-	if (machine->state != ST_ERROR && machine->state != ST_SET_OBJECTIVES)
-		machine->state = ST_PATH;
+	ft_lstdel(&machine->token_lst, del_lst);
 }

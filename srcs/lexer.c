@@ -1,19 +1,18 @@
 #include "filler.h"
 
-static void	init_grammar(char **grammar)
+static void	init_grammar(char **grammar, char *player_name)
 {
 	grammar[DOLLARS] = "$$$ ";
 	grammar[EXEC] = "exec ";
 	grammar[P1] = "p1 ";
 	grammar[P2] = "p2 ";
 	grammar[COLON] = ":";
-	grammar[NEW_LINE] = "\n";
 	grammar[PLATEAU] = "Plateau ";
 	grammar[PIECE] = "Piece ";
 	grammar[SPACE] = " ";
+	grammar[PLAYER_NAME] = player_name;
 	grammar[START] = NULL;
 	grammar[END] = NULL;
-	grammar[PLAYER_NAME] = NULL;
 	grammar[NB] = NULL;
 	grammar[LINE] = NULL;
 }
@@ -34,11 +33,12 @@ static void	get_next_token(t_machine *machine, t_token *token, size_t *pos,
 				char *input)
 {
 	static char	*grammar[NB_TOKEN];
-	size_t	len;
-	size_t	i;
+	size_t		len;
+	size_t		i;
 
 	i = 0;
-	init_grammar(grammar);
+	if (grammar[0] == NULL)
+		init_grammar(grammar, machine->player_name);
 	while (i < NB_TOKEN)
 	{
 		len = ft_strlen(grammar[i]);
@@ -54,18 +54,19 @@ static void	get_next_token(t_machine *machine, t_token *token, size_t *pos,
 		get_word(machine, input, token, pos);
 }
 
-void		lexer(t_machine *machine, char *input)
+void		lexer(t_machine *machine)
 {
 	t_token		token;
 	t_list		*lst_new;
 	size_t		pos;
 
 	pos = 0;
+	machine->token_lst = NULL;
 	init_token_lst(&machine->token_lst, START);
-	while (input[pos] != '\0')
+	while (machine->input[pos] != '\0')
 	{
 		ft_bzero(&token, sizeof(token));
-		get_next_token(machine, &token, &pos, input);
+		get_next_token(machine, &token, &pos, machine->input);
 		lst_new = ft_lstnew(&token, sizeof(token));
 		if (lst_new != NULL)
 			ft_lstaddend(&machine->token_lst, lst_new);
