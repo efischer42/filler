@@ -3,7 +3,6 @@
 
 # include "libft.h"
 
-# define STDIN					0
 # define FROM_LEFT				0x1
 # define FROM_RIGHT				0x2
 # define FROM_UP				0x4
@@ -80,8 +79,10 @@ typedef struct	s_path
 typedef struct	s_machine
 {
 	uint64_t	state;
+	uint64_t	opt;
 	t_map		*map;
 	t_map		*start;
+	t_map		*play;
 	t_map		*opponent_start;
 	t_map		*up_left_corner;
 	t_map		*up_right_corner;
@@ -101,6 +102,8 @@ typedef struct	s_machine
 	size_t		piece_height;
 	size_t		piece_width;
 	size_t		dist;
+	int			play_x;
+	int			play_y;
 	char		player;
 	char		player_last;
 	char		opponent;
@@ -154,7 +157,8 @@ void	get_piece_dimensions(t_machine *machine);
 void	generate_piece(t_machine *machine);
 void	fill_piece(t_machine *machine);
 void	play(t_machine *machine);
-t_map	*path_play(t_list *path_lst, enum e_id objective);
+void	path_play(t_machine *machine, t_list *path_lst, enum e_id objective);
+void	piece_placement(t_machine *machine, t_map *piece, uint64_t opt);
 int		find_path(t_map *map, t_map *objective, t_list **path);
 void	del(void *content, size_t content_size);
 void	debug(t_list *lst);

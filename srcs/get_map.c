@@ -2,7 +2,7 @@
 
 void		get_map(t_machine *machine)
 {
-	ft_putendl_fd("Get map", 2);
+//	ft_putendl_fd("Get map", 2);
 	get_map_dimensions(machine);
 	if (check_index_width(machine) == TRUE)
 	{

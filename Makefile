@@ -31,6 +31,7 @@ SRCS += generate_piece.c
 SRCS += fill_piece.c
 SRCS += play.c
 SRCS += path_play.c
+SRCS += piece_placement.c
 SRCS += find_path.c
 SRCS += del.c
 SRCS += debug.c

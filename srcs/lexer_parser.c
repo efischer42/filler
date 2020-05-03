@@ -5,8 +5,9 @@ void	lexer_parser(t_machine *machine)
 	char	*input;
 
 	input = NULL;
-	if (get_input(&input) == SUCCESS)
+	if (get_input(&input) == TRUE && input != NULL)
 	{
+		ft_putendl_fd("//////////INPUT//////////", 2);
 		ft_putstr_fd(input, 2);
 		lexer(machine, input);
 		if (machine->state != ST_ERROR)
@@ -23,7 +24,7 @@ void	lexer_parser(t_machine *machine)
 			}
 		}
 	}
-	else
+	else if (input != NULL)
 		machine->state = ST_ERROR;
 	ft_strdel(&input);
 }

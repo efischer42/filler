@@ -20,7 +20,6 @@ int					main(int ac, char **av)
 	{
 		machine = init_machine();
 		state_machine(machine);
-		ft_putstr("0 0\n");
 	}
 	return (EXIT_SUCCESS);
 }

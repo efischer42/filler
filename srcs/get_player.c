@@ -30,7 +30,7 @@ static int	check_player_name(t_machine *machine)
 
 void		get_player(t_machine *machine)
 {
-	ft_putendl_fd("Get player character", 2);
+//	ft_putendl_fd("Get player character", 2);
 	machine->state = ST_ERROR;
 	while (((t_token*)(machine->token_lst->content))->type != NEW_LINE)
 	{

@@ -41,9 +41,9 @@ static void	set_path(t_machine *machine, t_map *objective)
 
 void		path(t_machine *machine)
 {
-	ft_putendl_fd("Path", 2);
+//	ft_putendl_fd("Path", 2);
 //	if (check_path(machine, machine->objective1) == FALSE)
 	set_path(machine, machine->objective1);
 	machine->state = ST_GET_PIECE;
-	debug_map(machine->map);
+//	debug_map(machine->map);
 }

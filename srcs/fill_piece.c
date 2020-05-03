@@ -63,5 +63,5 @@ void	fill_piece(t_machine *machine)
 		i++;
 	}
 	machine->piece = machine->head_piece;
-	debug_map(machine->piece);
+//	debug_map(machine->piece);
 }
