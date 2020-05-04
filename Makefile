@@ -21,6 +21,7 @@ SRCS += get_map.c
 SRCS += generate_map.c
 SRCS += fill_map.c
 SRCS += fill_line.c
+SRCS += turn.c
 SRCS += set_objectives.c
 SRCS += path.c
 SRCS += set_dir.c

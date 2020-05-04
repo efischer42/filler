@@ -21,7 +21,7 @@
 # define DEBUG					0x20
 # define TAB_END				-1
 # define NB_TOKEN				13
-# define NB_FCT					7
+# define NB_FCT					4
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
 
@@ -29,10 +29,7 @@ enum	e_functions
 {
 	ST_GET_PLAYER,
 	ST_GET_MAP,
-	ST_SET_OBJECTIVES,
-	ST_PATH,
 	ST_GET_PIECE,
-	ST_PLAY,
 	ST_ERROR,
 };
 
@@ -142,19 +139,20 @@ void	check_index_width(t_machine *machine, t_list *token_lst);
 void	generate_map(t_machine *machine);
 void	data_map(t_map *map, t_map *line, size_t y, size_t x);
 void	add_map(t_map **line, t_map *new_map);
-void	fill_map(t_machine *machine);
-int		fill_line(t_machine *machine);
+void	fill_map(t_machine *machine, t_list *token_lst);
+int		fill_line(t_machine *machine, t_list *token_lst);
 void	set_objectives(t_machine *machine);
 void	path(t_machine *machine);
 void	set_dir(enum e_direction *dir, t_map *map, t_map *objective);
 void	get_piece(t_machine *machine);
-void	get_piece_dimensions(t_machine *machine);
+void	get_piece_dimensions(t_machine *machine, t_list *token_lst);
 void	generate_piece(t_machine *machine);
-void	fill_piece(t_machine *machine);
+void	fill_piece(t_machine *machine, t_list *token_lst);
 void	play(t_machine *machine);
 void	path_play(t_machine *machine, t_list *path_lst, enum e_id objective);
 void	piece_placement(t_machine *machine, t_map *piece, uint64_t opt);
 int		find_path(t_map *map, t_map *objective, t_list **path);
+void	turn(t_machine *machine);
 void	del_lst(void *content, size_t content_size);
 void	error(t_machine *machine);
 void	del_line(t_map **map);

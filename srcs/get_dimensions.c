@@ -26,27 +26,26 @@ void		get_map_dimensions(t_machine *machine, t_list *token_lst)
 	machine->dist = (machine->map_height + machine->map_width) * 1 / 10 + 1;
 }
 
-static void	set_piece_dimensions(t_machine *machine, int nb_count)
+static void	set_piece_dimensions(t_machine *machine, t_list *token_lst, int nb_count)
 {
 	if (nb_count == 0)
-		machine->piece_height = ft_atoi(((t_token*)(machine->token_lst->content))->value);
+		machine->piece_height = ft_atoi(((t_token*)(token_lst->content))->value);
 	else
-		machine->piece_width = ft_atoi(((t_token*)(machine->token_lst->content))->value);
+		machine->piece_width = ft_atoi(((t_token*)(token_lst->content))->value);
 }
 
-void		get_piece_dimensions(t_machine *machine)
+void		get_piece_dimensions(t_machine *machine, t_list *token_lst)
 {
 	int		nb_count;
 
 	nb_count = 0;
-	while (((t_token*)(machine->token_lst->content))->type != END)
+	while (((t_token*)(token_lst->content))->type != END)
 	{
-		if (((t_token*)(machine->token_lst->content))->type == NB)
+		if (((t_token*)(token_lst->content))->type == NB)
 		{
-			set_piece_dimensions(machine, nb_count);
+			set_piece_dimensions(machine, token_lst, nb_count);
 			nb_count++;
 		}
-		machine->token_lst = machine->token_lst->next;
+		token_lst = token_lst->next;
 	}
-	machine->token_lst = machine->token_lst->next;
 }

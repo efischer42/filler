@@ -4,8 +4,8 @@ int					main(int ac, char **av)
 {
 	t_machine	machine;
 	char		*line;
-	void		(*f_tab[NB_FCT])(t_machine *) = {get_player, get_map,
-					set_objectives, path, get_piece, play, error};
+	void		(*f_tab[NB_FCT])(t_machine *) = {get_player, get_map, get_piece,
+					error};
 
 	(void)ac;
 	line = NULL;

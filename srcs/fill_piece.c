@@ -15,7 +15,7 @@ static int	check_line(t_list *token_lst, size_t width)
 	return (ret);
 }
 
-static int	fill_piece_line(t_machine *machine)
+static int	fill_piece_line(t_machine *machine, t_list *token_lst)
 {
 	t_map	*line_head;
 	char	*line;
@@ -23,11 +23,11 @@ static int	fill_piece_line(t_machine *machine)
 	int		ret;
 
 	i = 0;
-	ret = check_line(machine->token_lst, machine->piece_width);
+	ret = check_line(token_lst, machine->piece_width);
 	if (ret == TRUE)
 	{
 		line_head = machine->piece;
-		line = ((t_token*)(machine->token_lst->content))->value;
+		line = ((t_token*)(token_lst->content))->value;
 		while (line[i] != '\0')
 		{
 			if (line[i] == PIECE_CHAR)
@@ -36,32 +36,20 @@ static int	fill_piece_line(t_machine *machine)
 			i++;
 		}
 		machine->piece = line_head;
-		machine->piece = machine->piece->down;
+		if (machine->piece->y + 1 == machine->piece_height)
+			machine->piece = machine->head_piece;
+		else
+			machine->piece = machine->piece->down;
 	}
 	return (ret);
 }
 
-static void	process_line(t_machine *machine)
+void	fill_piece(t_machine *machine, t_list *token_lst)
 {
-	while (((t_token*)(machine->token_lst->content))->type != END)
+	while (((t_token*)(token_lst->content))->type != END)
 	{
-		if (((t_token*)(machine->token_lst->content))->type == LINE)
-			fill_piece_line(machine);
-		machine->token_lst = machine->token_lst->next;
+		if (((t_token*)(token_lst->content))->type == LINE)
+			fill_piece_line(machine, token_lst);
+		token_lst = token_lst->next;
 	}
-}
-
-void	fill_piece(t_machine *machine)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < machine->piece_height)
-	{
-		process_line(machine);
-		machine->token_lst = machine->token_lst->next;
-		i++;
-	}
-	machine->piece = machine->head_piece;
-//	debug_map(machine->piece);
 }

@@ -89,7 +89,7 @@ static void	fill_map_data(t_machine *machine, char c)
 	}
 }
 
-int			fill_line(t_machine *machine)
+int			fill_line(t_machine *machine, t_list *token_lst)
 {
 	t_map	*line_head;
 	char	*line;
@@ -97,11 +97,11 @@ int			fill_line(t_machine *machine)
 	int		ret;
 
 	i = 0;
-	ret = check_line(machine->token_lst, machine->map_width);
+	ret = check_line(token_lst, machine->map_width);
 	if (ret == TRUE)
 	{
 		line_head = machine->map;
-		line = ((t_token*)(machine->token_lst->content))->value;
+		line = ((t_token*)(token_lst->content))->value;
 		while (line[i] != '\0')
 		{
 			fill_map_data(machine, line[i]);
@@ -109,7 +109,8 @@ int			fill_line(t_machine *machine)
 			i++;
 		}
 		machine->map = line_head;
-		machine->map = machine->map->down;
+		if (machine->map->down != NULL)
+			machine->map = machine->map->down;
 	}
 	return (ret);
 }

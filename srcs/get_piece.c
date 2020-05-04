@@ -2,11 +2,22 @@
 
 void		get_piece(t_machine *machine)
 {
-	machine->state = ST_ERROR;
-//	ft_putendl_fd("Get piece", 2);
-/*	get_piece_dimensions(machine);
-	generate_piece(machine);
-	fill_piece(machine);
+	lexer_parser(machine);
+	debug(machine->token_lst);
 	if (machine->state != ST_ERROR)
-		machine->state = ST_PLAY;*/
+	{
+		if (((t_token*)(machine->token_lst->next->content))->type == PIECE)
+		{
+			get_piece_dimensions(machine, machine->token_lst);
+			if (machine->piece == NULL)
+				generate_piece(machine);
+		}
+		else if (((t_token*)(machine->token_lst->next->content))->type == LINE)
+		{
+			fill_piece(machine, machine->token_lst);
+			if (machine->piece == machine->head_piece)
+				turn(machine);
+		}
+	}
+	ft_lstdel(&machine->token_lst, del_lst);
 }

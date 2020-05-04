@@ -20,20 +20,22 @@ static int	check_index_height(t_list *token_lst, size_t i)
 	return (ret);
 }
 
-void		fill_map(t_machine *machine)
+void		fill_map(t_machine *machine, t_list *token_lst)
 {
-	while (((t_token*)(machine->token_lst->content))->type != END)
+	while (((t_token*)(token_lst->content))->type != END)
 	{
-		if (((t_token*)(machine->token_lst->content))->type == NB)
-			check_index_height(machine->token_lst, machine->map->y);
-		else if (((t_token*)(machine->token_lst->content))->type == LINE)
-			fill_line(machine);
-		machine->token_lst = machine->token_lst->next;
-	}
-	if (machine->map->y + 1 == machine->map_height)
-	{
-		machine->state = ST_GET_PIECE;
-		machine->map = machine->up_left_corner;
-		debug_map(machine->map);
+		if (((t_token*)(token_lst->content))->type == NB)
+		{
+			if (check_index_height(token_lst, machine->map->y) == FALSE)
+				machine->state = ST_ERROR;
+			else if (machine->map->y + 1 == machine->map_height)
+			{
+				machine->state = ST_GET_PIECE;
+				machine->map = machine->up_left_corner;
+			}
+		}
+		else if (((t_token*)(token_lst->content))->type == LINE)
+			fill_line(machine, token_lst);
+		token_lst = token_lst->next;
 	}
 }
