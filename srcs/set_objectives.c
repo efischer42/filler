@@ -51,5 +51,4 @@ void		set_objectives(t_machine *machine)
 {
 	set_starts(machine);
 	set_first_objective(machine);
-	machine->state = ST_ERROR;
 }

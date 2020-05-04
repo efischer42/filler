@@ -80,9 +80,9 @@ static void	fill_opponent_zone(t_machine *machine)
 
 static void	fill_map_data(t_machine *machine, char c)
 {
-	if (c == P1_CHAR || c == P1_CHAR_LAST)
+	if (c == machine->player || c == machine->player_last)
 		machine->map->data |= P1_PLAY;
-	else if (c == P2_CHAR || c == P2_CHAR_LAST)
+	else if (c == machine->opponent || c == machine->opponent_last)
 	{
 		machine->map->data |= P2_PLAY;
 		fill_opponent_zone(machine);

@@ -16,6 +16,9 @@ int					main(int ac, char **av)
 	{
 		machine.input = line;
 		f_tab[machine.state](&machine);
+		if (machine.state == ST_ERROR)
+			f_tab[machine.state](&machine);
 	}
+	del_map(&machine.map);
 	return (EXIT_SUCCESS);
 }

@@ -149,7 +149,7 @@ void	get_piece_dimensions(t_machine *machine, t_list *token_lst);
 void	generate_piece(t_machine *machine);
 void	fill_piece(t_machine *machine, t_list *token_lst);
 void	play(t_machine *machine);
-void	path_play(t_machine *machine, t_list *path_lst, enum e_id objective);
+void	path_play(t_machine *machine, t_list *path_lst);
 void	piece_placement(t_machine *machine, t_map *piece, uint64_t opt);
 int		find_path(t_map *map, t_map *objective, t_list **path);
 void	turn(t_machine *machine);

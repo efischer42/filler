@@ -1,6 +1,6 @@
 #include "filler.h"
 
-/*static void		get_opt(t_machine *machine, t_map *objective)
+static void		get_opt(t_machine *machine, t_map *objective)
 {
 	int			diff_x;
 	int			diff_y;
@@ -23,23 +23,22 @@ static void		play_piece(t_machine *machine)
 	char	*print;
 
 	piece_placement(machine, machine->piece, machine->opt);
-//	print = ft_asprintf("Piece play %d %d", machine->play_x, machine->play_y);
-//	ft_putendl_fd(print, 2);
-//	ft_strdel(&print);
 	print = ft_asprintf("%d %d\n", machine->play_x, machine->play_y);
 	ft_putstr_fd(print, 2);
 	ft_strdel(&print);
-	ft_printf("%d %d\n", machine->play_x, machine->play_y);
-}*/
+	ft_printf("%d %d\n", machine->play_y, machine->play_x);
+}
 
 void			play(t_machine *machine)
 {
-//	t_map	*objective;
+	t_path	*objective;
 
-	machine->state = ST_ERROR;
 	ft_putendl_fd("Play", 2);
-/*	objective = machine->objective1;
-	path_play(machine, machine->path_lst, objective->id);
-	get_opt(machine, objective);
-	play_piece(machine);*/
+	objective = machine->path_lst->content;
+	path_play(machine, objective->lst);
+	get_opt(machine, machine->objective1);
+	play_piece(machine);
+	machine->state = ST_GET_MAP;
+	del_map(&machine->head_piece);
+	machine->piece = NULL;
 }
