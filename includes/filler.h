@@ -135,6 +135,8 @@ typedef struct	s_token
 void	add_map(t_map **line, t_map *new_map);
 void	check_index_width(t_machine *machine, t_list *token_lst);
 void	data_map(t_map *map, t_map *line, size_t y, size_t x);
+int		check_piece_pos(t_machine *machine, t_map *node, t_map *piece,
+						t_map *piece_play);
 void	del_line(t_map **map);
 void	del_lst(void *content, size_t content_size);
 void	del_map(t_map **map);
@@ -157,8 +159,7 @@ void	lexer(t_machine *machine);
 void	lexer_parser(t_machine *machine);
 void	parser(t_machine *machine, t_list *token_lst);
 void	path(t_machine *machine, t_map *map);
-int		piece_placement(t_machine *machine, t_map *node, t_map *piece,
-				uint64_t opt);
+int		piece_placement(t_machine *machine, t_map *map);
 void	play(t_machine *machine, t_list *path_play);
 void	play_turn(t_machine *machine);
 void	retard_play(t_machine *machine, t_map *map);

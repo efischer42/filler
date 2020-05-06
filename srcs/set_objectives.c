@@ -1,24 +1,22 @@
 #include "filler.h"
 
-static t_map	*get_opponent_start(t_machine *machine)
+static t_map	*get_opponent_start(t_map *map)
 {
-	t_map	*opponent_start;
 	t_map	*line_head;
 
-	while (machine->map != NULL)
+	while (map != NULL)
 	{
-		line_head = machine->map;
-		while (machine->map != NULL)
+		line_head = map;
+		while (map != NULL)
 		{
-			if ((machine->map->data & P2_PLAY) == P2_PLAY)
-				opponent_start = machine->map;
-			machine->map = machine->map->right;
+			if ((map->data & P2_PLAY) == P2_PLAY)
+				return (map);
+			map = map->right;
 		}
-		machine->map = line_head;
-		machine->map = machine->map->down;
+		map = line_head;
+		map = map->down;
 	}
-	machine->map = machine->up_left_corner;
-	return (opponent_start);
+	return (NULL);
 }
 
 static void		set_first_objective(t_machine *machine, t_map *opponent_start)
@@ -74,7 +72,7 @@ void			set_objectives(t_machine *machine)
 {
 	t_map		*opponent_start;
 
-	opponent_start = get_opponent_start(machine);
+	opponent_start = get_opponent_start(machine->map);
 	set_first_objective(machine, opponent_start);
 	set_second_third_objectives(machine);
 	machine->objective2->id = O2;

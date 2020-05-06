@@ -12,7 +12,7 @@
 	else if (id == O3)
 		objective = machine->objective3;
 	return (objective);
-}
+}*/
 
 static void		get_opt(t_machine *machine, t_map *node, t_map *objective)
 {
@@ -30,7 +30,7 @@ static void		get_opt(t_machine *machine, t_map *node, t_map *objective)
 		machine->opt |= FROM_UP;
 	else
 		machine->opt |= FROM_DOWN;
-}*/
+}
 
 void			play(t_machine *machine, t_list *path_lst)
 {
@@ -48,8 +48,13 @@ void			play(t_machine *machine, t_list *path_lst)
 				machine->piece, machine->opt);
 		}
 		path_lst = path_lst->next;
-	}
-*/	retard_play(machine, machine->map);
+	}*/
+
+
+	get_opt(machine, machine->map, machine->objective1);
+	retard_play(machine, machine->map);
+
+
 	ft_printf("%d %d\n", machine->play_y, machine->play_x);
 	print = ft_asprintf("%d %d\n", machine->play_y, machine->play_x);
 	ft_putendl_fd(print, 2);
