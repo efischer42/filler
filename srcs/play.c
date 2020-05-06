@@ -55,4 +55,5 @@ void			play(t_machine *machine, t_list *path_lst)
 	ft_strdel(&print);
 	machine->state = ST_GET_MAP;
 	del_map(&machine->head_piece);
+	machine->piece = machine->head_piece;
 }

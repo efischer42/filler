@@ -9,7 +9,7 @@ static t_map	*get_node(t_map *map, int x, int y)
 	return (map);
 }
 
-static int		check_piece_line(t_machine *machine, size_t play_y, t_map *piece,
+static int		check_piece_line(t_machine *machine, int play_y, t_map *piece,
 						t_map *piece_play)
 {
 	size_t	i;
@@ -20,7 +20,7 @@ static int		check_piece_line(t_machine *machine, size_t play_y, t_map *piece,
 	ret = TRUE;
 	while (i < machine->piece_width && piece != NULL)
 	{
-		if (play_y < 0 || machine->play_x + i < 0)
+		if (play_y < 0 || machine->play_x + (int)i < 0)
 		{
 			if ((piece->data & PIECE_PART) == PIECE_PART)
 				ret = FALSE;
@@ -85,10 +85,10 @@ static int		check_piece_char(t_machine *machine, t_map *node, t_map *piece)
 static int		search_line(t_machine *machine, t_map *node, t_map *piece,
 						uint64_t opt)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < machine->piece_height && piece != NULL)
+	while ((size_t)i < machine->piece_height && piece != NULL)
 	{
 		if ((opt & FROM_UP) == FROM_UP)
 		{

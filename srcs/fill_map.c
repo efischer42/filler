@@ -38,6 +38,7 @@ void		fill_map(t_machine *machine, t_list *token_lst)
 			{
 				machine->state = ST_GET_PIECE;
 				machine->map = machine->up_left_corner;
+				debug_map(machine->map);
 			}
 		}
 		else if (((t_token*)(token_lst->content))->type == LINE)

@@ -20,7 +20,7 @@ int					main(int ac, char **av)
 		if (machine.state == ST_ERROR)
 			f_tab[machine.state](&machine);
 	}
-	ft_lstdel(&machine.path_lst, del_lst);
+	del_path_lst(machine.path_lst);
 	del_map(&machine.map);
 	return (EXIT_SUCCESS);
 }

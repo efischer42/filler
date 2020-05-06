@@ -138,6 +138,7 @@ void	data_map(t_map *map, t_map *line, size_t y, size_t x);
 void	del_line(t_map **map);
 void	del_lst(void *content, size_t content_size);
 void	del_map(t_map **map);
+void	del_path_lst(t_list *path_lst);
 void	error(t_machine *machine);
 int		fill_line(t_machine *machine, t_list *token_lst);
 void	fill_map(t_machine *machine, t_list *token_lst);
