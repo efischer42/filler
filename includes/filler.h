@@ -161,6 +161,7 @@ int		piece_placement(t_machine *machine, t_map *node, t_map *piece,
 				uint64_t opt);
 void	play(t_machine *machine, t_list *path_play);
 void	play_turn(t_machine *machine);
+void	retard_play(t_machine *machine, t_map *map);
 void	set_dir(enum e_direction *dir, t_map *map, t_map *objective);
 void	set_objectives(t_machine *machine);
 void	sort_path(t_list **lst1, t_list **lst2, t_list **head);

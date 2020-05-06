@@ -22,7 +22,6 @@ void		get_map_dimensions(t_machine *machine, t_list *token_lst)
 		}
 		token_lst = token_lst->next;
 	}
-	token_lst = token_lst->next;
 	machine->dist = (machine->map_height + machine->map_width) * 1 / 10 + 1;
 }
 

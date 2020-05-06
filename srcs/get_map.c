@@ -32,7 +32,6 @@ static void	check_map_dimensions(t_machine *machine, t_list *token_lst)
 		ft_putendl_fd("Map dimension ERROR", 2);
 		machine->state = ST_ERROR;
 	}
-	token_lst = token_lst->next;
 }
 
 void		get_map(t_machine *machine)

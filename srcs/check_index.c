@@ -34,5 +34,4 @@ void		check_index_width(t_machine *machine, t_list *token_lst)
 		}
 		token_lst = token_lst->next;
 	}
-	token_lst = token_lst->next;
 }

@@ -9,7 +9,6 @@ static int	check_index_height(t_list *token_lst, size_t i)
 	int		ret;
 
 	ret = FALSE;
-	//dprintf(2, "y: %zu\n", i);
 	if (((t_token*)(token_lst->content))->type == NB)
 	{
 		len = ft_strlen(((t_token*)(token_lst->content))->value);
@@ -34,15 +33,19 @@ void		fill_map(t_machine *machine, t_list *token_lst)
 				ft_putendl_fd("Map height index ERROR", 2);
 				machine->state = ST_ERROR;
 			}
-			else if (machine->map->y + 1 == machine->map_height)
+		}
+		else if (((t_token*)(token_lst->content))->type == LINE)
+		{
+			if (machine->map->y + 1 == machine->map_height)
 			{
+				fill_line(machine, token_lst);
 				machine->state = ST_GET_PIECE;
 				machine->map = machine->up_left_corner;
 				debug_map(machine->map);
 			}
+			else
+				fill_line(machine, token_lst);
 		}
-		else if (((t_token*)(token_lst->content))->type == LINE)
-			fill_line(machine, token_lst);
 		token_lst = token_lst->next;
 	}
 }

@@ -31,6 +31,7 @@ SRCS += path.c
 SRCS += piece_placement.c
 SRCS += play.c
 SRCS += play_turn.c
+SRCS += retard_play.c
 SRCS += set_dir.c
 SRCS += set_objectives.c
 SRCS += sort.c
