@@ -12,12 +12,12 @@ static char	*get_play(uint64_t *data)
 	}
 	else if ((*data & PIECE_PART) == PIECE_PART)
 		play = "*";
-	else if ((*data & DANGER_ZONE) == DANGER_ZONE)
-			play = "!";
 	else if ((*data & P1_PLAY) == P1_PLAY)
 			play = "O";
 	else if ((*data & P2_PLAY) == P2_PLAY)
 			play = "X";
+	else if ((*data & DANGER_ZONE) == DANGER_ZONE)
+			play = "!";
 	return (play);
 }
 

@@ -1,6 +1,6 @@
 #include "filler.h"
 
-static void		init_map_dir(t_map **map_dir, t_map *map)
+void		init_map_dir(t_map **map_dir, t_map *map)
 {
 	size_t	i;
 
@@ -46,7 +46,12 @@ int			find_path(t_map *map, t_map *objective, t_list **lst)
 
 	i = 0;
 	if (map == objective)
+	{
+		map->data |= DEBUG;
+		lst_new = ft_lstnew(map, sizeof(*map));
+		ft_lstadd(lst, lst_new);
 		return (TRUE);
+	}
 	if (map == NULL)
 		return (TRUE);
 	if (check_danger_zone(map) == FALSE)
@@ -60,6 +65,7 @@ int			find_path(t_map *map, t_map *objective, t_list **lst)
 			break ;
 		i++;
 	}
+	map->data &= ~PATH;
 	map->data |= DEBUG;
 	lst_new = ft_lstnew(map, sizeof(*map));
 	ft_lstadd(lst, lst_new);

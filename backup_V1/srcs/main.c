@@ -14,11 +14,13 @@ int					main(int ac, char **av)
 	machine.state = ST_GET_PLAYER;
 	while (get_next_line(STDIN_FILENO, &line) > 0)
 	{
+		ft_putendl_fd(line, 2);
 		machine.input = line;
 		f_tab[machine.state](&machine);
 		if (machine.state == ST_ERROR)
 			f_tab[machine.state](&machine);
 	}
+	ft_lstdel(&machine.path_lst, del_lst);
 	del_map(&machine.map);
 	return (EXIT_SUCCESS);
 }
