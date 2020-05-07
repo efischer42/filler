@@ -8,8 +8,8 @@ void		play_turn(t_machine *machine)
 		set_objectives(machine);
 	if (machine->state != ST_ERROR)
 	{
-//		path(machine, machine->map);
-//		if (machine->state != ST_ERROR)
+		path(machine, machine->map);
+		if (machine->state != ST_ERROR)
 			play(machine, machine->path_lst);
 		machine->map = machine->up_left_corner;
 	}

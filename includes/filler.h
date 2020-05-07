@@ -140,6 +140,7 @@ int		check_piece_pos(t_machine *machine, t_map *node, t_map *piece,
 void	del_line(t_map **map);
 void	del_lst(void *content, size_t content_size);
 void	del_map(t_map **map);
+void	del_path(void *content, size_t content_size);
 void	del_path_lst(t_list *path_lst);
 void	error(t_machine *machine);
 int		fill_line(t_machine *machine, t_list *token_lst);
