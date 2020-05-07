@@ -5,17 +5,17 @@ static char	*get_play(uint64_t *data)
 	char	*play;
 
 	play = ".";
-	if ((*data & DEBUG) == DEBUG)
-	{
-		play = ">";
-		*data &= ~DEBUG;
-	}
-	else if ((*data & PIECE_PART) == PIECE_PART)
+	if ((*data & PIECE_PART) == PIECE_PART)
 		play = "*";
 	else if ((*data & P1_PLAY) == P1_PLAY)
 			play = "O";
 	else if ((*data & P2_PLAY) == P2_PLAY)
 			play = "X";
+	else if ((*data & DEBUG) == DEBUG)
+	{
+		play = ">";
+		*data &= ~DEBUG;
+	}
 	else if ((*data & DANGER_ZONE) == DANGER_ZONE)
 			play = "!";
 	return (play);

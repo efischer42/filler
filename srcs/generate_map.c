@@ -12,15 +12,6 @@ void		data_map(t_map *map, t_map *line, size_t y, size_t x)
 	}
 }
 
-static void	corners_dist(t_machine *machine, t_map *map)
-{
-	map->ul_dist = map->x + map->y;
-	map->ur_dist = ft_abs(map->x - machine->map_width - 1) + map->y;
-	map->bl_dist = map->x + ft_abs(map->y - machine->map_height - 1);
-	map->br_dist = ft_abs(map->x - machine->map_width - 1)
-						+ ft_abs(map->y - machine->map_height - 1);
-}
-
 void		add_map(t_map **line, t_map *new_map)
 {
 	t_map	*head;
@@ -72,7 +63,6 @@ static void	generate_line(t_map **new_line, t_map *last_line, size_t y,
 			path.node = new_map;
 			lst_new = ft_lstnew(&path, sizeof(path));
 			ft_lstaddend(&machine->path_lst, lst_new);
-			corners_dist(machine, new_map);
 			set_corners(machine, new_map, y, i);
 			if (last_line != NULL)
 				last_line = last_line->right;

@@ -63,10 +63,6 @@ typedef struct	s_map
 	uint64_t		data;
 	size_t			x;
 	size_t			y;
-	size_t			ul_dist;
-	size_t			ur_dist;
-	size_t			bl_dist;
-	size_t			br_dist;
 	enum e_id		id;
 }				t_map;
 

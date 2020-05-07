@@ -38,7 +38,7 @@ static void	fill_side(t_map *map, size_t dir, size_t dist)
 		init_dir_tab(map, dir_tab);
 		map = dir_tab[dir];
 		if (map == NULL || (map->data != 0
-			&& (map->data | DANGER_ZONE) != DANGER_ZONE))
+			&& (map->data & P2_PLAY) == P2_PLAY))
 			break ;
 		if (map->data == 0)
 			map->data |= DANGER_ZONE;
@@ -59,7 +59,7 @@ static void	fill_danger_zone(t_map *map, size_t dist, size_t pos)
 		init_dir_tab(map, dir_tab);
 		map = dir_tab[pos];
 		if (map == NULL || (map->data != 0
-			&& (map->data | DANGER_ZONE) != DANGER_ZONE))
+			&& (map->data & P2_PLAY) == P2_PLAY))
 		{
 			break ;
 		}

@@ -106,7 +106,7 @@ void		path(t_machine *machine, t_map *map)
 		{
 			path = get_node_path(map, machine->path_lst);
 			ret = check_path(path, path->lst);
-			if ((path->node->data & P1_PLAY) == P1_PLAY && ret == FALSE)
+			if ((path->node->data & P1_PLAY) == P1_PLAY	&& ret == FALSE)
 				set_path(path, play_to(machine, map));
 			map = map->right;
 		}
@@ -114,6 +114,6 @@ void		path(t_machine *machine, t_map *map)
 		map = map->down;
 	}
 	ft_merge_sort(&machine->path_lst, sort_path);
-	debug_path_lst(machine->path_lst);
+//	debug_path_lst(machine->path_lst);
 	debug_map(machine->map);
 }

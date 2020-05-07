@@ -32,7 +32,7 @@ static int	check_danger_zone(t_map *map)
 
 	ret = TRUE;
 	if (map != NULL && ((map->data & DANGER_ZONE) == DANGER_ZONE
-			||(map->data & PATH) == PATH))
+			|| (map->data & PATH) == PATH))
 		ret = FALSE;
 	return (ret);
 }
