@@ -2,16 +2,20 @@
 
 static t_path	*get_node_path(t_map *map, t_list *path_lst)
 {
-	while (path_lst != NULL && ((t_path*)(path_lst->content))->id != DEAD)
+	t_path	*path;
+
+	path = NULL;
+	while (path_lst != NULL)
 	{
 		if (map->x == ((t_path*)(path_lst->content))->node->x
 				&& map->y == ((t_path*)(path_lst->content))->node->y)
 		{
-			break ;
+			path = path_lst->content;
+			return (path);
 		}
 		path_lst = path_lst->next;
 	}
-	return (path_lst->content);
+	return (path);
 }
 
 static void	check_map_arounds(t_path *path)
