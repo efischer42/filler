@@ -18,7 +18,7 @@ static t_path	*get_node_path(t_map *map, t_list *path_lst)
 	return (path);
 }
 
-static void	check_map_arounds(t_path *path)
+/*static void	check_map_arounds(t_path *path)
 {
 	t_map	*map_dir[NB_DIR];
 	size_t	i;
@@ -34,29 +34,30 @@ static void	check_map_arounds(t_path *path)
 	}
 	if (i == NB_DIR)
 		path->id = DEAD;
-}
+}*/
 
 static int	check_path(t_path *path, t_list *lst)
 {
 	int		ret;
 
-	ret = TRUE;
-	if (lst == NULL)
-		ret = FALSE;
-	while (lst != NULL)
-	{
-		if ((((t_map*)(lst->content))->data & P2_PLAY) == P2_PLAY)
-		{
-			ft_putendl_fd("Del path", 2);
+	(void)lst;
+//	ret = TRUE;
+//	if (lst == NULL)
+//		ret = FALSE;
+//	while (lst != NULL)
+//	{
+//		if ((((t_map*)(lst->content))->data & P2_PLAY) == P2_PLAY)
+//		{
+//			ft_putendl_fd("Del path", 2);
 			ret = FALSE;
-			ft_lstdel(&lst, del_lst);
+			ft_lstdel(&path->lst, del_path);
 			path->path_len = 0;
-			break ;
-		}
-		lst = lst->next;
-	}
-	if (ret == FALSE && path->id != DEAD)
-		check_map_arounds(path);
+//			break ;
+//		}
+//		lst = lst->next;
+//	}
+//	if (ret == FALSE && path->id != DEAD)
+//		check_map_arounds(path);
 	return (ret);
 }
 
@@ -64,7 +65,9 @@ static t_map	*play_to(t_machine *machine, t_map *map)
 {
 	t_map	*objective;
 
-	objective = NULL;
+	(void)map;
+	objective = machine->objective1;
+/*	objective = NULL;
 	if (machine->up_left_corner->id != NONE)
 		objective = machine->up_left_corner;
 	if (machine->up_right_corner->id != NONE && (objective == NULL
@@ -76,7 +79,7 @@ static t_map	*play_to(t_machine *machine, t_map *map)
 		objective = machine->bottom_left_corner;
 	if (machine->bottom_right_corner->id != NONE && map->bl_dist > map->br_dist)
 		objective = machine->bottom_right_corner;
-	return (objective);
+*/	return (objective);
 }
 
 static void		set_path(t_path *path, t_map *objective)
@@ -103,11 +106,8 @@ void		path(t_machine *machine, t_map *map)
 		{
 			path = get_node_path(map, machine->path_lst);
 			ret = check_path(path, path->lst);
-			if ((path->node->data & P1_PLAY) == P1_PLAY && ret == FALSE
-				&& path->id != DEAD)
-			{
+			if ((path->node->data & P1_PLAY) == P1_PLAY && ret == FALSE)
 				set_path(path, play_to(machine, map));
-			}
 			map = map->right;
 		}
 		map = head_line;
