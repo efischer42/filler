@@ -6,7 +6,6 @@ static int	search_from_up(t_machine *machine, t_map *map, t_map *piece)
 {
 	while (piece != NULL)
 	{
-		dprintf(2, "piece x: %zu y: %zu\n", piece->x, piece->y);
 		if ((piece->data & PIECE_PART) == PIECE_PART)
 		{
 			if (check_piece_pos(machine, map, machine->piece, piece) == TRUE)
@@ -27,7 +26,6 @@ static int	search_from_down(t_machine *machine, t_map *map, t_map *piece)
 		piece = piece->down;
 	while (piece != NULL)
 	{
-		dprintf(2, "piece x: %zu y: %zu\n", piece->x, piece->y);
 		if ((piece->data & PIECE_PART) == PIECE_PART)
 			ret = check_piece_pos(machine, map, machine->piece, piece);
 		piece = piece->up;

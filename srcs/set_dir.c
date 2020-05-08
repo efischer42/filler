@@ -31,19 +31,14 @@ static void	x_y_directions(enum e_direction *dir, t_map *map, t_map *objective)
 static void	fill_dir(enum e_direction *dir)
 {
 	enum e_direction	i;
-	enum e_direction	dir_count;
 
 	i = 1;
-	dir_count = 1;
 	while (i < NB_DIR)
 	{
-		if (i % 2 != 0)
-			dir[i] = (dir[0] + dir_count) % NB_DIR;
+		if (i == 1)
+			dir[i] = (dir[0] + NB_DIR - i) % NB_DIR;
 		else
-		{
-			dir[i] = (dir[0] + NB_DIR - dir_count) % NB_DIR;
-			dir_count++;
-		}
+			dir[i] = (dir[0] + i - 1) % NB_DIR;
 		i++;
 	}
 }

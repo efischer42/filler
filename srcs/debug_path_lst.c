@@ -4,6 +4,8 @@ void	print_path(t_list *lst)
 {
 	char	*print;
 
+	if (lst != NULL)
+		ft_putendl_fd("", 2);
 	while (lst != NULL)
 	{
 		print = ft_asprintf("x: %d y: %d", ((t_map*)(lst->content))->x,

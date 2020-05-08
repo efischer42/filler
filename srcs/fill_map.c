@@ -41,7 +41,6 @@ void		fill_map(t_machine *machine, t_list *token_lst)
 				fill_line(machine, token_lst);
 				machine->state = ST_GET_PIECE;
 				machine->map = machine->up_left_corner;
-				debug_map(machine->map);
 			}
 			else
 				fill_line(machine, token_lst);

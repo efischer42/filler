@@ -22,8 +22,10 @@
 # define TAB_END				-1
 # define NB_TOKEN				13
 # define NB_FCT					4
+# define NB_OBJECTIVE			3
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
+# define NB_DIR_TO_OBJ			4
 
 enum	e_functions
 {
@@ -142,7 +144,7 @@ void	error(t_machine *machine);
 int		fill_line(t_machine *machine, t_list *token_lst);
 void	fill_map(t_machine *machine, t_list *token_lst);
 void	fill_piece(t_machine *machine, t_list *token_lst);
-int		find_path(t_map *map, t_map *objective, t_list **path);
+int		find_path(t_map *start, t_map *map, t_map *objective, t_list **path);
 void	generate_map(t_machine *machine);
 void	generate_piece(t_machine *machine);
 void	get_map(t_machine *machine);
@@ -162,7 +164,8 @@ void	play_turn(t_machine *machine);
 void	retard_play(t_machine *machine, t_map *map);
 void	set_dir(enum e_direction *dir, t_map *map, t_map *objective);
 void	set_objectives(t_machine *machine);
-void	sort_path(t_list **lst1, t_list **lst2, t_list **head);
+void	sort_obj1(t_list **lst1, t_list **lst2, t_list **head);
+void	sort_len_path(t_list **lst1, t_list **lst2, t_list **head);
 void	debug(t_list *lst);
 void	debug_map(t_map *map);
 void	debug_dir(enum e_direction *dir);

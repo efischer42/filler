@@ -1,6 +1,8 @@
 #include "filler.h"
 
-/*static t_map	*get_objective(t_machine *machine, enum e_id id)
+#include <stdio.h>
+
+static t_map	*get_objective(t_machine *machine, enum e_id id)
 {
 	t_map	*objective;
 
@@ -12,7 +14,7 @@
 	else if (id == O3)
 		objective = machine->objective3;
 	return (objective);
-}*/
+}
 
 static void		get_opt(t_machine *machine, t_map *node, t_map *objective)
 {
@@ -34,31 +36,27 @@ static void		get_opt(t_machine *machine, t_map *node, t_map *objective)
 
 void			play(t_machine *machine, t_list *path_lst)
 {
-//	t_map	*objective;
-	char	*print;
+	t_map	*objective;
 
-	(void)path_lst;
-/*	while (path_lst != NULL)
+	while (path_lst != NULL)
 	{
 		objective = get_objective(machine, ((t_path*)(path_lst->content))->id);
 		if (objective != NULL)
 		{
 			get_opt(machine, ((t_path*)(path_lst->content))->node, objective);
-			piece_placement(machine, ((t_path*)(path_lst->content))->node,
-				machine->piece, machine->opt);
+			if (piece_placement(machine, ((t_path*)(path_lst->content))->node) == TRUE)
+				break ;
 		}
 		path_lst = path_lst->next;
-	}*/
+	}
+	
+//	get_opt(machine, machine->map, machine->objective1);
+//	retard_play(machine, machine->map);
 
-
-	get_opt(machine, machine->map, machine->objective1);
-	retard_play(machine, machine->map);
-
-
+	debug_map(machine->map);
+	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
 	ft_printf("%d %d\n", machine->play_y, machine->play_x);
-	print = ft_asprintf("%d %d\n", machine->play_y, machine->play_x);
-	ft_putendl_fd(print, 2);
-	ft_strdel(&print);
+//	usleep(500000);
 	machine->state = ST_GET_MAP;
 	del_map(&machine->head_piece);
 	machine->piece = machine->head_piece;

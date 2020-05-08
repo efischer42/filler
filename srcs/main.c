@@ -1,5 +1,7 @@
 #include "filler.h"
 
+#include <stdio.h>
+
 int					main(int ac, char **av)
 {
 	t_machine	machine;
