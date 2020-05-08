@@ -50,21 +50,25 @@ static void		set_second_third_objectives(t_machine *machine)
 	{
 		machine->objective2 = machine->up_right_corner;
 		machine->objective3 = machine->bottom_left_corner;
+		machine->objective4 = machine->bottom_right_corner;
 	}
 	else if (machine->objective1 == machine->up_right_corner)
 	{
 		machine->objective2 = machine->bottom_right_corner;
 		machine->objective3 = machine->up_left_corner;
+		machine->objective4 = machine->bottom_left_corner;
 	}
 	else if (machine->objective1 == machine->bottom_right_corner)
 	{
 		machine->objective2 = machine->bottom_left_corner;
 		machine->objective3 = machine->up_right_corner;
+		machine->objective4 = machine->up_left_corner;
 	}
 	else if (machine->objective1 == machine->bottom_left_corner)
 	{
 		machine->objective2 = machine->up_left_corner;
 		machine->objective3 = machine->bottom_right_corner;
+		machine->objective4 = machine->up_right_corner;
 	}
 }
 

@@ -13,6 +13,8 @@ static t_map	*get_objective(t_machine *machine, enum e_id id)
 		objective = machine->objective2;
 	else if (id == O3)
 		objective = machine->objective3;
+	else if (id == O4)
+		objective = machine->objective4;
 	return (objective);
 }
 
@@ -50,8 +52,11 @@ void			play(t_machine *machine, t_list *path_lst)
 		path_lst = path_lst->next;
 	}
 	
-//	get_opt(machine, machine->map, machine->objective1);
-//	retard_play(machine, machine->map);
+	if (path_lst == NULL)
+	{
+		get_opt(machine, machine->map, machine->objective1);
+		retard_play(machine, machine->map);
+	}
 
 	debug_map(machine->map);
 	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);

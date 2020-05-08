@@ -41,6 +41,7 @@ enum	e_id
 	O1,
 	O2,
 	O3,
+	O4,
 	DEAD
 };
 
@@ -88,6 +89,7 @@ typedef struct	s_machine
 	t_map		*objective1;
 	t_map		*objective2;
 	t_map		*objective3;
+	t_map		*objective4;
 	t_map		*piece;
 	t_map		*head_piece;
 	t_list		*token_lst;
