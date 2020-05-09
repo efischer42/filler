@@ -16,16 +16,15 @@
 # define P1_PLAY				0x1
 # define P2_PLAY				0x2
 # define DANGER_ZONE			0x4
-# define PATH					0x8
-# define PIECE_PART				0x10
-# define DEBUG					0x20
+# define PIECE_PART				0x8
+# define DEBUG					0x10
 # define TAB_END				-1
 # define NB_TOKEN				13
 # define NB_FCT					4
 # define NB_OBJECTIVE			3
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
-# define NB_DIR_TO_OBJ			4
+# define NB_DIR_TO_OBJ			3
 
 enum	e_functions
 {
@@ -79,35 +78,37 @@ typedef struct	s_path
 
 typedef struct	s_machine
 {
-	uint64_t	state;
-	uint64_t	opt;
-	t_map		*map;
-	t_map		*up_left_corner;
-	t_map		*up_right_corner;
-	t_map		*bottom_left_corner;
-	t_map		*bottom_right_corner;
-	t_map		*objective1;
-	t_map		*objective2;
-	t_map		*objective3;
-	t_map		*objective4;
-	t_map		*piece;
-	t_map		*head_piece;
-	t_list		*token_lst;
-	t_list		*path_lst;
-	size_t		map_height;
-	size_t		map_width;
-	size_t		piece_height;
-	size_t		piece_width;
-	size_t		dist;
-	char		*input;
-	char		*player_name;
-	int			play_x;
-	int			play_y;
-	char		player;
-	char		player_last;
-	char		opponent;
-	char		opponent_last;
-}				t_machine;
+	uint64_t			state;
+	uint64_t			opt;
+	t_map				*map;
+	t_map				*up_left_corner;
+	t_map				*up_right_corner;
+	t_map				*bottom_left_corner;
+	t_map				*bottom_right_corner;
+	t_map				*objective1;
+	t_map				*objective2;
+	t_map				*objective3;
+	t_map				*objective4;
+	t_map				*cur_objective;
+	t_map				*piece;
+	t_map				*head_piece;
+	t_list				*token_lst;
+	t_list				*path_lst;
+	enum e_direction	dir[NB_DIR_TO_OBJ];
+	size_t				map_height;
+	size_t				map_width;
+	size_t				piece_height;
+	size_t				piece_width;
+	size_t				dist;
+	char				*input;
+	char				*player_name;
+	int					play_x;
+	int					play_y;
+	char				player;
+	char				player_last;
+	char				opponent;
+	char				opponent_last;
+}						t_machine;
 
 enum e_token
 {
@@ -146,7 +147,7 @@ void	error(t_machine *machine);
 int		fill_line(t_machine *machine, t_list *token_lst);
 void	fill_map(t_machine *machine, t_list *token_lst);
 void	fill_piece(t_machine *machine, t_list *token_lst);
-int		find_path(t_map *start, t_map *map, t_map *objective, t_list **path);
+int		find_path(t_machine *machine, t_map *start, t_map *map, t_list **path);
 void	generate_map(t_machine *machine);
 void	generate_piece(t_machine *machine);
 void	get_map(t_machine *machine);
@@ -164,8 +165,9 @@ int		piece_placement(t_machine *machine, t_map *map);
 void	play(t_machine *machine, t_list *path_play);
 void	play_turn(t_machine *machine);
 void	retard_play(t_machine *machine, t_map *map);
-void	set_dir(enum e_direction *dir, t_map *map, t_map *objective);
+void	set_dir(t_machine *machine, t_map *map);
 void	set_objectives(t_machine *machine);
+void	set_main_dir(t_machine *machine, t_map *map, t_map **map_dir);
 void	sort_obj1(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_len_path(t_list **lst1, t_list **lst2, t_list **head);
 void	debug(t_list *lst);

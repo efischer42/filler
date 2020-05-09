@@ -2,8 +2,8 @@
 
 void		sort_obj1(t_list **lst1, t_list **lst2, t_list **head)
 {
-	if (((t_path*)((*lst1)->content))->id == O1 &&
-			((t_path*)((*lst2)->content))->id != O1)
+	if (((t_path*)((*lst1)->content))->id != O1 &&
+			((t_path*)((*lst2)->content))->id == O1)
 	{
 		*head = *lst2;
 		*lst2 = (*lst2)->next;

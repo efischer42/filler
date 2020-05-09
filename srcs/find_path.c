@@ -33,52 +33,45 @@ static int	check_empty_place(t_map *start, t_map *map, t_map *to_obj)
 	ret = TRUE;
 	if (map == start)
 	{
-		if ((map->data & PATH) == PATH || (to_obj != NULL
-			&& (to_obj->data & P1_PLAY) == P1_PLAY))
-		{
+		if ((to_obj != NULL && (to_obj->data & P1_PLAY) == P1_PLAY))
 			ret = FALSE;
-		}
 	}
 	else if (map != NULL && ((map->data & DANGER_ZONE) == DANGER_ZONE
-			|| (map->data & PATH) == PATH || (map->data & P1_PLAY) == P1_PLAY
-			|| (map->data & P2_PLAY) == P2_PLAY))
+			|| (map->data & P1_PLAY) == P1_PLAY || (map->data & P2_PLAY) == P2_PLAY))
 	{
 		ret = FALSE;
 	}
 	return (ret);
 }
 
-int			find_path(t_map *start, t_map *map, t_map *objective, t_list **lst)
+int			find_path(t_machine *machine, t_map *start, t_map *map, t_list **lst)
 {
-	enum e_direction	dir[NB_DIR];
 	enum e_direction	i;
 	t_map				*map_dir[NB_DIR];
 	t_list				*lst_new;
 
 	i = 0;
-	if (map == objective)
+	if (map == machine->cur_objective)
 	{
 		map->data |= DEBUG;
-		lst_new = ft_lstnew(map, sizeof(*map));
+		lst_new = ft_lstnewnomalloc(map, sizeof(*map));
 		ft_lstadd(lst, lst_new);
 		return (TRUE);
 	}
 	if (map == NULL)
 		return (TRUE);
-	set_dir(dir, map, objective);
 	init_map_dir(map_dir, map);
-	if (check_empty_place(start, map, map_dir[dir[0]]) == FALSE)
+	set_main_dir(machine, map, map_dir);
+	if (check_empty_place(start, map, map_dir[machine->dir[0]]) == FALSE)
 		return (FALSE);
-	map->data |= PATH;
 	while (i < NB_DIR_TO_OBJ)
 	{
-		if (find_path(start, map_dir[dir[i]], objective, lst) == TRUE)
+		if (find_path(machine, start, map_dir[machine->dir[i]], lst) == TRUE)
 			break ;
 		i++;
 	}
 	if (i == NB_DIR_TO_OBJ)
 		return  (FALSE);
-	map->data &= ~PATH;
 	map->data |= DEBUG;
 	lst_new = ft_lstnewnomalloc(map, sizeof(*map));
 	ft_lstadd(lst, lst_new);

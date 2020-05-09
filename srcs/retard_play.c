@@ -1,7 +1,5 @@
 #include "filler.h"
 
-#include <stdio.h>
-
 void	retard_play(t_machine *machine, t_map *map)
 {
 	t_map	*line_head;
@@ -13,7 +11,6 @@ void	retard_play(t_machine *machine, t_map *map)
 		{
 			if ((map->data & P1_PLAY) == P1_PLAY)
 			{
-				dprintf(2, "map x: %zu y: %zu\n", map->x, map->y);
 				if (piece_placement(machine, map) == TRUE)
 					break ;
 			}

@@ -54,6 +54,7 @@ static int	check_path(t_path *path, t_list *lst)
 			ret = FALSE;
 			ft_lstdel(&path->lst, del_path);
 			path->path_len = 0;
+			path->id = NONE;
 			break ;
 		}
 		lst = lst->next;
@@ -75,17 +76,19 @@ static t_map	*play_to(t_machine *machine, t_map *map, size_t i)
 		objective = machine->objective2;
 	else if (i == 2)
 		objective = machine->objective3;
+	else if (i == 3)
+		objective = machine->objective4;
 	return (objective);
 }
 
-static int		set_path(t_path *path, t_map *objective)
+static int		set_path(t_machine *machine, t_path *path)
 {
 	t_list	*lst;
 	int		ret;
 
 	lst = NULL;
-	path->id = objective->id;
-	ret = find_path(path->node, path->node, objective, &lst);
+	path->id = machine->cur_objective->id;
+	ret = find_path(machine, path->node, path->node, &lst);
 	path->lst = lst;
 	path->path_len = ft_lstlen(lst);
 	return (ret);
@@ -93,10 +96,10 @@ static int		set_path(t_path *path, t_map *objective)
 
 void		path(t_machine *machine, t_map *map)
 {
-	t_map	*head_line;
-	t_path	*path;
-	size_t	i;
-	int		ret;
+	t_map				*head_line;
+	t_path				*path;
+	size_t				i;
+	int					ret;
 
 	while (map != NULL)
 	{
@@ -110,8 +113,13 @@ void		path(t_machine *machine, t_map *map)
 				i = 0;
 				while (i < NB_OBJECTIVE)
 				{
-					if (set_path(path, play_to(machine, map, i)) == TRUE)
-						break ;
+					machine->cur_objective = play_to(machine, map, i);
+					if (machine->cur_objective->id != DEAD)
+					{
+						set_dir(machine, map);
+						if (set_path(machine, path) == TRUE)
+							break ;
+					}
 					i++;
 				}
 			}
@@ -123,5 +131,5 @@ void		path(t_machine *machine, t_map *map)
 	ft_merge_sort(&machine->path_lst, sort_len_path);
 	ft_merge_sort(&machine->path_lst, sort_obj1);
 //	debug_path_lst(machine->path_lst);
-//	debug_map(machine->map);
+	debug_map(machine->map);
 }

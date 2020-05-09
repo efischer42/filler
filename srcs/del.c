@@ -29,7 +29,6 @@ void	del_path(void *content, size_t content_size)
 	(void)content;
 	(void)content_size;
 	((t_map*)(content))->data &= ~DEBUG;
-	//free(content);
 }
 
 void	del_path_lst(t_list *path_lst)
@@ -38,6 +37,7 @@ void	del_path_lst(t_list *path_lst)
 		return ;
 	del_path_lst(path_lst->next);
 	ft_lstdel(&((t_path*)(path_lst->content))->lst, del_path);
+	free(path_lst->content);
 	free(path_lst);
 	path_lst = NULL;
 }
