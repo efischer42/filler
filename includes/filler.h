@@ -8,20 +8,19 @@
 # define FROM_UP				0x4
 # define FROM_DOWN				0x8
 # define P1_CHAR				'O'
-# define P1_CHAR_LAST			'o'
 # define P2_CHAR				'X'
-# define P2_CHAR_LAST			'x'
 # define PIECE_CHAR				'*'
 # define INDEX_HEIGHT_FORMAT	3
 # define P1_PLAY				0x1
 # define P2_PLAY				0x2
 # define DANGER_ZONE			0x4
 # define PIECE_PART				0x8
-# define DEBUG					0x10
+# define PATH					0x10
+# define DEBUG					0x20
 # define TAB_END				-1
 # define NB_TOKEN				13
 # define NB_FCT					4
-# define NB_OBJECTIVE			3
+# define NB_OBJECTIVE			6
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
 # define NB_DIR_TO_OBJ			3
@@ -37,11 +36,13 @@ enum	e_functions
 enum	e_id
 {
 	NONE,
+	DEAD,
 	O1,
 	O2,
 	O3,
 	O4,
-	DEAD
+	O5,
+	O6
 };
 
 enum	e_direction
@@ -85,10 +86,7 @@ typedef struct	s_machine
 	t_map				*up_right_corner;
 	t_map				*bottom_left_corner;
 	t_map				*bottom_right_corner;
-	t_map				*objective1;
-	t_map				*objective2;
-	t_map				*objective3;
-	t_map				*objective4;
+	t_map				*objective[NB_OBJECTIVE];
 	t_map				*cur_objective;
 	t_map				*piece;
 	t_map				*head_piece;
@@ -104,6 +102,7 @@ typedef struct	s_machine
 	char				*player_name;
 	int					play_x;
 	int					play_y;
+	uint8_t				opponent_played;
 	char				player;
 	char				player_last;
 	char				opponent;

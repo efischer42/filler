@@ -5,16 +5,12 @@ static void	set_player_nb(t_machine *machine)
 	if (((t_token*)(machine->token_lst->content))->type == P1)
 	{
 		machine->player = P1_CHAR;
-		machine->player_last = P1_CHAR_LAST;
 		machine->opponent = P2_CHAR;
-		machine->opponent_last = P2_CHAR_LAST;
 	}
 	else if (((t_token*)(machine->token_lst->content))->type == P2)
 	{
 		machine->player = P2_CHAR;
-		machine->player_last = P2_CHAR_LAST;
 		machine->opponent = P1_CHAR;
-		machine->opponent_last = P1_CHAR_LAST;
 	}
 }
 

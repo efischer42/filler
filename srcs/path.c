@@ -1,7 +1,5 @@
 #include "filler.h"
 
-#include <stdio.h>
-
 static t_path	*get_node_path(t_map *map, t_list *path_lst)
 {
 	t_path	*path;
@@ -47,8 +45,9 @@ static int	check_path(t_path *path, t_list *lst)
 		ret = FALSE;
 	while (lst != NULL)
 	{
-		if ((((t_map*)(lst->content))->data & P2_PLAY) == P2_PLAY
-			|| (((t_map*)(lst->content))->data & DANGER_ZONE) == DANGER_ZONE)
+		if ((((t_map*)(lst->content))->data & P1_PLAY) == P1_PLAY
+			|| (((t_map*)(lst->content))->data & P2_PLAY) == P2_PLAY
+			|| path->id == DEAD)
 		{
 			ft_putendl_fd("del path", 2);
 			ret = FALSE;
@@ -64,23 +63,6 @@ static int	check_path(t_path *path, t_list *lst)
 	return (ret);
 }
 
-static t_map	*play_to(t_machine *machine, t_map *map, size_t i)
-{
-	t_map	*objective;
-
-	(void)map;
-	objective = NULL;
-	if (i == 0)
-		objective = machine->objective1;
-	else if (i == 1)
-		objective = machine->objective2;
-	else if (i == 2)
-		objective = machine->objective3;
-	else if (i == 3)
-		objective = machine->objective4;
-	return (objective);
-}
-
 static int		set_path(t_machine *machine, t_path *path)
 {
 	t_list	*lst;
@@ -89,6 +71,7 @@ static int		set_path(t_machine *machine, t_path *path)
 	lst = NULL;
 	path->id = machine->cur_objective->id;
 	ret = find_path(machine, path->node, path->node, &lst);
+	print_path(lst);
 	path->lst = lst;
 	path->path_len = ft_lstlen(lst);
 	return (ret);
@@ -113,9 +96,10 @@ void		path(t_machine *machine, t_map *map)
 				i = 0;
 				while (i < NB_OBJECTIVE)
 				{
-					machine->cur_objective = play_to(machine, map, i);
+					machine->cur_objective = machine->objective[i];
 					if (machine->cur_objective->id != DEAD)
 					{
+					//	dprintf(2, "objective x: %zu y: %zu\n", machine->cur_objective->x, machine->cur_objective->y);
 						set_dir(machine, map);
 						if (set_path(machine, path) == TRUE)
 							break ;
@@ -130,6 +114,6 @@ void		path(t_machine *machine, t_map *map)
 	}
 	ft_merge_sort(&machine->path_lst, sort_len_path);
 	ft_merge_sort(&machine->path_lst, sort_obj1);
-//	debug_path_lst(machine->path_lst);
+	debug_path_lst(machine->path_lst);
 	debug_map(machine->map);
 }

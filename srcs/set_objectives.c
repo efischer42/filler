@@ -1,6 +1,6 @@
 #include "filler.h"
 
-static t_map	*get_opponent_start(t_map *map)
+static t_map	*get_opponent_start(t_map *map, t_map **opponent_start, t_map **start)
 {
 	t_map	*line_head;
 
@@ -9,8 +9,10 @@ static t_map	*get_opponent_start(t_map *map)
 		line_head = map;
 		while (map != NULL)
 		{
-			if ((map->data & P2_PLAY) == P2_PLAY)
-				return (map);
+			if ((map->data & P1_PLAY) == P1_PLAY)
+				*start = map;
+			else if ((map->data & P2_PLAY) == P2_PLAY)
+				*opponent_start = map;
 			map = map->right;
 		}
 		map = line_head;
@@ -19,66 +21,99 @@ static t_map	*get_opponent_start(t_map *map)
 	return (NULL);
 }
 
-static void		set_first_objective(t_machine *machine, t_map *opponent_start)
+static void		set_first_objective(t_machine *machine, t_map *start)
 {
-	if (opponent_start->x < machine->map_width / 2 + machine->map_width % 2)
+	if (start->x < machine->map_width / 2 + machine->map_width % 2)
 	{
-		if (opponent_start->y <
-			machine->map_height / 2 + machine->map_height % 2)
-		{
-			machine->objective1 = machine->up_left_corner;
-		}
+		if (start->y < machine->map_height / 2 + machine->map_height % 2)
+			machine->objective[0] = machine->up_left_corner;
 		else
-			machine->objective1 = machine->bottom_left_corner;
+			machine->objective[0] = machine->bottom_left_corner;
 	}
 	else
 	{
-		if (opponent_start->y <
-			machine->map_height / 2 + machine->map_height % 2)
-		{
-			machine->objective1 = machine->up_right_corner;
-		}
+		if (start->y < machine->map_height / 2 + machine->map_height % 2)
+			machine->objective[0] = machine->up_right_corner;
 		else
-			machine->objective1 = machine->bottom_right_corner;
+			machine->objective[0] = machine->bottom_right_corner;
 	}
-	machine->objective1->id = O1;
+	machine->objective[0]->id = O1;
 }
 
-static void		set_second_third_objectives(t_machine *machine)
+static void		set_second_third_objectives(t_machine *machine, t_map *start)
 {
-	if (machine->objective1 == machine->up_left_corner)
+	t_map	*head;
+
+	head = start;
+	if (machine->objective[0] == machine->up_left_corner
+		|| machine->objective[0] == machine->bottom_left_corner)
 	{
-		machine->objective2 = machine->up_right_corner;
-		machine->objective3 = machine->bottom_left_corner;
-		machine->objective4 = machine->bottom_right_corner;
+		while (start->left != NULL)
+			start = start->left;
 	}
-	else if (machine->objective1 == machine->up_right_corner)
+	else
 	{
-		machine->objective2 = machine->bottom_right_corner;
-		machine->objective3 = machine->up_left_corner;
-		machine->objective4 = machine->bottom_left_corner;
+		while (start->right != NULL)
+			start = start->right;
 	}
-	else if (machine->objective1 == machine->bottom_right_corner)
+	machine->objective[1] = start;
+	start = head;
+	if (machine->objective[0] == machine->up_left_corner
+		|| machine->objective[0] == machine->up_right_corner)
 	{
-		machine->objective2 = machine->bottom_left_corner;
-		machine->objective3 = machine->up_right_corner;
-		machine->objective4 = machine->up_left_corner;
+		while (start->up != NULL)
+			start = start->up;
 	}
-	else if (machine->objective1 == machine->bottom_left_corner)
+	else
 	{
-		machine->objective2 = machine->up_left_corner;
-		machine->objective3 = machine->bottom_right_corner;
-		machine->objective4 = machine->up_right_corner;
+		while (start->down != NULL)
+			start = start->down;
+	}
+	machine->objective[2] = start;
+}
+
+static void		set_other_objectives(t_machine *machine)
+{
+	if (machine->objective[0] == machine->up_left_corner)
+	{
+		machine->objective[3] = machine->up_right_corner;
+		machine->objective[4] = machine->bottom_left_corner;
+		machine->objective[5] = machine->bottom_right_corner;
+	}
+	else if (machine->objective[0] == machine->up_right_corner)
+	{
+		machine->objective[3] = machine->bottom_right_corner;
+		machine->objective[4] = machine->up_left_corner;
+		machine->objective[5] = machine->bottom_left_corner;
+	}
+	else if (machine->objective[0] == machine->bottom_right_corner)
+	{
+		machine->objective[3] = machine->bottom_left_corner;
+		machine->objective[4] = machine->up_right_corner;
+		machine->objective[5] = machine->up_left_corner;
+	}
+	else if (machine->objective[0] == machine->bottom_left_corner)
+	{
+		machine->objective[3] = machine->up_left_corner;
+		machine->objective[4] = machine->bottom_right_corner;
+		machine->objective[5] = machine->up_right_corner;
 	}
 }
 
 void			set_objectives(t_machine *machine)
 {
 	t_map		*opponent_start;
+	t_map		*start;
 
-	opponent_start = get_opponent_start(machine->map);
+	opponent_start = NULL;
+	start = NULL;
+	get_opponent_start(machine->map, &opponent_start, &start);
 	set_first_objective(machine, opponent_start);
-	set_second_third_objectives(machine);
-	machine->objective2->id = O2;
-	machine->objective3->id = O3;
+	set_second_third_objectives(machine, start);
+	set_other_objectives(machine);
+	machine->objective[1]->id = O2;
+	machine->objective[2]->id = O3;
+	machine->objective[3]->id = O4;
+	machine->objective[4]->id = O5;
+	machine->objective[5]->id = O6;
 }

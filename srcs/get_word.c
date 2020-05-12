@@ -5,7 +5,7 @@ static int	is_line_char(char c)
 	int		ret;
 
 	ret = FALSE;
-	if (c == '.' || c == 'O' || c == 'o' || c == 'X' || c == 'x' || c == '*')
+	if (c == '.' || c == 'O' || c == 'X' || c == '*')
 		ret = TRUE;
 	return (ret);
 }
