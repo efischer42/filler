@@ -21,5 +21,6 @@ int					main(int ac, char **av)
 	}
 	del_path_lst(machine.path_lst);
 	del_map(&machine.map);
+	del_mx(&machine);
 	return (EXIT_SUCCESS);
 }

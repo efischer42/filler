@@ -41,3 +41,16 @@ void	del_path_lst(t_list *path_lst)
 	free(path_lst);
 	path_lst = NULL;
 }
+
+void	del_mx(t_machine *machine)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < machine->map_height)
+	{
+		free(machine->mx[i]);
+		i++;
+	}
+	free(machine->mx);
+}

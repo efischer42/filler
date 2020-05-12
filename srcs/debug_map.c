@@ -11,6 +11,8 @@ static char	*get_play(uint64_t data)
 			play = "O";
 	else if ((data & P2_PLAY) == P2_PLAY)
 			play = "X";
+	else if ((data & PATH) == PATH)
+		play = "#";
 	else if ((data & DEBUG) == DEBUG)
 		play = ">";
 	else if ((data & DANGER_ZONE) == DANGER_ZONE)

@@ -18,6 +18,7 @@ SRCS += fill_map.c
 SRCS += fill_piece.c
 SRCS += find_path.c
 SRCS += generate_map.c
+SRCS += generate_mx.c
 SRCS += generate_piece.c
 SRCS += get_dimensions.c
 SRCS += get_map.c

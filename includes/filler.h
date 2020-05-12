@@ -11,10 +11,10 @@
 # define P2_CHAR				'X'
 # define PIECE_CHAR				'*'
 # define INDEX_HEIGHT_FORMAT	3
-# define P1_PLAY				0x1
-# define P2_PLAY				0x2
-# define DANGER_ZONE			0x4
-# define PIECE_PART				0x8
+# define P1_PLAY				0x01
+# define P2_PLAY				0x02
+# define DANGER_ZONE			0x04
+# define PIECE_PART				0x08
 # define PATH					0x10
 # define DEBUG					0x20
 # define TAB_END				-1
@@ -81,6 +81,7 @@ typedef struct	s_machine
 {
 	uint64_t			state;
 	uint64_t			opt;
+	t_map				***mx;
 	t_map				*map;
 	t_map				*up_left_corner;
 	t_map				*up_right_corner;
@@ -140,6 +141,7 @@ int		check_piece_pos(t_machine *machine, t_map *node, t_map *piece,
 void	del_line(t_map **map);
 void	del_lst(void *content, size_t content_size);
 void	del_map(t_map **map);
+void	del_mx(t_machine *machine);
 void	del_path(void *content, size_t content_size);
 void	del_path_lst(t_list *path_lst);
 void	error(t_machine *machine);
@@ -148,6 +150,7 @@ void	fill_map(t_machine *machine, t_list *token_lst);
 void	fill_piece(t_machine *machine, t_list *token_lst);
 int		find_path(t_machine *machine, t_map *start, t_map *map, t_list **path);
 void	generate_map(t_machine *machine);
+void	generate_mx(t_machine *machine);
 void	generate_piece(t_machine *machine);
 void	get_map(t_machine *machine);
 void	get_map_dimensions(t_machine *machine, t_list *token_lst);

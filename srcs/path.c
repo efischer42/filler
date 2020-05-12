@@ -49,7 +49,7 @@ static int	check_path(t_path *path, t_list *lst)
 			|| (((t_map*)(lst->content))->data & P2_PLAY) == P2_PLAY
 			|| path->id == DEAD)
 		{
-			ft_putendl_fd("del path", 2);
+//			ft_putendl_fd("del path", 2);
 			ret = FALSE;
 			ft_lstdel(&path->lst, del_path);
 			path->path_len = 0;
@@ -71,7 +71,7 @@ static int		set_path(t_machine *machine, t_path *path)
 	lst = NULL;
 	path->id = machine->cur_objective->id;
 	ret = find_path(machine, path->node, path->node, &lst);
-	print_path(lst);
+//	print_path(lst);
 	path->lst = lst;
 	path->path_len = ft_lstlen(lst);
 	return (ret);
@@ -114,6 +114,6 @@ void		path(t_machine *machine, t_map *map)
 	}
 	ft_merge_sort(&machine->path_lst, sort_len_path);
 	ft_merge_sort(&machine->path_lst, sort_obj1);
-	debug_path_lst(machine->path_lst);
-	debug_map(machine->map);
+//	debug_path_lst(machine->path_lst);
+//	debug_map(machine->map);
 }

@@ -40,8 +40,11 @@ void		play_turn(t_machine *machine)
 {
 //	debug_map(machine->map);
 //	debug_map(machine->piece);
-	if (machine->objective[0] == NULL)
+	if (machine->mx == NULL)
+	{
+		generate_mx(machine);
 		set_objectives(machine);
+	}
 	check_objectives(machine);
 	check_path_lst(machine, machine->path_lst);
 	if (machine->state != ST_ERROR)
