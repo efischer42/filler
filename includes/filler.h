@@ -57,6 +57,13 @@ enum	e_direction
 	UP_LEFT
 };
 
+typedef struct	s_objective
+{
+	struct s_map	*map;
+	size_t			last_play_dist;
+	uint64_t		dead;
+}				t_objective;
+
 typedef struct	s_map
 {
 	struct s_map	*left;
@@ -67,6 +74,7 @@ typedef struct	s_map
 	size_t			x;
 	size_t			y;
 	enum e_id		id;
+//	t_objective		*objective;
 }				t_map;
 
 typedef struct	s_path
@@ -74,7 +82,7 @@ typedef struct	s_path
 	t_list		*lst;
 	t_map		*node;
 	size_t		path_len;
-	enum e_id	id;
+//	t_objective		*objective;
 }				t_path;
 
 typedef struct	s_machine
@@ -91,7 +99,9 @@ typedef struct	s_machine
 	t_map				*cur_objective;
 	t_map				*piece;
 	t_map				*head_piece;
+	t_map				*last_play;
 	t_list				*token_lst;
+	t_list				*objective_lst;
 	t_list				*path_lst;
 	enum e_direction	dir[NB_DIR_TO_OBJ];
 	size_t				map_height;
@@ -103,7 +113,6 @@ typedef struct	s_machine
 	char				*player_name;
 	int					play_x;
 	int					play_y;
-	uint8_t				opponent_played;
 	char				player;
 	char				player_last;
 	char				opponent;
@@ -170,7 +179,7 @@ void	retard_play(t_machine *machine, t_map *map);
 void	set_dir(t_machine *machine, t_map *map);
 void	set_objectives(t_machine *machine);
 void	set_main_dir(t_machine *machine, t_map *map, t_map **map_dir);
-void	sort_obj1(t_list **lst1, t_list **lst2, t_list **head);
+void	sort_objectives(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_len_path(t_list **lst1, t_list **lst2, t_list **head);
 void	debug(t_list *lst);
 void	debug_map(t_map *map);

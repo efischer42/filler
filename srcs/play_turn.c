@@ -52,7 +52,7 @@ void		play_turn(t_machine *machine)
 		path(machine, machine->map);
 		if (machine->state != ST_ERROR)
 			play(machine, machine->path_lst);
-		machine->opponent_played = 0;
+		machine->last_play = NULL;
 		machine->map = machine->up_left_corner;
 	}
 }

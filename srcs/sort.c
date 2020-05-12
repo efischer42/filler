@@ -1,6 +1,6 @@
 #include "filler.h"
 
-void		sort_obj1(t_list **lst1, t_list **lst2, t_list **head)
+void		sort_objectives(t_list **lst1, t_list **lst2, t_list **head)
 {
 	if (((t_path*)((*lst1)->content))->id >
 			((t_path*)((*lst2)->content))->id)

@@ -24,7 +24,7 @@ void			play(t_machine *machine, t_list *path_lst)
 {
 	t_map	*objective;
 
-	if (machine->opponent_played == 1)
+	if (machine->last_play != NULL)
 	{
 		while (path_lst != NULL)
 		{
@@ -38,7 +38,7 @@ void			play(t_machine *machine, t_list *path_lst)
 			path_lst = path_lst->next;
 		}
 	}
-	if (path_lst == NULL || machine->opponent_played == 0)
+	if (path_lst == NULL || machine->last_play == NULL)
 	{
 		get_opt(machine, machine->map, machine->objective[0]);
 		retard_play(machine, machine->map);

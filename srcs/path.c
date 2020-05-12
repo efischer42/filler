@@ -113,7 +113,7 @@ void		path(t_machine *machine, t_map *map)
 		map = map->down;
 	}
 	ft_merge_sort(&machine->path_lst, sort_len_path);
-	ft_merge_sort(&machine->path_lst, sort_obj1);
+	ft_merge_sort(&machine->path_lst, sort_objectives);
 //	debug_path_lst(machine->path_lst);
 //	debug_map(machine->map);
 }
