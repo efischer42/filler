@@ -33,7 +33,7 @@ static void	check_map_arounds(t_path *path)
 		i++;
 	}
 	if (i == NB_DIR)
-		path->id = DEAD;
+		path->dead = TRUE;
 }
 
 static int	check_path(t_path *path, t_list *lst)
@@ -47,18 +47,17 @@ static int	check_path(t_path *path, t_list *lst)
 	{
 		if ((((t_map*)(lst->content))->data & P1_PLAY) == P1_PLAY
 			|| (((t_map*)(lst->content))->data & P2_PLAY) == P2_PLAY
-			|| path->id == DEAD)
+			|| path->objective->dead == TRUE)
 		{
-//			ft_putendl_fd("del path", 2);
 			ret = FALSE;
 			ft_lstdel(&path->lst, del_path);
 			path->path_len = 0;
-			path->id = NONE;
+			path->dead = FALSE;
 			break ;
 		}
 		lst = lst->next;
 	}
-	if (ret == FALSE && path->id != DEAD)
+	if (ret == FALSE && path->dead == FALSE)
 		check_map_arounds(path);
 	return (ret);
 }
@@ -69,9 +68,9 @@ static int		set_path(t_machine *machine, t_path *path)
 	int		ret;
 
 	lst = NULL;
-	path->id = machine->cur_objective->id;
+	path->objective = machine->cur_objective;
+	path->dead = machine->cur_objective->dead;
 	ret = find_path(machine, path->node, path->node, &lst);
-//	print_path(lst);
 	path->lst = lst;
 	path->path_len = ft_lstlen(lst);
 	return (ret);
@@ -81,9 +80,10 @@ void		path(t_machine *machine, t_map *map)
 {
 	t_map				*head_line;
 	t_path				*path;
-	size_t				i;
+	t_list				*objective_lst;
 	int					ret;
 
+	
 	while (map != NULL)
 	{
 		head_line = map;
@@ -93,18 +93,17 @@ void		path(t_machine *machine, t_map *map)
 			ret = check_path(path, path->lst);
 			if ((path->node->data & P1_PLAY) == P1_PLAY	&& ret == FALSE)
 			{
-				i = 0;
-				while (i < NB_OBJECTIVE)
+				objective_lst = machine->objective_lst;
+				while (objective_lst != NULL)
 				{
-					machine->cur_objective = machine->objective[i];
-					if (machine->cur_objective->id != DEAD)
+					machine->cur_objective = objective_lst->content;
+					if (machine->cur_objective->dead == FALSE)
 					{
-					//	dprintf(2, "objective x: %zu y: %zu\n", machine->cur_objective->x, machine->cur_objective->y);
 						set_dir(machine, map);
 						if (set_path(machine, path) == TRUE)
 							break ;
 					}
-					i++;
+					objective_lst = objective_lst->next;
 				}
 			}
 			map = map->right;

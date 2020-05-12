@@ -13,8 +13,8 @@ static int	check_dist_to_objective(t_machine *machine, t_map *map,
 	ret = FALSE;
 	if (map != NULL)
 	{
-		diff_x = ft_abs(map->x - machine->cur_objective->x);
-		diff_y = ft_abs(map->y - machine->cur_objective->y);
+		diff_x = ft_abs(map->x - machine->cur_objective->map->x);
+		diff_y = ft_abs(map->y - machine->cur_objective->map->y);
 		if (dir == UP_RIGHT || dir == UP_LEFT || dir == DOWN_RIGHT
 			|| dir == DOWN_LEFT)
 		{
@@ -60,8 +60,8 @@ void		set_main_dir(t_machine *machine, t_map *map, t_map **map_dir)
 
 	i = 0;
 	main_dir = 0;
-	diff_x = ft_abs(map->x - machine->cur_objective->x);
-	diff_y = ft_abs(map->y - machine->cur_objective->y);
+	diff_x = ft_abs(map->x - machine->cur_objective->map->x);
+	diff_y = ft_abs(map->y - machine->cur_objective->map->y);
 	dist = diff_x + diff_y;
 	while (i < NB_DIR_TO_OBJ)
 	{

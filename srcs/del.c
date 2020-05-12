@@ -39,7 +39,6 @@ void	del_path_lst(t_list *path_lst)
 	ft_lstdel(&((t_path*)(path_lst->content))->lst, del_path);
 	free(path_lst->content);
 	free(path_lst);
-	path_lst = NULL;
 }
 
 void	del_mx(t_machine *machine)
@@ -54,3 +53,13 @@ void	del_mx(t_machine *machine)
 	}
 	free(machine->mx);
 }
+
+void	del_objective_lst(t_list *objective_lst)
+{
+	if (objective_lst == NULL)
+		return ;
+	del_objective_lst(objective_lst->next);
+	free(objective_lst->content);
+	free(objective_lst);
+}
+

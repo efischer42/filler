@@ -5,7 +5,7 @@ NAME = efischer.filler
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
-#DFLAGS += -fsanitize=address,undefined
+DFLAGS += -fsanitize=address,undefined
 #DFLSGS += -g3
 
 PATHSRCS = srcs/

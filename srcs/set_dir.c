@@ -2,29 +2,32 @@
 
 static void	x_directions(t_machine *machine, t_map *map)
 {
-	if (map->x > machine->cur_objective->x)
+	if (map->x > machine->cur_objective->map->x)
 		machine->dir[0] = LEFT;
-	else if (map->x < machine->cur_objective->x)
+	else if (map->x < machine->cur_objective->map->x)
 		machine->dir[0] = RIGHT;
 }
 
 static void	y_directions(t_machine *machine, t_map *map)
 {
-	if (map->y > machine->cur_objective->y)
+	if (map->y > machine->cur_objective->map->y)
 		machine->dir[0] = UP;
-	else if (map->y < machine->cur_objective->y)
+	else if (map->y < machine->cur_objective->map->y)
 		machine->dir[0] = DOWN;
 }
 
 static void	x_y_directions(t_machine *machine, t_map *map)
 {
-	if (map->x > machine->cur_objective->x && map->y > machine->cur_objective->y)
+	t_map	*objective;
+
+	objective = machine->cur_objective->map;
+	if (map->x > objective->x && map->y > objective->y)
 		machine->dir[0] = UP_LEFT;
-	else if (map->x > machine->cur_objective->x && map->y < machine->cur_objective->y)
+	else if (map->x > objective->x && map->y < objective->y)
 		machine->dir[0] = DOWN_LEFT;
-	else if (map->x < machine->cur_objective->x && map->y > machine->cur_objective->y)
+	else if (map->x < objective->x && map->y > objective->y)
 		machine->dir[0] = UP_RIGHT;
-	else if (map->x < machine->cur_objective->x && map->y < machine->cur_objective->y)
+	else if (map->x < objective->x && map->y < objective->y)
 		machine->dir[0] = DOWN_RIGHT;
 }
 
@@ -50,8 +53,8 @@ void		set_dir(t_machine *machine, t_map *map)
 
 	if (map != NULL)
 	{
-		diff_x = ft_abs(map->x - machine->cur_objective->x);
-		diff_y = ft_abs(map->y - machine->cur_objective->y);
+		diff_x = ft_abs(map->x - machine->cur_objective->map->x);
+		diff_y = ft_abs(map->y - machine->cur_objective->map->y);
 		if (diff_x > diff_y * 2)
 			x_directions(machine, map);
 		else if (diff_y > diff_x * 2)

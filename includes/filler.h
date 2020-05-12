@@ -20,7 +20,6 @@
 # define TAB_END				-1
 # define NB_TOKEN				13
 # define NB_FCT					4
-# define NB_OBJECTIVE			6
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
 # define NB_DIR_TO_OBJ			3
@@ -31,18 +30,6 @@ enum	e_functions
 	ST_GET_MAP,
 	ST_GET_PIECE,
 	ST_ERROR,
-};
-
-enum	e_id
-{
-	NONE,
-	DEAD,
-	O1,
-	O2,
-	O3,
-	O4,
-	O5,
-	O6
 };
 
 enum	e_direction
@@ -61,7 +48,7 @@ typedef struct	s_objective
 {
 	struct s_map	*map;
 	size_t			last_play_dist;
-	uint64_t		dead;
+	uint8_t			dead;
 }				t_objective;
 
 typedef struct	s_map
@@ -73,16 +60,16 @@ typedef struct	s_map
 	uint64_t		data;
 	size_t			x;
 	size_t			y;
-	enum e_id		id;
-//	t_objective		*objective;
+	t_objective		*objective;
 }				t_map;
 
 typedef struct	s_path
 {
-	t_list		*lst;
-	t_map		*node;
-	size_t		path_len;
-//	t_objective		*objective;
+	t_list			*lst;
+	t_map			*node;
+	size_t			path_len;
+	uint8_t			dead;
+	t_objective		*objective;
 }				t_path;
 
 typedef struct	s_machine
@@ -95,14 +82,13 @@ typedef struct	s_machine
 	t_map				*up_right_corner;
 	t_map				*bottom_left_corner;
 	t_map				*bottom_right_corner;
-	t_map				*objective[NB_OBJECTIVE];
-	t_map				*cur_objective;
 	t_map				*piece;
 	t_map				*head_piece;
 	t_map				*last_play;
 	t_list				*token_lst;
 	t_list				*objective_lst;
 	t_list				*path_lst;
+	t_objective			*cur_objective;
 	enum e_direction	dir[NB_DIR_TO_OBJ];
 	size_t				map_height;
 	size_t				map_width;
@@ -151,6 +137,7 @@ void	del_line(t_map **map);
 void	del_lst(void *content, size_t content_size);
 void	del_map(t_map **map);
 void	del_mx(t_machine *machine);
+void	del_objective_lst(t_list *objective_lst);
 void	del_path(void *content, size_t content_size);
 void	del_path_lst(t_list *path_lst);
 void	error(t_machine *machine);
@@ -179,6 +166,7 @@ void	retard_play(t_machine *machine, t_map *map);
 void	set_dir(t_machine *machine, t_map *map);
 void	set_objectives(t_machine *machine);
 void	set_main_dir(t_machine *machine, t_map *map, t_map **map_dir);
+void	sort_objective_lst(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_objectives(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_len_path(t_list **lst1, t_list **lst2, t_list **head);
 void	debug(t_list *lst);

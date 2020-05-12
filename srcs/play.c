@@ -28,19 +28,22 @@ void			play(t_machine *machine, t_list *path_lst)
 	{
 		while (path_lst != NULL)
 		{
-			objective = machine->objective[((t_path*)(path_lst->content))->id];
-			if (objective != NULL)
+			if (((t_path*)(path_lst->content))->objective != NULL)
 			{
-				get_opt(machine, ((t_path*)(path_lst->content))->node, objective);
-				if (piece_placement(machine, ((t_path*)(path_lst->content))->node) == TRUE)
-					break ;
+				objective = ((t_path*)(path_lst->content))->objective->map;
+				if (objective != NULL)
+				{
+					get_opt(machine, ((t_path*)(path_lst->content))->node, objective);
+					if (piece_placement(machine, ((t_path*)(path_lst->content))->node) == TRUE)
+						break ;
+				}
 			}
 			path_lst = path_lst->next;
 		}
 	}
 	if (path_lst == NULL || machine->last_play == NULL)
 	{
-		get_opt(machine, machine->map, machine->objective[0]);
+		get_opt(machine, machine->map, ((t_objective*)(machine->objective_lst->content))->map);
 		retard_play(machine, machine->map);
 	}
 //	debug_map(machine->map);

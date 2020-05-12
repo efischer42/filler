@@ -4,49 +4,42 @@
 
 static void	check_objectives(t_machine *machine)
 {
-	size_t	i;
+	t_list		*objective_lst;
+	t_map		*objective;
+	uint64_t	data;
+	size_t		diff_x;
+	size_t		diff_y;
 
-	i = 0;
-	while (i < NB_OBJECTIVE)
+	objective_lst = machine->objective_lst;
+	while (objective_lst != NULL)
 	{
-		if ((machine->objective[i]->data & P1_PLAY) == P1_PLAY
-			|| (machine->objective[i]->data & P2_PLAY) == P2_PLAY
-			|| (machine->objective[i]->data & DANGER_ZONE) == DANGER_ZONE)
+		data = ((t_objective*)(objective_lst->content))->map->data;
+		if ((data & P1_PLAY) == P1_PLAY || (data & P2_PLAY) == P2_PLAY
+			|| (data & DANGER_ZONE) == DANGER_ZONE)
 		{
-			machine->objective[i]->id = DEAD;
+			((t_objective*)(objective_lst->content))->dead = TRUE;
 		}
-		i++;
-	}
-}
-
-static void	check_path_lst(t_machine *machine, t_list *path_lst)
-{
-	enum e_id	id;
-
-	while (path_lst != NULL)
-	{
-		if (((t_path*)(path_lst->content))->id != NONE
-			&& ((t_path*)(path_lst->content))->id != DEAD)
+		else
 		{
-			id = ((t_path*)(path_lst->content))->id - 2;
-			if (machine->objective[id]->id == DEAD)
-				((t_path*)(path_lst->content))->id = DEAD;
+			objective = ((t_objective*)(objective_lst->content))->map;
+			diff_x = ft_abs(objective->x - machine->last_play->x);
+			diff_y = ft_abs(objective->y - machine->last_play->y);
+			((t_objective*)(objective_lst->content))->last_play_dist = diff_x + diff_y;
 		}
-		path_lst = path_lst->next;
+		objective_lst = objective_lst->next;
 	}
 }
 
 void		play_turn(t_machine *machine)
 {
-//	debug_map(machine->map);
-//	debug_map(machine->piece);
 	if (machine->mx == NULL)
 	{
 		generate_mx(machine);
 		set_objectives(machine);
 	}
-	check_objectives(machine);
-	check_path_lst(machine, machine->path_lst);
+	if (machine->last_play != NULL)
+		check_objectives(machine);
+	ft_merge_sort(&machine->objective_lst, sort_objective_lst);
 	if (machine->state != ST_ERROR)
 	{
 		path(machine, machine->map);
