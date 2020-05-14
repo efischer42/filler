@@ -13,6 +13,14 @@
 # define PIECE_PART				0x08
 # define PATH					0x10
 # define DEBUG					0x20
+# define UPL_EDGE				0x01
+# define UPR_EDGE				0x02
+# define DOWNL_EDGE				0x04
+# define DOWNR_EDGE				0x08
+# define LEFTU_EDGE				0x10
+# define LEFTD_EDGE				0x20
+# define RIGHTU_EDGE			0x40
+# define RIGHTD_EDGE			0x80
 # define FROM_LEFT				0x01
 # define FROM_RIGHT				0x02
 # define FROM_UP				0x04
@@ -47,6 +55,7 @@ enum	e_direction
 typedef struct	s_objective
 {
 	struct s_map	*map;
+	uint64_t		edge;
 	uint8_t			dead;
 }				t_objective;
 
@@ -76,6 +85,8 @@ typedef struct	s_machine
 {
 	uint64_t			state;
 	uint64_t			opt;
+	uint64_t			p1_edge;
+	uint64_t			p2_edge;
 	t_map				***mx;
 	t_map				*map;
 	t_map				*up_left_corner;
@@ -170,6 +181,7 @@ void	play(t_machine *machine, t_list *path_play);
 void	play_turn(t_machine *machine);
 void	retard_play(t_machine *machine, t_map *map);
 void	set_dir(t_machine *machine, t_map *map);
+void	set_edges(t_machine *machine, t_map *map, uint64_t *edge);
 void	set_objectives(t_machine *machine);
 void	set_main_dir(t_machine *machine, t_map *map, t_map **map_dir);
 void	sort_objective_lst(t_list **lst1, t_list **lst2, t_list **head);

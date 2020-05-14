@@ -94,6 +94,10 @@ static void	fill_map_data(t_machine *machine, char c)
 		machine->map->data |= P2_PLAY;
 		fill_opponent_zone(machine);
 	}
+	if ((machine->map->data & P1_PLAY) == P1_PLAY)
+		set_edges(machine, machine->map, &machine->p1_edge);
+	if ((machine->map->data & P2_PLAY) == P2_PLAY)
+		set_edges(machine, machine->map, &machine->p2_edge);
 }
 
 int			fill_line(t_machine *machine, t_list *token_lst)

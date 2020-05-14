@@ -47,7 +47,7 @@ void			play(t_machine *machine, t_list *path_lst)
 		retard_play(machine, machine->map);
 	}
 	debug_map(machine, machine->map);
-	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
+//	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
 	ft_printf("%d %d\n", machine->play_y, machine->play_x);
 //	usleep(500000);
 	machine->state = ST_GET_MAP;

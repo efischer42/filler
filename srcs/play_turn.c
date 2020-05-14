@@ -5,22 +5,28 @@
 static void	check_objectives(t_machine *machine)
 {
 	t_list		*objective_lst;
-	uint64_t	data;
+	uint64_t	edge;
 
 	objective_lst = machine->objective_lst;
 	while (objective_lst != NULL)
 	{
-		data = ((t_objective*)(objective_lst->content))->map->data;
-		if ((data & P1_PLAY) == P1_PLAY || (data & P2_PLAY) == P2_PLAY)
+		edge = ((t_objective*)(objective_lst->content))->edge;
+		if ((machine->p1_edge & edge) == edge
+			|| (machine->p2_edge & edge) == edge)
+		{
+			dprintf(2, "objective x: %zu y: %zu\n",
+				((t_objective*)(objective_lst->content))->map->x,
+				((t_objective*)(objective_lst->content))->map->y);
 			((t_objective*)(objective_lst->content))->dead = TRUE;
+		}
 		objective_lst = objective_lst->next;
 	}
 }
 
 void		play_turn(t_machine *machine)
 {
-	dprintf(2, "ul: %zu, ur: %zu, dl: %zu, dr: %zu\n", machine->upl_zone,
-		machine->upr_zone, machine->downl_zone, machine->downr_zone);
+//	dprintf(2, "ul: %zu, ur: %zu, dl: %zu, dr: %zu\n", machine->upl_zone,
+//		machine->upr_zone, machine->downl_zone, machine->downr_zone);
 	if (machine->mx == NULL)
 	{
 		generate_mx(machine);
