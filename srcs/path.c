@@ -45,10 +45,10 @@ static int	check_path(t_path *path, t_list *lst)
 		ret = FALSE;
 	while (lst != NULL)
 	{
-		if ((((t_map*)(lst->content))->data & P1_PLAY) == P1_PLAY
-			|| (((t_map*)(lst->content))->data & P2_PLAY) == P2_PLAY
-			|| path->objective->dead == TRUE)
+		if ((((t_map*)(lst->content))->data & P2_PLAY) == P2_PLAY
+			||  path->objective->dead == TRUE)
 		{
+		//	ft_putendl_fd("Del path", 2);
 			ret = FALSE;
 			ft_lstdel(&path->lst, del_path);
 			path->path_len = 0;
@@ -111,6 +111,7 @@ void		path(t_machine *machine, t_map *map)
 		map = head_line;
 		map = map->down;
 	}
+	cut_path(machine);
 	ft_merge_sort(&machine->path_lst, sort_len_path);
 	ft_merge_sort(&machine->path_lst, sort_objectives);
 //	debug_path_lst(machine->path_lst);

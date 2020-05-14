@@ -46,8 +46,8 @@ void			play(t_machine *machine, t_list *path_lst)
 		get_opt(machine, machine->map, ((t_objective*)(machine->objective_lst->content))->map);
 		retard_play(machine, machine->map);
 	}
-//	debug_map(machine->map);
-//	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
+	debug_map(machine, machine->map);
+	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
 	ft_printf("%d %d\n", machine->play_y, machine->play_x);
 //	usleep(500000);
 	machine->state = ST_GET_MAP;

@@ -87,7 +87,10 @@ static void	fill_map_data(t_machine *machine, char c)
 	else if (c == machine->opponent)
 	{
 		if ((machine->map->data & P2_PLAY) != P2_PLAY)
+		{	
 			machine->last_play = machine->map;
+			*machine->map->zone += 1;
+		}
 		machine->map->data |= P2_PLAY;
 		fill_opponent_zone(machine);
 	}

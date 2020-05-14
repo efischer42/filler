@@ -12,6 +12,24 @@ void		data_map(t_map *map, t_map *line, size_t y, size_t x)
 	}
 }
 
+static void	map_zone(t_machine *machine, t_map *map)
+{
+	if (map->x < machine->map_width / 2 + (machine->map_width / 2) % 2)
+	{
+		if (map->y < machine->map_height / 2 + (machine->map_height / 2) % 2)
+			map->zone = &machine->upl_zone;
+		else
+			map->zone = &machine->downl_zone;
+	}
+	else
+	{
+		if (map->y < machine->map_height / 2 + (machine->map_height / 2) % 2)
+			map->zone = &machine->upr_zone;
+		else
+			map->zone = &machine->downr_zone;
+	}
+}
+
 void		add_map(t_map **line, t_map *new_map)
 {
 	t_map	*head;
@@ -59,6 +77,7 @@ static void	generate_line(t_map **new_line, t_map *last_line, size_t y,
 		if (new_map != NULL)
 		{
 			data_map(new_map, last_line, y, i);
+			map_zone(machine, new_map);
 			ft_bzero(&path, sizeof(path));
 			path.node = new_map;
 			lst_new = ft_lstnew(&path, sizeof(path));
@@ -89,4 +108,5 @@ void		generate_map(t_machine *machine)
 		i++;
 	}
 	machine->map = machine->up_left_corner;
+	debug_map(machine, machine->map);
 }

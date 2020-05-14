@@ -5,33 +5,22 @@
 static void	check_objectives(t_machine *machine)
 {
 	t_list		*objective_lst;
-	t_map		*objective;
 	uint64_t	data;
-	size_t		diff_x;
-	size_t		diff_y;
 
 	objective_lst = machine->objective_lst;
 	while (objective_lst != NULL)
 	{
 		data = ((t_objective*)(objective_lst->content))->map->data;
-		if ((data & P1_PLAY) == P1_PLAY || (data & P2_PLAY) == P2_PLAY
-			|| (data & DANGER_ZONE) == DANGER_ZONE)
-		{
+		if ((data & P1_PLAY) == P1_PLAY || (data & P2_PLAY) == P2_PLAY)
 			((t_objective*)(objective_lst->content))->dead = TRUE;
-		}
-		else
-		{
-			objective = ((t_objective*)(objective_lst->content))->map;
-			diff_x = ft_abs(objective->x - machine->last_play->x);
-			diff_y = ft_abs(objective->y - machine->last_play->y);
-			((t_objective*)(objective_lst->content))->last_play_dist = diff_x + diff_y;
-		}
 		objective_lst = objective_lst->next;
 	}
 }
 
 void		play_turn(t_machine *machine)
 {
+	dprintf(2, "ul: %zu, ur: %zu, dl: %zu, dr: %zu\n", machine->upl_zone,
+		machine->upr_zone, machine->downl_zone, machine->downr_zone);
 	if (machine->mx == NULL)
 	{
 		generate_mx(machine);
@@ -40,6 +29,7 @@ void		play_turn(t_machine *machine)
 	if (machine->last_play != NULL)
 		check_objectives(machine);
 	ft_merge_sort(&machine->objective_lst, sort_objective_lst);
+	debug_objective_lst(machine->objective_lst);
 	if (machine->state != ST_ERROR)
 	{
 		path(machine, machine->map);

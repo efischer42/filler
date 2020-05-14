@@ -26,8 +26,6 @@ static void		new_objective(t_machine *machine, t_map *map)
 
 	ft_bzero(&objective, sizeof(objective));
 	objective.map = map;
-	objective.last_play_dist = ft_abs(map->x - machine->last_play->x) +
-				ft_abs(map->y - machine->last_play->y);
 	lst_new = ft_lstnew(&objective, sizeof(objective));
 	if (lst_new != NULL)
 		ft_lstadd(&machine->objective_lst, lst_new);
@@ -37,9 +35,14 @@ void			set_objectives(t_machine *machine)
 {
 	t_map		*start;
 
+	(void)start;
 	start = get_start(machine->map);
 	new_objective(machine, machine->up_left_corner);
 	new_objective(machine, machine->up_right_corner);
 	new_objective(machine, machine->bottom_left_corner);
 	new_objective(machine, machine->bottom_right_corner);
+//	new_objective(machine, machine->mx[0][start->x]);
+//	new_objective(machine, machine->mx[machine->map_height - 1][start->x]);
+//	new_objective(machine, machine->mx[start->y][0]);
+//	new_objective(machine, machine->mx[start->y][machine->map_width - 1]);
 }

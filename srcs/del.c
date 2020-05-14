@@ -62,4 +62,3 @@ void	del_objective_lst(t_list *objective_lst)
 	free(objective_lst->content);
 	free(objective_lst);
 }
-

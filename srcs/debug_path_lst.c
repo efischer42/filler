@@ -1,5 +1,7 @@
 #include "filler.h"
 
+#include <stdio.h>
+
 void	print_path(t_list *lst)
 {
 	char	*print;
@@ -23,5 +25,16 @@ void	debug_path_lst(t_list *path_lst)
 	{
 		print_path(((t_path*)(path_lst->content))->lst);
 		path_lst = path_lst->next;
+	}
+}
+
+void	debug_objective_lst(t_list *objective_lst)
+{
+	ft_putendl_fd("\nDebug objective list\n", 2);
+	while (objective_lst != NULL)
+	{
+		dprintf(2, "objective x: %zu y: %zu\n", ((t_objective*)(objective_lst->content))->map->x,
+			((t_objective*)(objective_lst->content))->map->y);
+		objective_lst = objective_lst->next;
 	}
 }

@@ -6,11 +6,12 @@ CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
 DFLAGS += -fsanitize=address,undefined
-#DFLSGS += -g3
+DFLSGS += -g3
 
 PATHSRCS = srcs/
 SRCS += check_index.c
 SRCS += check_piece_pos.c
+SRCS += cut_path.c
 SRCS += del.c
 SRCS += error.c
 SRCS += fill_line.c

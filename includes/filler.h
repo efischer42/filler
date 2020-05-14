@@ -3,10 +3,6 @@
 
 # include "libft.h"
 
-# define FROM_LEFT				0x1
-# define FROM_RIGHT				0x2
-# define FROM_UP				0x4
-# define FROM_DOWN				0x8
 # define P1_CHAR				'O'
 # define P2_CHAR				'X'
 # define PIECE_CHAR				'*'
@@ -17,6 +13,10 @@
 # define PIECE_PART				0x08
 # define PATH					0x10
 # define DEBUG					0x20
+# define FROM_LEFT				0x01
+# define FROM_RIGHT				0x02
+# define FROM_UP				0x04
+# define FROM_DOWN				0x08
 # define TAB_END				-1
 # define NB_TOKEN				13
 # define NB_FCT					4
@@ -47,7 +47,6 @@ enum	e_direction
 typedef struct	s_objective
 {
 	struct s_map	*map;
-	size_t			last_play_dist;
 	uint8_t			dead;
 }				t_objective;
 
@@ -58,6 +57,7 @@ typedef struct	s_map
 	struct s_map	*up;
 	struct s_map	*down;
 	uint64_t		data;
+	size_t			*zone;
 	size_t			x;
 	size_t			y;
 	t_objective		*objective;
@@ -95,6 +95,10 @@ typedef struct	s_machine
 	size_t				piece_height;
 	size_t				piece_width;
 	size_t				dist;
+	size_t				upl_zone;
+	size_t				upr_zone;
+	size_t				downl_zone;
+	size_t				downr_zone;
 	char				*input;
 	char				*player_name;
 	int					play_x;
@@ -133,12 +137,14 @@ void	check_index_width(t_machine *machine, t_list *token_lst);
 void	data_map(t_map *map, t_map *line, size_t y, size_t x);
 int		check_piece_pos(t_machine *machine, t_map *node, t_map *piece,
 						t_map *piece_play);
+void	cut_path(t_machine *machine);
 void	del_line(t_map **map);
 void	del_lst(void *content, size_t content_size);
 void	del_map(t_map **map);
 void	del_mx(t_machine *machine);
 void	del_objective_lst(t_list *objective_lst);
 void	del_path(void *content, size_t content_size);
+void	del_path_first_part(t_machine *machine, t_list *lst, t_list *head);
 void	del_path_lst(t_list *path_lst);
 void	error(t_machine *machine);
 int		fill_line(t_machine *machine, t_list *token_lst);
@@ -170,10 +176,11 @@ void	sort_objective_lst(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_objectives(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_len_path(t_list **lst1, t_list **lst2, t_list **head);
 void	debug(t_list *lst);
-void	debug_map(t_map *map);
+void	debug_map(t_machine *machine, t_map *map);
 void	debug_dir(enum e_direction *dir);
 void	debug_path(t_list *lst);
 void	debug_path_lst(t_list *path_lst);
 void	print_path(t_list *lst);
+void	debug_objective_lst(t_list *objective_lst);
 
 #endif
