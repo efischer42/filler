@@ -55,7 +55,7 @@ void		play_turn(t_machine *machine)
 		check_objectives(machine);
 	ft_merge_sort(&machine->objective_lst, sort_objective);
 	ft_merge_sort(&machine->objective_lst, sort_dead_objective);
-//	debug_objective_lst(machine->objective_lst);
+	debug_objective_lst(machine->objective_lst);
 	if (machine->state != ST_ERROR)
 	{
 		path(machine, machine->map);
