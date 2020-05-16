@@ -20,8 +20,8 @@ void		del_path_first_part(t_machine *machine, t_list *lst, t_list *head)
 		((t_path*)(machine->path_lst->content))->lst = lst;
 		return ;
 	}
+	((t_path*)(machine->path_lst->content))->node->data &= ~DEBUG;
 	del_path_first_part(machine, lst->next, head);
-//	free(lst->content);
 	free(lst);
 }
 
@@ -41,6 +41,8 @@ void		cut_path(t_machine *machine)
 			//	ft_putendl_fd("Cut path", 2);
 				del_path_first_part(machine,
 					((t_path*)(machine->path_lst->content))->lst, new_head);
+				((t_path*)(machine->path_lst->content))->path_len =
+					ft_lstlen(((t_path*)(machine->path_lst->content))->lst);
 			}
 		}
 		machine->path_lst = machine->path_lst->next;

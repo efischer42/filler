@@ -49,7 +49,6 @@ static void		new_objective(t_machine *machine, t_map *map)
 {
 	t_objective	objective;
 	t_list		*lst_new;
-	char		*print;
 
 	ft_bzero(&objective, sizeof(objective));
 	objective.map = map;
@@ -57,9 +56,6 @@ static void		new_objective(t_machine *machine, t_map *map)
 	lst_new = ft_lstnew(&objective, sizeof(objective));
 	if (lst_new != NULL)
 		ft_lstadd(&machine->objective_lst, lst_new);
-	print = ft_asprintf("edge: %b\n", objective.edge);
-	ft_putendl_fd(print, 2);
-	ft_strdel(&print);
 }
 
 void			set_objectives(t_machine *machine)

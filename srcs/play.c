@@ -1,7 +1,5 @@
 #include "filler.h"
 
-#include <stdio.h>
-
 static void		get_opt(t_machine *machine, t_map *node, t_map *objective)
 {
 	int			diff_x;
@@ -24,6 +22,7 @@ void			play(t_machine *machine, t_list *path_lst)
 {
 	t_map	*objective;
 
+//	debug_path_lst(machine->path_lst);
 	if (machine->last_play != NULL)
 	{
 		while (path_lst != NULL)
@@ -46,7 +45,7 @@ void			play(t_machine *machine, t_list *path_lst)
 		get_opt(machine, machine->map, ((t_objective*)(machine->objective_lst->content))->map);
 		retard_play(machine, machine->map);
 	}
-	debug_map(machine, machine->map);
+//	debug_map(machine, machine->map);
 //	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
 	ft_printf("%d %d\n", machine->play_y, machine->play_x);
 //	usleep(500000);

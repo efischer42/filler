@@ -35,12 +35,13 @@ static void	fill_side(t_map *map, size_t dir, size_t dist)
 	i = 0;
 	while (i < dist)
 	{
+		*map->zone += 1;
 		init_dir_tab(map, dir_tab);
 		map = dir_tab[dir];
-		if (map == NULL || (map->data & P2_PLAY) == P2_PLAY)
+		if (map == NULL || (map->data & P2_PLAY) == P2_PLAY
+			|| (map->data & P1_PLAY) == P1_PLAY)
 			break ;
-		if ((map->data & P1_PLAY) != P1_PLAY)
-			map->data |= DANGER_ZONE;
+		map->data |= DANGER_ZONE;
 		i++;
 	}
 }
@@ -82,22 +83,20 @@ static void	fill_opponent_zone(t_machine *machine)
 
 static void	fill_map_data(t_machine *machine, char c)
 {
-	if (c == machine->player)
-		machine->map->data |= P1_PLAY;
-	else if (c == machine->opponent)
+	if (c == machine->player && (machine->map->data & P1_PLAY) != P1_PLAY)
 	{
-		if ((machine->map->data & P2_PLAY) != P2_PLAY)
-		{	
-			machine->last_play = machine->map;
-			*machine->map->zone += 1;
-		}
+		*machine->map->zone -= 1;
+		machine->map->data |= P1_PLAY;
+		set_edges(machine, machine->map, &machine->edge);
+	}
+	else if (c == machine->opponent && (machine->map->data & P2_PLAY) != P2_PLAY)
+	{
+		machine->last_play = machine->map;
+		*machine->map->zone += 1;
 		machine->map->data |= P2_PLAY;
 		fill_opponent_zone(machine);
+		set_edges(machine, machine->map, &machine->edge);
 	}
-	if ((machine->map->data & P1_PLAY) == P1_PLAY)
-		set_edges(machine, machine->map, &machine->p1_edge);
-	if ((machine->map->data & P2_PLAY) == P2_PLAY)
-		set_edges(machine, machine->map, &machine->p2_edge);
 }
 
 int			fill_line(t_machine *machine, t_list *token_lst)

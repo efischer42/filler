@@ -1,9 +1,11 @@
 #include "filler.h"
 
-static char	*get_play(t_machine *machine, uint64_t data, size_t *zone)
+static char	*get_play(t_machine *machine, uint64_t data, int *zone)
 {
 	char	*play;
 
+	(void)zone;
+	(void)machine;
 	play = ".";
 	if ((data & PIECE_PART) == PIECE_PART)
 		play = "*";
@@ -17,14 +19,14 @@ static char	*get_play(t_machine *machine, uint64_t data, size_t *zone)
 		play = ">";
 	else if ((data & DANGER_ZONE) == DANGER_ZONE)
 			play = "!";
-	else if (zone == &machine->upl_zone)
-		play = "1";
-	else if (zone == &machine->upr_zone)
-		play = "2";
-	else if (zone == &machine->downl_zone)
-		play = "3";
-	else if (zone == &machine->downr_zone)
-		play = "4";
+//	else if (zone == &machine->upl_zone)
+//		play = "1";
+//	else if (zone == &machine->upr_zone)
+//		play = "2";
+//	else if (zone == &machine->downl_zone)
+//		play = "3";
+//	else if (zone == &machine->downr_zone)
+//		play = "4";
 	return (play);
 }
 

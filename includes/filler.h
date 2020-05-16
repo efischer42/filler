@@ -2,6 +2,7 @@
 # define FILLER_H
 
 # include "libft.h"
+# include <stdio.h>//
 
 # define P1_CHAR				'O'
 # define P2_CHAR				'X'
@@ -56,7 +57,7 @@ typedef struct	s_objective
 {
 	struct s_map	*map;
 	uint64_t		edge;
-	uint8_t			dead;
+	int				dead;
 }				t_objective;
 
 typedef struct	s_map
@@ -66,9 +67,9 @@ typedef struct	s_map
 	struct s_map	*up;
 	struct s_map	*down;
 	uint64_t		data;
-	size_t			*zone;
 	size_t			x;
 	size_t			y;
+	int				*zone;
 	t_objective		*objective;
 }				t_map;
 
@@ -85,8 +86,7 @@ typedef struct	s_machine
 {
 	uint64_t			state;
 	uint64_t			opt;
-	uint64_t			p1_edge;
-	uint64_t			p2_edge;
+	uint64_t			edge;
 	t_map				***mx;
 	t_map				*map;
 	t_map				*up_left_corner;
@@ -106,12 +106,12 @@ typedef struct	s_machine
 	size_t				piece_height;
 	size_t				piece_width;
 	size_t				dist;
-	size_t				upl_zone;
-	size_t				upr_zone;
-	size_t				downl_zone;
-	size_t				downr_zone;
 	char				*input;
 	char				*player_name;
+	int					upl_zone;
+	int					upr_zone;
+	int					downl_zone;
+	int					downr_zone;
 	int					play_x;
 	int					play_y;
 	char				player;
@@ -161,7 +161,7 @@ void	error(t_machine *machine);
 int		fill_line(t_machine *machine, t_list *token_lst);
 void	fill_map(t_machine *machine, t_list *token_lst);
 void	fill_piece(t_machine *machine, t_list *token_lst);
-int		find_path(t_machine *machine, t_map *start, t_map *map, t_list **path);
+int		find_path(t_machine *machine, t_map *map, t_list **path);
 void	generate_map(t_machine *machine);
 void	generate_mx(t_machine *machine);
 void	generate_piece(t_machine *machine);
@@ -184,8 +184,10 @@ void	set_dir(t_machine *machine, t_map *map);
 void	set_edges(t_machine *machine, t_map *map, uint64_t *edge);
 void	set_objectives(t_machine *machine);
 void	set_main_dir(t_machine *machine, t_map *map, t_map **map_dir);
-void	sort_objective_lst(t_list **lst1, t_list **lst2, t_list **head);
-void	sort_objectives(t_list **lst1, t_list **lst2, t_list **head);
+void	sort_dead_objective(t_list **lst1, t_list **lst2, t_list **head);
+void	sort_dead_path(t_list **lst1, t_list **lst2, t_list **head);
+void	sort_objective(t_list **lst1, t_list **lst2, t_list **head);
+void	sort_objective_path(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_len_path(t_list **lst1, t_list **lst2, t_list **head);
 void	debug(t_list *lst);
 void	debug_map(t_machine *machine, t_map *map);

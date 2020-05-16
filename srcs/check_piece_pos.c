@@ -1,10 +1,5 @@
 #include "filler.h"
 
-static t_map	*get_node(t_machine *machine, int x, int y)
-{
-	return (machine->mx[y][x]);
-}
-
 static int		check_piece_line(t_machine *machine, int play_y, t_map *piece,
 						t_map *piece_play)
 {
@@ -25,7 +20,7 @@ static int		check_piece_line(t_machine *machine, int play_y, t_map *piece,
 		}
 		else
 		{
-			node = get_node(machine, machine->play_x + i, play_y);
+			node = machine->mx[play_y][machine->play_x + i];
 			if ((piece->data & PIECE_PART) == PIECE_PART)
 			{
 				if (piece == piece_play && (node->data & P1_PLAY) != P1_PLAY)

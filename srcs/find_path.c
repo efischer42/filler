@@ -1,7 +1,5 @@
 #include "filler.h"
 
-#include <stdio.h>
-
 void		init_map_dir(t_map **map_dir, t_map *map)
 {
 	size_t	i;
@@ -28,22 +26,13 @@ void		init_map_dir(t_map **map_dir, t_map *map)
 	}
 }
 
-static int	check_empty_place(t_map *start, t_map *map, t_map *to_obj)
+static int	check_empty_place(t_map *to_obj)
 {
 	int			ret;
 
 	ret = TRUE;
-	if (map == start)
-	{
-		if ((to_obj != NULL && (to_obj->data & P1_PLAY)))
-		{
-			map->data |= PATH;
-			ret = FALSE;
-		}
-	}
-	else if (to_obj != NULL && ((to_obj->data & DANGER_ZONE)
-			|| (to_obj->data & P1_PLAY) || (to_obj->data & P2_PLAY)
-			|| (to_obj->data & PATH)))
+	if (to_obj != NULL && (/*(to_obj->data & P2_PLAY)
+			|| */(to_obj->data & PATH) || (to_obj->data & DANGER_ZONE)))
 	{
 		to_obj->data |= PATH;
 		ret = FALSE;
@@ -51,7 +40,7 @@ static int	check_empty_place(t_map *start, t_map *map, t_map *to_obj)
 	return (ret);
 }
 
-int			find_path(t_machine *machine, t_map *start, t_map *map, t_list **lst)
+int			find_path(t_machine *machine, t_map *map, t_list **lst)
 {
 	enum e_direction	i;
 	t_map				*map_dir[NB_DIR];
@@ -61,23 +50,21 @@ int			find_path(t_machine *machine, t_map *start, t_map *map, t_list **lst)
 	if (map == NULL)
 		return (TRUE);
 	init_map_dir(map_dir, map);
-	set_main_dir(machine, map, map_dir);
+//	set_main_dir(machine, map, map_dir);
 	while (i < NB_DIR_TO_OBJ)
 	{
-		if (check_empty_place(start, map, map_dir[machine->dir[i]]) == TRUE)
+		if (check_empty_place(map_dir[machine->dir[i]]) == TRUE)
 		{
-			map->data |= DEBUG;
-		//	debug_map(machine->map);
-		//	usleep(50000);
-		//	dprintf(2, "\033[2J\033[H");
-			if (find_path(machine, start, map_dir[machine->dir[i]], lst) == TRUE)
+	//		debug_map(machine, machine->map);
+	//		usleep(50000);
+	//		dprintf(2, "\033[2J\033[H");
+			if (find_path(machine, map_dir[machine->dir[i]], lst) == TRUE)
 			{
 				map->data |= DEBUG;
 				lst_new = ft_lstnewnomalloc(map, sizeof(*map));
 				ft_lstadd(lst, lst_new);
 				return (TRUE);
 			}
-			map->data &= ~DEBUG;
 		}
 		i++;
 	}

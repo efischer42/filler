@@ -1,10 +1,9 @@
 #include "filler.h"
 
-void		sort_objective_lst(t_list **lst1, t_list **lst2, t_list **head)
+void		sort_dead_objective(t_list **lst1, t_list **lst2, t_list **head)
 {
-	if (*((t_objective*)((*lst1)->content))->map->zone <
-			*((t_objective*)((*lst2)->content))->map->zone
-			&& ((t_objective*)((*lst1)->content))->dead == FALSE)
+	if (((t_objective*)((*lst1)->content))->dead == TRUE
+			&& ((t_objective*)((*lst2)->content))->dead == FALSE)
 	{
 		*head = *lst2;
 		*lst2 = (*lst2)->next;
@@ -16,11 +15,43 @@ void		sort_objective_lst(t_list **lst1, t_list **lst2, t_list **head)
 	}
 }
 
-void		sort_objectives(t_list **lst1, t_list **lst2, t_list **head)
+void		sort_objective(t_list **lst1, t_list **lst2, t_list **head)
 {
-	if (((t_path*)((*lst1)->content))->objective != NULL &&
-			((t_path*)((*lst2)->content))->objective != NULL &&
-			*((t_path*)((*lst1)->content))->objective->map->zone >
+	if (*((t_objective*)((*lst1)->content))->map->zone <
+			*((t_objective*)((*lst2)->content))->map->zone)
+	{
+		*head = *lst2;
+		*lst2 = (*lst2)->next;
+	}
+	else
+	{
+		*head = *lst1;
+		*lst1 = (*lst1)->next;
+	}
+}
+
+void		sort_dead_path(t_list **lst1, t_list **lst2, t_list **head)
+{
+	if (((t_path*)((*lst1)->content))->objective != NULL
+			&& ((t_path*)((*lst2)->content))->objective != NULL
+			&& ((t_path*)((*lst1)->content))->objective->dead == TRUE
+			&& ((t_path*)((*lst2)->content))->objective->dead == FALSE)
+	{
+		*head = *lst2;
+		*lst2 = (*lst2)->next;
+	}
+	else
+	{
+		*head = *lst1;
+		*lst1 = (*lst1)->next;
+	}
+}
+
+void		sort_objective_path(t_list **lst1, t_list **lst2, t_list **head)
+{
+	if (((t_path*)((*lst1)->content))->objective != NULL
+			&& ((t_path*)((*lst2)->content))->objective != NULL
+			&& *((t_path*)((*lst1)->content))->objective->map->zone <
 			*((t_path*)((*lst2)->content))->objective->map->zone)
 	{
 		*head = *lst2;

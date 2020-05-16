@@ -108,5 +108,4 @@ void		generate_map(t_machine *machine)
 		i++;
 	}
 	machine->map = machine->up_left_corner;
-	debug_map(machine, machine->map);
 }

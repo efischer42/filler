@@ -1,7 +1,5 @@
 #include "filler.h"
 
-#include <stdio.h>
-
 static int	search_from_up(t_machine *machine, t_map *map, t_map *piece)
 {
 	while (piece != NULL)
@@ -18,19 +16,18 @@ static int	search_from_up(t_machine *machine, t_map *map, t_map *piece)
 
 static int	search_from_down(t_machine *machine, t_map *map, t_map *piece)
 {
-	int		ret;
-
-	(void)machine;
-	ret = FALSE;
 	while (piece->down != NULL)
 		piece = piece->down;
 	while (piece != NULL)
 	{
 		if ((piece->data & PIECE_PART) == PIECE_PART)
-			ret = check_piece_pos(machine, map, machine->piece, piece);
+		{
+			if (check_piece_pos(machine, map, machine->piece, piece) == TRUE)
+				return (TRUE);
+		}
 		piece = piece->up;
 	}
-	return (ret);
+	return (FALSE);
 }
 
 static int	search_from_left(t_machine *machine, t_map *map, t_map *piece)
