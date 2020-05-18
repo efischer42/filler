@@ -31,8 +31,8 @@ static int	check_empty_place(t_map *to_obj)
 	int			ret;
 
 	ret = TRUE;
-	if (to_obj != NULL && (/*(to_obj->data & P2_PLAY)
-			|| */(to_obj->data & PATH) || (to_obj->data & DANGER_ZONE)))
+	if (to_obj != NULL && ((to_obj->data & PATH)
+		|| (to_obj->data & DANGER_ZONE)))
 	{
 		to_obj->data |= PATH;
 		ret = FALSE;

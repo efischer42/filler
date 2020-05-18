@@ -98,12 +98,9 @@ void		path(t_machine *machine, t_map *map)
 				while (objective_lst != NULL)
 				{
 					machine->cur_objective = objective_lst->content;
-					if (machine->cur_objective->dead == FALSE)
-					{
-						set_dir(machine, map);
-						if (set_path(machine, path) == TRUE)
-							break ;
-					}
+					set_dir(machine, map);
+					if (set_path(machine, path) == TRUE)
+						break ;
 					objective_lst = objective_lst->next;
 				}
 			}
@@ -117,5 +114,5 @@ void		path(t_machine *machine, t_map *map)
 	ft_merge_sort(&machine->path_lst, sort_objective_path);
 	ft_merge_sort(&machine->path_lst, sort_dead_path);
 //	debug_path_lst(machine->path_lst);
-//	debug_map(machine->map);
+//	debug_map(machine, machine->map);
 }

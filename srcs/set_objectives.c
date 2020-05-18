@@ -68,8 +68,8 @@ void			set_objectives(t_machine *machine)
 	new_objective(machine, machine->up_right_corner);
 	new_objective(machine, machine->bottom_left_corner);
 	new_objective(machine, machine->bottom_right_corner);
-	new_objective(machine, machine->mx[0][start->x]);
-	new_objective(machine, machine->mx[machine->map_height - 1][start->x]);
-	new_objective(machine, machine->mx[start->y][0]);
-	new_objective(machine, machine->mx[start->y][machine->map_width - 1]);
+	new_objective(machine, machine->mx[0][(machine->map_width + 1) / 2]);
+	new_objective(machine, machine->mx[machine->map_height - 1][(machine->map_width + 1) / 2]);
+	new_objective(machine, machine->mx[(machine->map_height + 1) / 2][0]);
+	new_objective(machine, machine->mx[(machine->map_height + 1) / 2][machine->map_width - 1]);
 }

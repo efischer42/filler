@@ -41,7 +41,7 @@ static void	check_objectives(t_machine *machine)
 
 void		play_turn(t_machine *machine)
 {
-//	dprintf(2, "ul: %zu, ur: %zu, dl: %zu, dr: %zu\n", machine->upl_zone,
+//	dprintf(2, "ul: %d, ur: %d, dl: %d, dr: %d\n", machine->upl_zone,
 //		machine->upr_zone, machine->downl_zone, machine->downr_zone);
 //	ft_putendl_fd("\nNew turn\n", 2);
 //	debug_map(machine, machine->map);
