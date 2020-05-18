@@ -50,7 +50,7 @@ int			find_path(t_machine *machine, t_map *map, t_list **lst)
 	if (map == NULL)
 		return (TRUE);
 	init_map_dir(map_dir, map);
-//	set_main_dir(machine, map, map_dir);
+	set_main_dir(machine, map, map_dir);
 	while (i < NB_DIR_TO_OBJ)
 	{
 		if (check_empty_place(map_dir[machine->dir[i]]) == TRUE)
