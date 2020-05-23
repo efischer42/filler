@@ -10,12 +10,12 @@ static void	clean_map(t_map *map)
 		while (map != NULL)
 		{
 			if ((map->data & DANGER_ZONE) == DANGER_ZONE)
-				*map->zone -= 1;
-			map->data &= ~(PATH | DANGER_ZONE);
+				*map->zone -= DGZ_WT;
+			map->data &= ~PATH;
+			map->data &= ~DANGER_ZONE;
 			map = map->right;
 		}
-		map = head_line;
-		map = map->down;
+		map = head_line->down;
 	}
 }
 
@@ -41,11 +41,13 @@ static void	check_objectives(t_machine *machine)
 
 void		play_turn(t_machine *machine)
 {
-//	dprintf(2, "ul: %d, ur: %d, dl: %d, dr: %d\n", machine->upl_zone,
-//		machine->upr_zone, machine->downl_zone, machine->downr_zone);
 //	ft_putendl_fd("\nNew turn\n", 2);
 //	debug_map(machine, machine->map);
 //	debug_map(machine, machine->piece);
+//	dprintf(2, "upl: %d upr: %d downl: %d downr: %d up: %d down: %d left: %d right: %d mid: %d\n",
+//		machine->upl_zone, machine->upr_zone, machine->downl_zone,
+//		machine->downr_zone, machine->up_zone, machine->down_zone,
+//		machine->left_zone, machine->right_zone, machine->mid_zone);
 	if (machine->mx == NULL)
 	{
 		generate_mx(machine);
@@ -58,7 +60,8 @@ void		play_turn(t_machine *machine)
 	debug_objective_lst(machine->objective_lst);
 	if (machine->state != ST_ERROR)
 	{
-		path(machine, machine->map);
+		if (machine->last_play != NULL)
+			path(machine, machine->map);
 		if (machine->state != ST_ERROR)
 			play(machine, machine->path_lst);
 		machine->last_play = NULL;

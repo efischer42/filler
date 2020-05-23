@@ -14,21 +14,52 @@ void		data_map(t_map *map, t_map *line, size_t y, size_t x)
 
 static void	map_zone(t_machine *machine, t_map *map)
 {
-	if (map->x < machine->map_width / 2 + (machine->map_width / 2) % 2)
+	if (map->x < (machine->map_width + 1) / 2)
 	{
-		if (map->y < machine->map_height / 2 + (machine->map_height / 2) % 2)
+		if (map->y < (machine->map_height + 1) / 2)
 			map->zone = &machine->upl_zone;
 		else
 			map->zone = &machine->downl_zone;
 	}
 	else
 	{
-		if (map->y < machine->map_height / 2 + (machine->map_height / 2) % 2)
+		if (map->y < (machine->map_height + 1) / 2)
 			map->zone = &machine->upr_zone;
 		else
 			map->zone = &machine->downr_zone;
 	}
 }
+
+/*static void	map_zone(t_machine *machine, t_map *map)
+{
+	if (map->x < machine->map_width / 3)
+	{
+		if (map->y < machine->map_height / 3)
+			map->zone = &machine->upl_zone;
+		else if (map->y > machine->map_height / 3 * 2)
+			map->zone = &machine->downl_zone;
+		else
+			map->zone = &machine->left_zone;
+	}
+	else if (map->x > machine->map_width / 3 * 2)
+	{
+		if (map->y < machine->map_height / 3)
+			map->zone = &machine->upr_zone;
+		else if (map->y > machine->map_height / 3 * 2)
+			map->zone = &machine->downr_zone;
+		else
+			map->zone = &machine->right_zone;
+	}
+	else
+	{
+		if (map->y < machine->map_height / 3)
+			map->zone = &machine->up_zone;
+		else if (map->y > machine->map_height / 3 * 2)
+			map->zone = &machine->down_zone;
+		else
+			map->zone = &machine->mid_zone;
+	}
+}*/
 
 void		add_map(t_map **line, t_map *new_map)
 {
@@ -66,8 +97,6 @@ static void	generate_line(t_map **new_line, t_map *last_line, size_t y,
 					t_machine *machine)
 {
 	t_map	*new_map;
-	t_path	path;
-	t_list	*lst_new;
 	size_t	i;
 
 	i = 0;
@@ -78,10 +107,6 @@ static void	generate_line(t_map **new_line, t_map *last_line, size_t y,
 		{
 			data_map(new_map, last_line, y, i);
 			map_zone(machine, new_map);
-			ft_bzero(&path, sizeof(path));
-			path.node = new_map;
-			lst_new = ft_lstnew(&path, sizeof(path));
-			ft_lstaddend(&machine->path_lst, lst_new);
 			set_corners(machine, new_map, y, i);
 			if (last_line != NULL)
 				last_line = last_line->right;

@@ -32,6 +32,9 @@
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
 # define NB_DIR_TO_OBJ			3
+# define DGZ_WT					1
+# define P1_WT					1
+# define P2_WT					0
 
 enum	e_functions
 {
@@ -70,15 +73,14 @@ typedef struct	s_map
 	size_t			x;
 	size_t			y;
 	int				*zone;
+	uint8_t			dead;
 	t_objective		*objective;
 }				t_map;
 
 typedef struct	s_path
 {
 	t_list			*lst;
-	t_map			*node;
 	size_t			path_len;
-	uint8_t			dead;
 	t_objective		*objective;
 }				t_path;
 
@@ -112,6 +114,10 @@ typedef struct	s_machine
 	int					upr_zone;
 	int					downl_zone;
 	int					downr_zone;
+	int					up_zone;
+	int					down_zone;
+	int					left_zone;
+	int					right_zone;
 	int					play_x;
 	int					play_y;
 	char				player;
@@ -146,9 +152,10 @@ typedef struct	s_token
 void	add_map(t_map **line, t_map *new_map);
 void	check_index_width(t_machine *machine, t_list *token_lst);
 void	data_map(t_map *map, t_map *line, size_t y, size_t x);
+void	check_map_arounds(t_map *map);
 int		check_piece_pos(t_machine *machine, t_map *node, t_map *piece,
 						t_map *piece_play);
-void	cut_path(t_machine *machine);
+void	cut_path(t_path *path);
 void	del_line(t_map **map);
 void	del_lst(void *content, size_t content_size);
 void	del_map(t_map **map);

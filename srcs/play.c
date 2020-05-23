@@ -18,9 +18,21 @@ static void		get_opt(t_machine *machine, t_map *node, t_map *objective)
 		machine->opt |= FROM_DOWN;
 }
 
+static t_map	*get_play_node(t_list *lst)
+{
+	while (lst != NULL && lst->next != NULL)
+	{
+		if ((((t_map*)(lst->next->content))->data & P1_PLAY) == FALSE)
+			return (lst->content);
+		lst = lst->next;
+	}
+	return (NULL);
+}
+
 void			play(t_machine *machine, t_list *path_lst)
 {
 	t_map	*objective;
+	t_map	*play_node;
 
 //	debug_path_lst(machine->path_lst);
 	if (machine->last_play != NULL)
@@ -32,9 +44,13 @@ void			play(t_machine *machine, t_list *path_lst)
 				objective = ((t_path*)(path_lst->content))->objective->map;
 				if (objective != NULL)
 				{
-					get_opt(machine, ((t_path*)(path_lst->content))->node, objective);
-					if (piece_placement(machine, ((t_path*)(path_lst->content))->node) == TRUE)
-						break ;
+					play_node = get_play_node(((t_path*)(path_lst->content))->lst);
+					if (play_node != NULL)
+					{
+						get_opt(machine, play_node, objective);
+						if (piece_placement(machine, play_node) == TRUE)
+							break ;
+					}
 				}
 			}
 			path_lst = path_lst->next;

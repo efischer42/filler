@@ -19,15 +19,25 @@ static char	*get_play(t_machine *machine, uint64_t data, int *zone)
 		play = ">";
 	else if ((data & DANGER_ZONE) == DANGER_ZONE)
 			play = "!";
-//	else if (zone == &machine->upl_zone)
-//		play = "1";
-//	else if (zone == &machine->upr_zone)
-//		play = "2";
-//	else if (zone == &machine->downl_zone)
-//		play = "3";
-//	else if (zone == &machine->downr_zone)
-//		play = "4";
-	return (play);
+/*	else if (zone == &machine->upl_zone)
+		play = "1";
+	else if (zone == &machine->up_zone)
+		play = "2";
+	else if (zone == &machine->upr_zone)
+		play = "3";
+	else if (zone == &machine->left_zone)
+		play = "4";
+	else if (zone == &machine->mid_zone)
+		play = "5";
+	else if (zone == &machine->right_zone)
+		play = "6";
+	else if (zone == &machine->downl_zone)
+		play = "7";
+	else if (zone == &machine->down_zone)
+		play = "8";
+	else if (zone == &machine->downr_zone)
+		play = "9";
+*/	return (play);
 }
 
 void		debug_map(t_machine *machine, t_map *map)

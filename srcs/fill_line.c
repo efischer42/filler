@@ -40,10 +40,10 @@ static void	fill_side(t_map *map, size_t dir, size_t dist)
 		if (map == NULL || (map->data & P2_PLAY) == P2_PLAY
 			|| (map->data & P1_PLAY) == P1_PLAY)
 			break ;
-		if ((map->data & DANGER_ZONE) != DANGER_ZONE)
+		if ((map->data & DANGER_ZONE) == FALSE)
 		{
 			map->data |= DANGER_ZONE;
-			*map->zone += 1;
+			*map->zone += DGZ_WT;
 		}
 		i++;
 	}
@@ -65,11 +65,11 @@ static void	fill_danger_zone(t_map *map, size_t dist, size_t pos)
 		{
 			break ;
 		}
-		if ((map->data & P1_PLAY) != P1_PLAY
-			&& (map->data & DANGER_ZONE) != DANGER_ZONE)
+		if ((map->data & P1_PLAY) == FALSE
+			&& (map->data & DANGER_ZONE) == FALSE)
 		{
 			map->data |= DANGER_ZONE;
-			*map->zone += 1;
+			*map->zone += DGZ_WT;
 		}
 		i++;
 		fill_side(map, dir, dist - i);
@@ -92,14 +92,14 @@ static void	fill_map_data(t_machine *machine, char c)
 {
 	if (c == machine->player && (machine->map->data & P1_PLAY) != P1_PLAY)
 	{
-		*machine->map->zone -= 1;
+		*machine->map->zone -= P1_WT;
 		machine->map->data |= P1_PLAY;
 		set_edges(machine, machine->map, &machine->edge);
 	}
 	else if (c == machine->opponent && (machine->map->data & P2_PLAY) != P2_PLAY)
 	{
+		*machine->map->zone += P2_WT;
 		machine->last_play = machine->map;
-		*machine->map->zone += 1;
 		machine->map->data |= P2_PLAY;
 		fill_opponent_zone(machine);
 		set_edges(machine, machine->map, &machine->edge);

@@ -26,13 +26,15 @@ void		init_map_dir(t_map **map_dir, t_map *map)
 	}
 }
 
-static int	check_empty_place(t_map *to_obj)
+static int	check_empty_place(t_machine *machine, t_map *to_obj)
 {
 	int			ret;
 
+	(void)machine;
 	ret = TRUE;
 	if (to_obj != NULL && ((to_obj->data & PATH)
-		|| (to_obj->data & DANGER_ZONE)))
+		|| (((to_obj->data & P2_PLAY) || (to_obj->data & DANGER_ZONE))
+		&& machine->cur_objective->dead == FALSE)))
 	{
 		to_obj->data |= PATH;
 		ret = FALSE;
@@ -47,17 +49,13 @@ int			find_path(t_machine *machine, t_map *map, t_list **lst)
 	t_list				*lst_new;
 
 	i = 0;
-	if (map == NULL)
+	if (map == NULL || map == machine->cur_objective->map)
 		return (TRUE);
 	init_map_dir(map_dir, map);
-	set_main_dir(machine, map, map_dir);
 	while (i < NB_DIR_TO_OBJ)
 	{
-		if (check_empty_place(map_dir[machine->dir[i]]) == TRUE)
+		if (check_empty_place(machine, map_dir[machine->dir[i]]) == TRUE)
 		{
-	//		debug_map(machine, machine->map);
-	//		usleep(50000);
-	//		dprintf(2, "\033[2J\033[H");
 			if (find_path(machine, map_dir[machine->dir[i]], lst) == TRUE)
 			{
 				map->data |= DEBUG;
@@ -69,5 +67,5 @@ int			find_path(t_machine *machine, t_map *map, t_list **lst)
 		i++;
 	}
 	map->data |= PATH;
-	return  (FALSE);
+	return (FALSE);
 }

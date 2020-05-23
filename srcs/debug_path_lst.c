@@ -29,8 +29,10 @@ void	debug_objective_lst(t_list *objective_lst)
 	ft_putendl_fd("\nDebug objective list\n", 2);
 	while (objective_lst != NULL)
 	{
-		dprintf(2, "objective x: %zu y: %zu\n", ((t_objective*)(objective_lst->content))->map->x,
-			((t_objective*)(objective_lst->content))->map->y);
+		dprintf(2, "objective x: %zu y: %zu dead: %d\n",
+			((t_objective*)(objective_lst->content))->map->x,
+			((t_objective*)(objective_lst->content))->map->y,
+			((t_objective*)(objective_lst->content))->dead);
 		objective_lst = objective_lst->next;
 	}
 }
