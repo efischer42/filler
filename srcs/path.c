@@ -124,7 +124,7 @@ void			path(t_machine *machine, t_map *map)
 	}
 	ft_merge_sort(&machine->path_lst, sort_len_path);
 	ft_merge_sort(&machine->path_lst, sort_objective_path);
-//	ft_merge_sort(&machine->path_lst, sort_dead_path);
+	ft_merge_sort(&machine->path_lst, sort_dead_path);
 //	debug_path_lst(machine->path_lst);
 //	debug_map(machine, machine->map);
 }
