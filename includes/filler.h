@@ -70,8 +70,8 @@ typedef struct	s_map
 	struct s_map	*up;
 	struct s_map	*down;
 	uint64_t		data;
-	size_t			x;
-	size_t			y;
+	int				x;
+	int				y;
 	int				*zone;
 	uint8_t			dead;
 	t_objective		*objective;
@@ -103,10 +103,10 @@ typedef struct	s_machine
 	t_list				*path_lst;
 	t_objective			*cur_objective;
 	enum e_direction	dir[NB_DIR_TO_OBJ];
-	size_t				map_height;
-	size_t				map_width;
-	size_t				piece_height;
-	size_t				piece_width;
+	int					map_height;
+	int					map_width;
+	int					piece_height;
+	int					piece_width;
 	size_t				dist;
 	char				*input;
 	char				*player_name;
@@ -151,7 +151,7 @@ typedef struct	s_token
 
 void	add_map(t_map **line, t_map *new_map);
 void	check_index_width(t_machine *machine, t_list *token_lst);
-void	data_map(t_map *map, t_map *line, size_t y, size_t x);
+void	data_map(t_map *map, t_map *line, int y, int x);
 void	check_map_arounds(t_map *map);
 int		check_piece_pos(t_machine *machine, t_map *node, t_map *piece,
 						t_map *piece_play);

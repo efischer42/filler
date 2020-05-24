@@ -30,7 +30,7 @@ static void	check_objectives(t_machine *machine)
 		edge = ((t_objective*)(objective_lst->content))->edge;
 		if ((machine->edge & edge) == edge)
 		{
-			dprintf(2, "objective x: %zu y: %zu\n",
+			dprintf(2, "objective x: %d y: %d\n",
 				((t_objective*)(objective_lst->content))->map->x,
 				((t_objective*)(objective_lst->content))->map->y);
 			((t_objective*)(objective_lst->content))->dead = TRUE;

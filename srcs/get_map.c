@@ -3,8 +3,8 @@
 static void	check_map_dimensions(t_machine *machine, t_list *token_lst)
 {
 	int		nb_count;
-	size_t	width;
-	size_t	height;
+	int		width;
+	int		height;
 
 	nb_count = 0;
 	while (((t_token*)(token_lst->content))->type != END)

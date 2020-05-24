@@ -5,11 +5,11 @@ void	print_path(t_list *lst)
 	if (lst != NULL)
 	{
 		ft_putendl_fd("", 2);
-		dprintf(2, "x: %zu y: %zu\n", ((t_map*)(lst->content))->x,
+		dprintf(2, "x: %d y: %d\n", ((t_map*)(lst->content))->x,
 				((t_map*)(lst->content))->y);
 		while (lst->next != NULL)
 			lst = lst->next;
-		dprintf(2, "x: %zu y: %zu\n", ((t_map*)(lst->content))->x,
+		dprintf(2, "x: %d y: %d\n", ((t_map*)(lst->content))->x,
 			((t_map*)(lst->content))->y);
 	}
 }
@@ -29,7 +29,7 @@ void	debug_objective_lst(t_list *objective_lst)
 	ft_putendl_fd("\nDebug objective list\n", 2);
 	while (objective_lst != NULL)
 	{
-		dprintf(2, "objective x: %zu y: %zu dead: %d\n",
+		dprintf(2, "objective x: %d y: %d dead: %d\n",
 			((t_objective*)(objective_lst->content))->map->x,
 			((t_objective*)(objective_lst->content))->map->y,
 			((t_objective*)(objective_lst->content))->dead);

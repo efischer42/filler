@@ -3,7 +3,7 @@
 static int		check_piece_line(t_machine *machine, int play_y, t_map *piece,
 						t_map *piece_play)
 {
-	size_t	i;
+	int		i;
 	int		ret;
 	t_map	*node;
 
@@ -44,7 +44,7 @@ static int		check_piece_line(t_machine *machine, int play_y, t_map *piece,
 int				check_piece_pos(t_machine *machine, t_map *node, t_map *piece,
 						t_map *piece_play)
 {
-	size_t	i;
+	int		i;
 	int		ret;
 
 	i = 0;

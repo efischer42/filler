@@ -104,10 +104,6 @@ void			set_edges(t_machine *machine, t_map *map, uint64_t *edge)
 			*edge |= LEFTD_EDGE;
 		else if (map->zone == &machine->downr_zone)
 			*edge |= RIGHTD_EDGE;
-		else if (map->zone == &machine->left_zone)
-			*edge |= (LEFTU_EDGE | LEFTD_EDGE);
-		else if (map->zone == &machine->right_zone)
-			*edge |= (RIGHTU_EDGE | RIGHTD_EDGE);
 	}
 	if (map->y == 0 || map->y == machine->map_height - 1)
 	{
@@ -119,17 +115,19 @@ void			set_edges(t_machine *machine, t_map *map, uint64_t *edge)
 			*edge |= DOWNL_EDGE;
 		else if (map->zone == &machine->downr_zone)
 			*edge |= DOWNR_EDGE;
-		else if (map->zone == &machine->up_zone)
-			*edge |= (UPL_EDGE | UPR_EDGE);
-		else if (map->zone == &machine->down_zone)
-			*edge |= (DOWNL_EDGE | DOWNR_EDGE);
 	}
 }
 
 static int		is_fair(t_machine *machine, t_map *opponent, t_map *start)
 {
-	if (start->x == machine->map_width - opponent->x
-		&& start->y == machine->map_height - opponent->y)
+//	dprintf(2, "dist: %zu\n", machine->dist);
+//	dprintf(2, "start x: %zu y: %zu, opponent x: %zu y: %zu\n",
+//		start->x, start->y, opponent->x, opponent->y);
+//	dprintf(2, "diff x: %d, diff y: %d\n",
+//		start->x - (machine->map_width - opponent->x),
+//		start->y - (machine->map_height - opponent->y));
+	if (ft_abs(start->x - (machine->map_width - opponent->x)) < machine->dist
+		&& ft_abs(start->y - (machine->map_height - opponent->y)) < machine->dist)
 	{
 		return (TRUE);
 	}

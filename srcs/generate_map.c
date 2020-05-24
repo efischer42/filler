@@ -1,6 +1,6 @@
 #include "filler.h"
 
-void		data_map(t_map *map, t_map *line, size_t y, size_t x)
+void		data_map(t_map *map, t_map *line, int y, int x)
 {
 	ft_bzero(map, sizeof(*map));
 	map->x = x;
@@ -81,7 +81,7 @@ void		add_map(t_map **line, t_map *new_map)
 	}
 }
 
-static void	set_corners(t_machine *machine, t_map *map, size_t y, size_t x)
+static void	set_corners(t_machine *machine, t_map *map, int y, int x)
 {
 	if (y == 0 && x == 0)
 		machine->up_left_corner = map;
@@ -93,11 +93,11 @@ static void	set_corners(t_machine *machine, t_map *map, size_t y, size_t x)
 		machine->bottom_right_corner = map;
 }
 
-static void	generate_line(t_map **new_line, t_map *last_line, size_t y,
+static void	generate_line(t_map **new_line, t_map *last_line, int y,
 					t_machine *machine)
 {
 	t_map	*new_map;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	while (i < machine->map_width)
@@ -120,7 +120,7 @@ void		generate_map(t_machine *machine)
 {
 	t_map	*new_line;
 	t_map	*last_line;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	last_line = NULL;

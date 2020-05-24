@@ -1,10 +1,10 @@
 #include "filler.h"
 
-static void	generate_line(t_map **new_line, t_map *last_line, size_t y,
+static void	generate_line(t_map **new_line, t_map *last_line, int y,
 					t_machine *machine)
 {
 	t_map	*new_piece;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	while (i < machine->piece_width)
@@ -25,7 +25,7 @@ void		generate_piece(t_machine *machine)
 {
 	t_map	*new_line;
 	t_map	*last_line;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	last_line = NULL;

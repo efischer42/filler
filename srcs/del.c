@@ -43,7 +43,7 @@ void	del_path_lst(t_list *path_lst)
 
 void	del_mx(t_machine *machine)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < machine->map_height)

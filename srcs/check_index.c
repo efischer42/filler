@@ -3,7 +3,7 @@
 static void	is_index_width_ok(t_machine *machine, char *index_line)
 {
 	char	c;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	c = '0';

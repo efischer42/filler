@@ -1,8 +1,8 @@
 #include "filler.h"
 
-static void	fill_line_mx(t_machine *machine, size_t line, t_map *map)
+static void	fill_line_mx(t_machine *machine, int line, t_map *map)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < machine->map_width && map != NULL)
@@ -16,7 +16,7 @@ static void	fill_line_mx(t_machine *machine, size_t line, t_map *map)
 void		generate_mx(t_machine *machine)
 {
 	t_map	*map;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	map = machine->map;
