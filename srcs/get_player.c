@@ -28,6 +28,6 @@ void		get_player(t_machine *machine)
 			machine->token_lst = machine->token_lst->next;
 		}
 		machine->state = ST_GET_MAP;
+		ft_lstdel(&head, del_lst);
 	}
-	ft_lstdel(&head, del_lst);
 }
