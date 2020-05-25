@@ -1,6 +1,6 @@
 #include "filler.h"
 
-void	retard_play(t_machine *machine, t_map *map)
+int		retard_play(t_machine *machine, t_map *map)
 {
 	t_map	*line_head;
 
@@ -14,12 +14,11 @@ void	retard_play(t_machine *machine, t_map *map)
 			if ((map->data & P1_PLAY) == P1_PLAY && map->dead == FALSE)
 			{
 				if (piece_placement(machine, map) == TRUE)
-					break ;
+					return (TRUE);
 			}
 			map = map->right;
 		}
-		if (map != NULL)
-			break ;
 		map = line_head->down;
 	}
+	return (FALSE);
 }

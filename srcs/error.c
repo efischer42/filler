@@ -2,7 +2,6 @@
 
 void	error(t_machine *machine)
 {
-	(void)machine;
 	ft_putendl_fd("Error", 2);
 	del_map(&machine->map);
 	ft_putstr("0 0\n");

@@ -186,7 +186,7 @@ void	path(t_machine *machine, t_map *map);
 int		piece_placement(t_machine *machine, t_map *map);
 void	play(t_machine *machine, t_list *path_play);
 void	play_turn(t_machine *machine);
-void	retard_play(t_machine *machine, t_map *map);
+int		retard_play(t_machine *machine, t_map *map);
 void	set_dir(t_machine *machine, t_map *map);
 void	set_edges(t_machine *machine, t_map *map, uint64_t *edge);
 void	set_objectives(t_machine *machine);

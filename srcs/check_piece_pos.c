@@ -11,9 +11,9 @@ static int		check_piece_line(t_machine *machine, int play_y, t_map *piece,
 	ret = TRUE;
 	while (i < machine->piece_width && piece != NULL)
 	{
-		if (play_y < 0 || machine->play_x + (int)i < 0
-			|| play_y >= (int)machine->map_height
-			|| machine->play_x + (int)i >= (int)machine->map_width)
+		if (play_y < 0 || machine->play_x + i < 0
+			|| play_y >= machine->map_height
+			|| machine->play_x + i >= machine->map_width)
 		{
 			if ((piece->data & PIECE_PART) == PIECE_PART)
 				ret = FALSE;

@@ -63,7 +63,7 @@ void		lexer(t_machine *machine)
 	pos = 0;
 	machine->token_lst = NULL;
 	init_token_lst(&machine->token_lst, START);
-	while (machine->input[pos] != '\0')
+	while (machine->input[pos] != '\0' && machine->state != ST_ERROR)
 	{
 		ft_bzero(&token, sizeof(token));
 		get_next_token(machine, &token, &pos, machine->input);

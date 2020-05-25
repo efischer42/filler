@@ -29,12 +29,7 @@ static void	check_objectives(t_machine *machine)
 	{
 		edge = ((t_objective*)(objective_lst->content))->edge;
 		if ((machine->edge & edge) == edge)
-		{
-			dprintf(2, "objective x: %d y: %d\n",
-				((t_objective*)(objective_lst->content))->map->x,
-				((t_objective*)(objective_lst->content))->map->y);
 			((t_objective*)(objective_lst->content))->dead = TRUE;
-		}
 		objective_lst = objective_lst->next;
 	}
 }
@@ -57,7 +52,7 @@ void		play_turn(t_machine *machine)
 		check_objectives(machine);
 	ft_merge_sort(&machine->objective_lst, sort_objective);
 	ft_merge_sort(&machine->objective_lst, sort_dead_objective);
-	debug_objective_lst(machine->objective_lst);
+//	debug_objective_lst(machine->objective_lst);
 	if (machine->state != ST_ERROR)
 	{
 		if (machine->last_play != NULL)

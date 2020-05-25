@@ -23,5 +23,6 @@ int					main(int ac, char **av)
 	del_map(&machine.map);
 	del_mx(&machine);
 	del_objective_lst(machine.objective_lst);
+	ft_putendl_fd("Process well terminated", 2);
 	return (EXIT_SUCCESS);
 }

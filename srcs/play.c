@@ -34,6 +34,7 @@ void			play(t_machine *machine, t_list *path_lst)
 	t_map	*objective;
 	t_map	*play_node;
 
+	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
 //	debug_path_lst(machine->path_lst);
 	if (machine->last_play != NULL)
 	{
@@ -59,7 +60,11 @@ void			play(t_machine *machine, t_list *path_lst)
 	if (path_lst == NULL || machine->last_play == NULL)
 	{
 		get_opt(machine, machine->map, ((t_objective*)(machine->objective_lst->content))->map);
-		retard_play(machine, machine->map);
+		if (retard_play(machine, machine->map) == FALSE)
+		{
+			machine->play_x = 0;
+			machine->play_y = 0;
+		}
 	}
 //	debug_map(machine, machine->map);
 //	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
