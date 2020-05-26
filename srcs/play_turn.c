@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:40 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:41 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/26 12:46:55 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void		play_turn(t_machine *machine)
 	if (machine->mx == NULL)
 	{
 		generate_mx(machine);
+		if (machine->state == ST_ERROR)
+			return ;
 		set_objectives(machine);
 	}
 	if (machine->last_play != NULL)

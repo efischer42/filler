@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:12 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/26 12:47:22 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void		generate_mx(t_machine *machine)
 		machine->mx[i] = (t_map**)malloc(sizeof(t_map*) * machine->map_width);
 		if (machine->mx[i] == NULL)
 		{
-			//voir plus tard
+			del_mx(machine);
+			machine->state = ST_ERROR;
 			return ;
 		}
 		fill_line_mx(machine, i, map);
