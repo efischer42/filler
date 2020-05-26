@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:09:36 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:44:42 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/26 13:37:00 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,4 @@ void	del_path_lst(t_list *path_lst)
 	ft_lstdel(&((t_path*)(path_lst->content))->lst, del_path);
 	free(path_lst->content);
 	free(path_lst);
-}
-
-void	del_mx(t_machine *machine)
-{
-	int	i;
-
-	i = 0;
-	while (i < machine->map_height && machine->mx[i] != NULL)
-	{
-		free(machine->mx[i]);
-		i++;
-	}
-	free(machine->mx);
-}
-
-void	del_objective_lst(t_list *objective_lst)
-{
-	if (objective_lst == NULL)
-		return ;
-	del_objective_lst(objective_lst->next);
-	free(objective_lst->content);
-	free(objective_lst);
 }

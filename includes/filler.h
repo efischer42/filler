@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   filler.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 13:54:40 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 14:02:12 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FILLER_H
 # define FILLER_H
 
@@ -35,120 +47,14 @@
 # define P1_WT					1
 # define P2_WT					0
 
-enum	e_functions
-{
-	ST_GET_PLAYER,
-	ST_GET_MAP,
-	ST_GET_PIECE,
-	ST_ERROR,
-};
-
-enum	e_direction
-{
-	UP,
-	UP_RIGHT,
-	RIGHT,
-	DOWN_RIGHT,
-	DOWN,
-	DOWN_LEFT,
-	LEFT,
-	UP_LEFT
-};
-
-typedef struct	s_objective
-{
-	struct s_map	*map;
-	uint64_t		edge;
-	int				dead;
-}				t_objective;
-
-typedef struct	s_map
-{
-	struct s_map	*left;
-	struct s_map	*right;
-	struct s_map	*up;
-	struct s_map	*down;
-	uint64_t		data;
-	int				x;
-	int				y;
-	int				*zone;
-	uint8_t			dead;
-	t_objective		*objective;
-}				t_map;
-
-typedef struct	s_path
-{
-	t_list			*lst;
-	size_t			path_len;
-	t_objective		*objective;
-}				t_path;
-
-typedef struct	s_machine
-{
-	uint64_t			state;
-	uint64_t			opt;
-	uint64_t			edge;
-	t_map				***mx;
-	t_map				*map;
-	t_map				*head_map;
-	t_map				*piece;
-	t_map				*head_piece;
-	t_map				*last_play;
-	t_list				*token_lst;
-	t_list				*objective_lst;
-	t_list				*path_lst;
-	t_objective			*cur_objective;
-	enum e_direction	dir[NB_DIR_TO_OBJ];
-	int					map_height;
-	int					map_width;
-	int					piece_height;
-	int					piece_width;
-	size_t				dist;
-	char				*input;
-	char				*player_name;
-	int					upl_zone;
-	int					upr_zone;
-	int					downl_zone;
-	int					downr_zone;
-	int					up_zone;
-	int					down_zone;
-	int					left_zone;
-	int					right_zone;
-	int					play_x;
-	int					play_y;
-	char				player;
-	char				player_last;
-	char				opponent;
-	char				opponent_last;
-}						t_machine;
-
-enum e_token
-{
-	DOLLARS,
-	EXEC,
-	P1,
-	P2,
-	COLON,
-	PLATEAU,
-	PIECE,
-	SPACE,
-	START,
-	END,
-	PLAYER_NAME,
-	NB,
-	LINE
-};
-
-typedef struct	s_token
-{
-	enum e_token	type;
-	char			*value;
-}				t_token;
+# include "filler_enum.h"
+# include "filler_struct.h"
 
 void	add_map(t_map **line, t_map *new_map);
 void	check_index_width(t_machine *machine, t_list *token_lst);
 void	data_map(t_map *map, t_map *line, int y, int x);
 void	check_map_arounds(t_map *map);
+int		check_path(t_path *path, t_list *lst, t_map *map);
 int		check_piece_pos(t_machine *machine, t_map *node, t_map *piece,
 						t_map *piece_play);
 void	cut_path(t_path *path);

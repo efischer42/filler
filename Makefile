@@ -10,9 +10,11 @@ DFLSGS += -g3
 
 PATHSRCS = srcs/
 SRCS += check_index.c
+SRCS += check_path.c
 SRCS += check_piece_pos.c
 SRCS += cut_path.c
 SRCS += del.c
+SRCS += del2.c
 SRCS += error.c
 SRCS += fill_line.c
 SRCS += fill_map.c

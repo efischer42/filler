@@ -6,25 +6,19 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:35 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:36 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/26 13:53:12 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static void	init_enum_tab(enum e_token **enum_tab)
+static void	init_enum_tab1(enum e_token **enum_tab)
 {
 	static enum e_token	token_dollars[] = {EXEC, TAB_END};
 	static enum e_token	token_exec[] = {P1, P2, TAB_END};
 	static enum e_token	token_player_number[] = {COLON, TAB_END};
 	static enum e_token	token_colon[] = {SPACE, END, TAB_END};
 	static enum e_token	token_map[] = {NB, TAB_END};
-	static enum e_token	token_space[] = {PLAYER_NAME, NB, LINE, SPACE, TAB_END};
-	static enum e_token	token_start[] = {DOLLARS, PLATEAU, SPACE, NB, PIECE,
-								LINE, TAB_END};
-	static enum e_token	token_player_name[] = {END, TAB_END};
-	static enum e_token	token_nb[] = {SPACE, COLON, END, TAB_END};
-	static enum e_token	token_line[] = {END, TAB_END};
 
 	enum_tab[DOLLARS] = token_dollars;
 	enum_tab[EXEC] = token_exec;
@@ -33,6 +27,17 @@ static void	init_enum_tab(enum e_token **enum_tab)
 	enum_tab[COLON] = token_colon;
 	enum_tab[PLATEAU] = token_map;
 	enum_tab[PIECE] = token_map;
+}
+
+static void	init_enum_tab2(enum e_token **enum_tab)
+{
+	static enum e_token	token_space[] = {PLAYER_NAME, NB, LINE, SPACE, TAB_END};
+	static enum e_token	token_start[] = {DOLLARS, PLATEAU, SPACE, NB, PIECE,
+								LINE, TAB_END};
+	static enum e_token	token_player_name[] = {END, TAB_END};
+	static enum e_token	token_nb[] = {SPACE, COLON, END, TAB_END};
+	static enum e_token	token_line[] = {END, TAB_END};
+
 	enum_tab[SPACE] = token_space;
 	enum_tab[START] = token_start;
 	enum_tab[END] = NULL;
@@ -66,7 +71,10 @@ void		parser(t_machine *machine, t_list *token_lst)
 	enum e_token		last_type;
 
 	if (enum_tab[0] == NULL)
-		init_enum_tab(enum_tab);
+	{
+		init_enum_tab1(enum_tab);
+		init_enum_tab2(enum_tab);
+	}
 	while (((t_token*)(token_lst->content))->type != END)
 	{
 		last_type = ((t_token*)(token_lst->content))->type;
