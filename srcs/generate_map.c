@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   generate_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:07 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:34:20 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 void		data_map(t_map *map, t_map *line, int y, int x)
@@ -30,37 +42,6 @@ static void	map_zone(t_machine *machine, t_map *map)
 	}
 }
 
-/*static void	map_zone(t_machine *machine, t_map *map)
-{
-	if (map->x < machine->map_width / 3)
-	{
-		if (map->y < machine->map_height / 3)
-			map->zone = &machine->upl_zone;
-		else if (map->y > machine->map_height / 3 * 2)
-			map->zone = &machine->downl_zone;
-		else
-			map->zone = &machine->left_zone;
-	}
-	else if (map->x > machine->map_width / 3 * 2)
-	{
-		if (map->y < machine->map_height / 3)
-			map->zone = &machine->upr_zone;
-		else if (map->y > machine->map_height / 3 * 2)
-			map->zone = &machine->downr_zone;
-		else
-			map->zone = &machine->right_zone;
-	}
-	else
-	{
-		if (map->y < machine->map_height / 3)
-			map->zone = &machine->up_zone;
-		else if (map->y > machine->map_height / 3 * 2)
-			map->zone = &machine->down_zone;
-		else
-			map->zone = &machine->mid_zone;
-	}
-}*/
-
 void		add_map(t_map **line, t_map *new_map)
 {
 	t_map	*head;
@@ -81,18 +62,6 @@ void		add_map(t_map **line, t_map *new_map)
 	}
 }
 
-static void	set_corners(t_machine *machine, t_map *map, int y, int x)
-{
-	if (y == 0 && x == 0)
-		machine->up_left_corner = map;
-	else if (y == 0 && x == machine->map_width - 1)
-		machine->up_right_corner = map;
-	else if (y == machine->map_height - 1 && x == 0)
-		machine->bottom_left_corner = map;
-	else if (y == machine->map_height - 1 && x == machine->map_width - 1)
-		machine->bottom_right_corner = map;
-}
-
 static void	generate_line(t_map **new_line, t_map *last_line, int y,
 					t_machine *machine)
 {
@@ -107,7 +76,6 @@ static void	generate_line(t_map **new_line, t_map *last_line, int y,
 		{
 			data_map(new_map, last_line, y, i);
 			map_zone(machine, new_map);
-			set_corners(machine, new_map, y, i);
 			if (last_line != NULL)
 				last_line = last_line->right;
 			add_map(new_line, new_map);
@@ -129,8 +97,10 @@ void		generate_map(t_machine *machine)
 	{
 		new_line = NULL;
 		generate_line(&new_line, last_line, i, machine);
+		if (machine->head_map == NULL)
+			machine->head_map = new_line;
 		last_line = new_line;
 		i++;
 	}
-	machine->map = machine->up_left_corner;
+	machine->map = machine->head_map;
 }

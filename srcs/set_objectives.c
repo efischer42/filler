@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_objectives.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:47 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:20:33 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 static void		get_start(t_map *map, t_map **start, t_map **opponent)
@@ -19,78 +31,6 @@ static void		get_start(t_map *map, t_map **start, t_map **opponent)
 		map = map->down;
 	}
 }
-
-/*static void		set_zone(t_machine *machine, t_map *map)
-{
-	int		*zone;
-
-	zone = map->zone;
-	if (map->x > (machine->map_width + 1) / 3
-		&& map->x < machine->map_width / 3 * 2)
-	{
-		if (map->y < (machine->map_height + 1) / 2)
-			map->zone = &machine->up_zone;
-		else
-			map->zone = &machine->down_zone;
-		if ((map->data & P2_PLAY) == P2_PLAY)
-		{
-			(*map->zone) += P2_WT;
-			(*zone) -= P2_WT;
-		}
-		else if ((map->data & DANGER_ZONE) == DANGER_ZONE)
-		{
-			(*map->zone) += DGZ_WT;
-			(*zone) -= DGZ_WT;
-		}
-	}
-	else if (map->y > (machine->map_height + 1) / 3
-		&& map->y < machine->map_height / 3 * 2)
-	{
-		if (map->x < (machine->map_width + 1) / 2)
-			map->zone = &machine->left_zone;
-		else
-			map->zone = &machine->right_zone;
-		if ((map->data & P2_PLAY) == P2_PLAY)
-		{
-			(*map->zone) += P2_WT;
-			(*zone) -= P2_WT;
-		}
-		else if ((map->data & DANGER_ZONE) == DANGER_ZONE)
-		{
-			(*map->zone) += DGZ_WT;
-			(*zone) -= DGZ_WT;
-		}
-	}
-}
-
-static void		zone(t_machine *machine, t_map *opponent)
-{
-	t_map	*map;
-	t_map	*head_line;
-
-	(void)opponent;
-	map = machine->map;
-	while (map != NULL)
-	{
-		head_line = map;
-		while (map != NULL)
-		{
-			if ((opponent->x < (machine->map_width + 1) / 3
-				&& map->x < (machine->map_width + 1) / 3)
-				|| (opponent->y < (machine->map_height + 1) / 3
-				&& map->y < (machine->map_height + 1) / 3)
-				|| (opponent->x > machine->map_width / 3 * 2
-				&& map->x > machine->map_width / 3 * 2)
-				|| (opponent->y > machine->map_height / 3 * 2
-				&& map->y > machine->map_height / 3 * 2))
-			{
-				set_zone(machine, map);
-			}
-			map = map->right;
-		}
-		map = head_line->down;
-	}
-}*/
 
 void			set_edges(t_machine *machine, t_map *map, uint64_t *edge)
 {
@@ -120,28 +60,27 @@ void			set_edges(t_machine *machine, t_map *map, uint64_t *edge)
 
 static int		is_fair(t_machine *machine, t_map *opponent, t_map *start)
 {
-//	dprintf(2, "dist: %zu\n", machine->dist);
-//	dprintf(2, "start x: %zu y: %zu, opponent x: %zu y: %zu\n",
-//		start->x, start->y, opponent->x, opponent->y);
-//	dprintf(2, "diff x: %d, diff y: %d\n",
-//		start->x - (machine->map_width - opponent->x),
-//		start->y - (machine->map_height - opponent->y));
 	if (ft_abs(start->x - (machine->map_width - opponent->x)) < machine->dist
-		&& ft_abs(start->y - (machine->map_height - opponent->y)) < machine->dist)
+		&& ft_abs(start->y - (machine->map_height - opponent->y))
+		< machine->dist)
 	{
 		return (TRUE);
 	}
 	return (FALSE);
 }
 
-static void		new_objective(t_machine *machine, t_map *map, t_map *opponent, t_map *start)
+static void		new_objective(t_machine *machine, t_map *map, t_map *opponent,
+					t_map *start)
 {
 	t_objective	objective;
 	t_list		*lst_new;
 
 	ft_bzero(&objective, sizeof(objective));
-	if (is_fair(machine, opponent, start) == FALSE && (map->zone == opponent->zone || map->zone == start->zone))
+	if (is_fair(machine, opponent, start) == FALSE
+		&& (map->zone == opponent->zone || map->zone == start->zone))
+	{
 		objective.dead = TRUE;
+	}
 	objective.map = map;
 	set_edges(machine, map, &objective.edge);
 	lst_new = ft_lstnew(&objective, sizeof(objective));
@@ -157,17 +96,12 @@ void			set_objectives(t_machine *machine)
 	start = NULL;
 	opponent = NULL;
 	get_start(machine->map, &start, &opponent);
-//	zone(machine, opponent);
-	new_objective(machine, machine->up_left_corner, opponent, start);
-	new_objective(machine, machine->up_right_corner, opponent, start);
-	new_objective(machine, machine->bottom_left_corner, opponent, start);
-	new_objective(machine, machine->bottom_right_corner, opponent, start);
-/*	if (opponent->x < start->x)
-		new_objective(machine, machine->mx[(machine->map_height + 1) / 2][0]);
-	if (opponent->x > start->x)
-		new_objective(machine, machine->mx[(machine->map_height + 1) / 2][machine->map_width - 1]);
-	if (opponent->y < start->y)
-		new_objective(machine, machine->mx[0][(machine->map_width + 1) / 2]);
-	if (opponent->y > start->y)
-		new_objective(machine, machine->mx[machine->map_height - 1][(machine->map_width + 1) / 2]);
-*/}
+	new_objective(machine, machine->mx[0][0], opponent, start);
+	new_objective(machine, machine->mx[0][machine->map_width - 1], opponent,
+		start);
+	new_objective(machine, machine->mx[machine->map_height - 1][0], opponent,
+		start);
+	new_objective(machine,
+		machine->mx[machine->map_height - 1][machine->map_width - 1], opponent,
+		start);
+}

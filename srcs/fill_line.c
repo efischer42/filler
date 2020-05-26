@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_line.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:09:41 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:15:29 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 static int	check_line(t_list *token_lst, size_t width)
@@ -77,7 +89,7 @@ static void	fill_danger_zone(t_map *map, size_t dist, size_t pos)
 }
 
 static void	fill_opponent_zone(t_machine *machine)
-{	
+{
 	size_t	i;
 
 	i = 0;
@@ -96,7 +108,8 @@ static void	fill_map_data(t_machine *machine, char c)
 		machine->map->data |= P1_PLAY;
 		set_edges(machine, machine->map, &machine->edge);
 	}
-	else if (c == machine->opponent && (machine->map->data & P2_PLAY) != P2_PLAY)
+	else if (c == machine->opponent
+		&& (machine->map->data & P2_PLAY) != P2_PLAY)
 	{
 		*machine->map->zone += P2_WT;
 		machine->last_play = machine->map;

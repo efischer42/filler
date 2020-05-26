@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug_path_lst.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:09:33 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:09:35 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 void	print_path(t_list *lst)
@@ -5,12 +17,12 @@ void	print_path(t_list *lst)
 	if (lst != NULL)
 	{
 		ft_putendl_fd("", 2);
-		dprintf(2, "x: %d y: %d\n", ((t_map*)(lst->content))->x,
-				((t_map*)(lst->content))->y);
+//		dprintf(2, "x: %d y: %d\n", ((t_map*)(lst->content))->x,
+//				((t_map*)(lst->content))->y);
 		while (lst->next != NULL)
 			lst = lst->next;
-		dprintf(2, "x: %d y: %d\n", ((t_map*)(lst->content))->x,
-			((t_map*)(lst->content))->y);
+//		dprintf(2, "x: %d y: %d\n", ((t_map*)(lst->content))->x,
+//			((t_map*)(lst->content))->y);
 	}
 }
 
@@ -29,10 +41,10 @@ void	debug_objective_lst(t_list *objective_lst)
 	ft_putendl_fd("\nDebug objective list\n", 2);
 	while (objective_lst != NULL)
 	{
-		dprintf(2, "objective x: %d y: %d dead: %d\n",
-			((t_objective*)(objective_lst->content))->map->x,
-			((t_objective*)(objective_lst->content))->map->y,
-			((t_objective*)(objective_lst->content))->dead);
+//		dprintf(2, "objective x: %d y: %d dead: %d\n",
+//			((t_objective*)(objective_lst->content))->map->x,
+//			((t_objective*)(objective_lst->content))->map->y,
+//			((t_objective*)(objective_lst->content))->dead);
 		objective_lst = objective_lst->next;
 	}
 }

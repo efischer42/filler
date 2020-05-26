@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_piece.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:00 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:10:02 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 static int	check_line(t_list *token_lst, size_t width)
@@ -44,7 +56,7 @@ static int	fill_piece_line(t_machine *machine, t_list *token_lst)
 	return (ret);
 }
 
-void	fill_piece(t_machine *machine, t_list *token_lst)
+void		fill_piece(t_machine *machine, t_list *token_lst)
 {
 	while (((t_token*)(token_lst->content))->type != END)
 	{

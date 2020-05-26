@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   play.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:39 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:10:40 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 static void		get_opt(t_machine *machine, t_map *node, t_map *objective)
@@ -29,47 +41,50 @@ static t_map	*get_play_node(t_list *lst)
 	return (NULL);
 }
 
-void			play(t_machine *machine, t_list *path_lst)
+static int		play_path(t_machine *machine, t_list *path_lst)
 {
 	t_map	*objective;
 	t_map	*play_node;
 
-	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
-//	debug_path_lst(machine->path_lst);
-	if (machine->last_play != NULL)
+	while (path_lst != NULL)
 	{
-		while (path_lst != NULL)
+		if (((t_path*)(path_lst->content))->objective != NULL)
 		{
-			if (((t_path*)(path_lst->content))->objective != NULL)
+			objective = ((t_path*)(path_lst->content))->objective->map;
+			if (objective != NULL)
 			{
-				objective = ((t_path*)(path_lst->content))->objective->map;
-				if (objective != NULL)
+				play_node = get_play_node(((t_path*)(path_lst->content))->lst);
+				if (play_node != NULL)
 				{
-					play_node = get_play_node(((t_path*)(path_lst->content))->lst);
-					if (play_node != NULL)
-					{
-						get_opt(machine, play_node, objective);
-						if (piece_placement(machine, play_node) == TRUE)
-							break ;
-					}
+					get_opt(machine, play_node, objective);
+					if (piece_placement(machine, play_node) == TRUE)
+						return (TRUE);
 				}
 			}
-			path_lst = path_lst->next;
 		}
+		path_lst = path_lst->next;
 	}
-	if (path_lst == NULL || machine->last_play == NULL)
+	return (FALSE);
+}
+
+void			play(t_machine *machine, t_list *path_lst)
+{
+	int	ret;
+
+	ret = FALSE;
+	if (machine->last_play != NULL)
+		ret = play_path(machine, path_lst);
+	if (ret == FALSE || machine->last_play == NULL)
 	{
-		get_opt(machine, machine->map, ((t_objective*)(machine->objective_lst->content))->map);
+		get_opt(machine, machine->map,
+			((t_objective*)(machine->objective_lst->content))->map);
 		if (retard_play(machine, machine->map) == FALSE)
 		{
 			machine->play_x = 0;
 			machine->play_y = 0;
 		}
 	}
-//	debug_map(machine, machine->map);
-//	dprintf(2, "%d %d\n", machine->play_y, machine->play_x);
 	ft_printf("%d %d\n", machine->play_y, machine->play_x);
-//	usleep(500000);
 	machine->state = ST_GET_MAP;
 	del_map(&machine->head_piece);
 	machine->piece = machine->head_piece;

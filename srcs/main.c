@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:33 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:10:34 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
-int					main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	t_machine	machine;
 	char		*line;
@@ -23,6 +35,5 @@ int					main(int ac, char **av)
 	del_map(&machine.map);
 	del_mx(&machine);
 	del_objective_lst(machine.objective_lst);
-	ft_putendl_fd("Process well terminated", 2);
 	return (EXIT_SUCCESS);
 }

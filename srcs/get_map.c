@@ -1,28 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_map.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:18 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:10:19 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
+
+static int	set_height_width(t_machine *machine, t_list *token_lst, int nb_count)
+{
+	int	width;
+	int	height;
+	int	ret;
+
+	ret = TRUE;
+	if (nb_count == 0)
+	{
+		height = ft_atoi(((t_token*)(token_lst->content))->value);
+		if (machine->map_height != height)
+			ret = FALSE;
+	}
+	else
+	{
+		width = ft_atoi(((t_token*)(token_lst->content))->value);
+		if (machine->map_width != width)
+			ret = FALSE;
+	}
+	return (ret);
+}
 
 static void	check_map_dimensions(t_machine *machine, t_list *token_lst)
 {
 	int		nb_count;
-	int		width;
-	int		height;
 
 	nb_count = 0;
 	while (((t_token*)(token_lst->content))->type != END)
 	{
 		if (((t_token*)(token_lst->content))->type == NB)
 		{
-			if (nb_count == 0)
-			{
-				height = ft_atoi(((t_token*)(token_lst->content))->value);
-				if (machine->map_height != height)
-					break;
-			}
-			else
-			{
-				width = ft_atoi(((t_token*)(token_lst->content))->value);
-				if (machine->map_width != width)
-					break;
-			}
+			if (set_height_width(machine, token_lst, nb_count) == FALSE)
+				break ;
 			nb_count++;
 		}
 		token_lst = token_lst->next;

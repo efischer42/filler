@@ -1,6 +1,16 @@
-#include "filler.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:09:56 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:26:45 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdio.h>
+#include "filler.h"
 
 static int	check_index_height(t_list *token_lst, size_t i)
 {
@@ -40,7 +50,7 @@ void		fill_map(t_machine *machine, t_list *token_lst)
 			{
 				fill_line(machine, token_lst);
 				machine->state = ST_GET_PIECE;
-				machine->map = machine->up_left_corner;
+				machine->map = machine->head_map;
 			}
 			else
 				fill_line(machine, token_lst);

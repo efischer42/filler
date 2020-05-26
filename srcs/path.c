@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:37 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:10:37 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 static t_path	*get_path(t_machine *machine, t_map *cur_map)
@@ -93,13 +105,25 @@ static int		set_path(t_machine *machine, t_path *path, t_map *map)
 	return (FALSE);
 }
 
+static void		set_new_path(t_machine *machine, t_path **path)
+{
+	t_path	new_path;
+	t_list	*lst_new;
+
+	if (*path == NULL)
+	{
+		ft_bzero(&new_path, sizeof(new_path));
+		lst_new = ft_lstnew(&new_path, sizeof(new_path));
+		ft_lstadd(&machine->path_lst, lst_new);
+		*path = lst_new->content;
+	}
+}
+
 void			path(t_machine *machine, t_map *map)
 {
 	t_map	*head_line;
 	t_path	*path;
-	t_path	new_path;
-	t_list	*lst_new;
-	
+
 	while (map != NULL)
 	{
 		head_line = map;
@@ -108,13 +132,7 @@ void			path(t_machine *machine, t_map *map)
 			if ((map->data & P1_PLAY) == P1_PLAY && map->dead == FALSE)
 			{
 				path = get_path(machine, map);
-				if (path == NULL)
-				{
-					ft_bzero(&new_path, sizeof(new_path));
-					lst_new = ft_lstnew(&new_path, sizeof(new_path));
-					ft_lstadd(&machine->path_lst, lst_new);
-					path = lst_new->content;
-				}
+				set_new_path(machine, &path);
 				if (set_path(machine, path, map) == TRUE)
 					break ;
 			}
@@ -125,6 +143,4 @@ void			path(t_machine *machine, t_map *map)
 	ft_merge_sort(&machine->path_lst, sort_len_path);
 	ft_merge_sort(&machine->path_lst, sort_objective_path);
 	ft_merge_sort(&machine->path_lst, sort_dead_path);
-//	debug_path_lst(machine->path_lst);
-//	debug_map(machine, machine->map);
 }

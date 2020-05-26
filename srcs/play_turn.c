@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   play_turn.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:40 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:10:41 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 static void	clean_map(t_map *map)
@@ -36,13 +48,6 @@ static void	check_objectives(t_machine *machine)
 
 void		play_turn(t_machine *machine)
 {
-//	ft_putendl_fd("\nNew turn\n", 2);
-//	debug_map(machine, machine->map);
-//	debug_map(machine, machine->piece);
-//	dprintf(2, "upl: %d upr: %d downl: %d downr: %d up: %d down: %d left: %d right: %d mid: %d\n",
-//		machine->upl_zone, machine->upr_zone, machine->downl_zone,
-//		machine->downr_zone, machine->up_zone, machine->down_zone,
-//		machine->left_zone, machine->right_zone, machine->mid_zone);
 	if (machine->mx == NULL)
 	{
 		generate_mx(machine);
@@ -52,7 +57,6 @@ void		play_turn(t_machine *machine)
 		check_objectives(machine);
 	ft_merge_sort(&machine->objective_lst, sort_objective);
 	ft_merge_sort(&machine->objective_lst, sort_dead_objective);
-//	debug_objective_lst(machine->objective_lst);
 	if (machine->state != ST_ERROR)
 	{
 		if (machine->last_play != NULL)

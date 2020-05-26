@@ -2,7 +2,6 @@
 # define FILLER_H
 
 # include "libft.h"
-# include <stdio.h>//
 
 # define P1_CHAR				'O'
 # define P2_CHAR				'X'
@@ -91,10 +90,7 @@ typedef struct	s_machine
 	uint64_t			edge;
 	t_map				***mx;
 	t_map				*map;
-	t_map				*up_left_corner;
-	t_map				*up_right_corner;
-	t_map				*bottom_left_corner;
-	t_map				*bottom_right_corner;
+	t_map				*head_map;
 	t_map				*piece;
 	t_map				*head_piece;
 	t_map				*last_play;

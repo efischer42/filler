@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/26 12:10:35 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/26 12:10:36 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "filler.h"
 
 static void	init_enum_tab(enum e_token **enum_tab)
@@ -20,7 +32,7 @@ static void	init_enum_tab(enum e_token **enum_tab)
 	enum_tab[P2] = token_player_number;
 	enum_tab[COLON] = token_colon;
 	enum_tab[PLATEAU] = token_map;
-	enum_tab[PIECE] =  token_map;
+	enum_tab[PIECE] = token_map;
 	enum_tab[SPACE] = token_space;
 	enum_tab[START] = token_start;
 	enum_tab[END] = NULL;
