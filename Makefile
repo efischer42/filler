@@ -16,6 +16,7 @@ SRCS += del.c
 SRCS += error.c
 SRCS += fill_line.c
 SRCS += fill_map.c
+SRCS += fill_opponent_zone.c
 SRCS += fill_piece.c
 SRCS += find_path.c
 SRCS += generate_map.c
@@ -39,9 +40,6 @@ SRCS += set_dir.c
 SRCS += set_main_dir.c
 SRCS += set_objectives.c
 SRCS += sort.c
-SRCS += debug.c
-SRCS += debug_map.c
-SRCS += debug_path_lst.c
 
 PATHOBJS = objs/
 OBJS = $(patsubst %.c, $(PATHOBJS)%.o, $(SRCS))

@@ -163,6 +163,7 @@ void	del_path_lst(t_list *path_lst);
 void	error(t_machine *machine);
 int		fill_line(t_machine *machine, t_list *token_lst);
 void	fill_map(t_machine *machine, t_list *token_lst);
+void	fill_opponent_zone(t_machine *machine);
 void	fill_piece(t_machine *machine, t_list *token_lst);
 int		find_path(t_machine *machine, t_map *map, t_list **path);
 void	generate_map(t_machine *machine);
@@ -192,12 +193,5 @@ void	sort_dead_path(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_objective(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_objective_path(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_len_path(t_list **lst1, t_list **lst2, t_list **head);
-void	debug(t_list *lst);
-void	debug_map(t_machine *machine, t_map *map);
-void	debug_dir(enum e_direction *dir);
-void	debug_path(t_list *lst);
-void	debug_path_lst(t_list *path_lst);
-void	print_path(t_list *lst);
-void	debug_objective_lst(t_list *objective_lst);
 
 #endif

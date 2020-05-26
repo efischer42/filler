@@ -6,13 +6,14 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:18 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:19 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/26 13:09:19 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	set_height_width(t_machine *machine, t_list *token_lst, int nb_count)
+static int	set_height_width(t_machine *machine, t_list *token_lst,
+				int nb_count)
 {
 	int	width;
 	int	height;

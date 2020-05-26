@@ -2,5 +2,5 @@
 *.o
 *.swp
 filler.trace
-debug
+trace
 efischer.filler

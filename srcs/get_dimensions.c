@@ -6,18 +6,18 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:16 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:17 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/26 13:03:59 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "filler.h"
+#include "filler.h"
 
-static void	set_map_dimensions(t_machine *machine, int nb_count, t_list *token_lst)
+static void	set_map_dimensions(t_machine *machine, int nb_count, t_list *lst)
 {
 	if (nb_count == 0)
-		machine->map_height = ft_atoi(((t_token*)(token_lst->content))->value);
+		machine->map_height = ft_atoi(((t_token*)(lst->content))->value);
 	else
-		machine->map_width = ft_atoi(((t_token*)(token_lst->content))->value);
+		machine->map_width = ft_atoi(((t_token*)(lst->content))->value);
 }
 
 void		get_map_dimensions(t_machine *machine, t_list *token_lst)
@@ -37,12 +37,12 @@ void		get_map_dimensions(t_machine *machine, t_list *token_lst)
 	machine->dist = (machine->map_height + machine->map_width) * 1 / 20;
 }
 
-static void	set_piece_dimensions(t_machine *machine, t_list *token_lst, int nb_count)
+static void	set_piece_dimensions(t_machine *machine, t_list *lst, int nb_count)
 {
 	if (nb_count == 0)
-		machine->piece_height = ft_atoi(((t_token*)(token_lst->content))->value);
+		machine->piece_height = ft_atoi(((t_token*)(lst->content))->value);
 	else
-		machine->piece_width = ft_atoi(((t_token*)(token_lst->content))->value);
+		machine->piece_width = ft_atoi(((t_token*)(lst->content))->value);
 }
 
 void		get_piece_dimensions(t_machine *machine, t_list *token_lst)

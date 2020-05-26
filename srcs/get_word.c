@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:28 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:29 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/26 13:08:09 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,19 @@ static int	is_line_char(char c)
 	return (ret);
 }
 
-void	get_word(t_machine *machine, char *input, t_token *token, size_t *pos)
+static void	get_player_name(t_token *token, char *input, size_t *pos, size_t i)
+{
+	token->type = PLAYER_NAME;
+	while (input[*pos + i] != ']' && input[*pos + i] != '\0')
+		i++;
+	if (input[*pos + i] == ']')
+		i++;
+	token->value = ft_strndup(input + *pos, i);
+	*pos += i;
+}
+
+void		get_word(t_machine *machine, char *input, t_token *token,
+				size_t *pos)
 {
 	size_t	i;
 
@@ -44,15 +56,7 @@ void	get_word(t_machine *machine, char *input, t_token *token, size_t *pos)
 		*pos += i;
 	}
 	else if (input[*pos] == '[')
-	{
-		token->type = PLAYER_NAME;
-		while (input[*pos + i] != ']' && input[*pos + i] != '\0')
-			i++;
-		if (input[*pos + i] == ']')
-			i++;
-		token->value = ft_strndup(input + *pos, i);
-		*pos += i;
-	}
+		get_player_name(token, input, pos, i);
 	else
 		machine->state = ST_ERROR;
 }
