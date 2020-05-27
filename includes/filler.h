@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 13:54:40 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 14:02:12 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 02:42:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define FROM_UP				0x04
 # define FROM_DOWN				0x08
 # define TAB_END				-1
-# define NB_TOKEN				13
-# define NB_FCT					4
+# define NB_TOKEN				14
+# define NB_FCT					3
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
 # define NB_DIR_TO_OBJ			3

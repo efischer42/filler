@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 13:59:16 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 14:00:23 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 02:43:14 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ enum	e_token
 	END,
 	PLAYER_NAME,
 	NB,
-	LINE
+	MAP_LINE,
+	PIECE_LINE
 };
 
 #endif

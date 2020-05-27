@@ -6,18 +6,28 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:28 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 13:08:09 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 02:44:01 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	is_line_char(char c)
+static int	is_map_line_char(char c)
 {
 	int		ret;
 
 	ret = FALSE;
-	if (c == '.' || c == 'O' || c == 'X' || c == '*')
+	if (c == '.' || c == 'O' || c == 'X')
+		ret = TRUE;
+	return (ret);
+}
+
+static int	is_piece_line_char(char c)
+{
+	int		ret;
+
+	ret = FALSE;
+	if (c == '.' || c == '*')
 		ret = TRUE;
 	return (ret);
 }
@@ -47,10 +57,18 @@ void		get_word(t_machine *machine, char *input, t_token *token,
 		token->value = ft_strndup(input + *pos, i);
 		*pos += i;
 	}
-	else if (is_line_char(input[*pos]) == TRUE)
+	else if (is_map_line_char(input[*pos]) == TRUE)
 	{
-		token->type = LINE;
-		while (is_line_char(input[*pos + i]) == TRUE)
+		token->type = MAP_LINE;
+		while (is_map_line_char(input[*pos + i]) == TRUE)
+			i++;
+		token->value = ft_strndup(input + *pos, i);
+		*pos += i;
+	}
+	else if (is_piece_line_char(input[*pos]) == TRUE)
+	{
+		token->type = PIECE_LINE;
+		while (is_piece_line_char(input[*pos + i]) == TRUE)
 			i++;
 		token->value = ft_strndup(input + *pos, i);
 		*pos += i;

@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:18 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 13:09:19 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 02:38:10 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ static void	check_map_dimensions(t_machine *machine, t_list *token_lst)
 		token_lst = token_lst->next;
 	}
 	if (((t_token*)(token_lst->content))->type != END)
-	{
-		ft_putendl_fd("Map dimension ERROR", 2);
 		machine->state = ST_ERROR;
-	}
 }
 
 void		get_map(t_machine *machine)
