@@ -5,71 +5,76 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/26 12:10:18 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 02:38:10 by efischer         ###   ########.fr       */
+/*   Created: 2020/05/27 12:21:31 by efischer          #+#    #+#             */
+/*   Updated: 2020/05/27 16:02:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	set_height_width(t_machine *machine, t_list *token_lst,
-				int nb_count)
+static int	is_index_width_ok(t_machine *machine, char *index_line)
 {
-	int	width;
-	int	height;
-	int	ret;
+	char	c;
+	int		i;
+	int		ret;
 
+	i = 0;
+	c = '0';
 	ret = TRUE;
-	if (nb_count == 0)
+	while (index_line[i] != '\0')
 	{
-		height = ft_atoi(((t_token*)(token_lst->content))->value);
-		if (machine->map_height != height)
+		if (c > '9')
+			c = '0';
+		if (i > machine->map_width || index_line[i] != c)
+		{
 			ret = FALSE;
+			break ;
+		}
+		c++;
+		i++;
 	}
-	else
-	{
-		width = ft_atoi(((t_token*)(token_lst->content))->value);
-		if (machine->map_width != width)
-			ret = FALSE;
-	}
+	if (i != machine->map_width)
+		ret = FALSE;
 	return (ret);
 }
 
-static void	check_map_dimensions(t_machine *machine, t_list *token_lst)
+static int	check_index_width(t_machine *machine, t_list *token_lst)
 {
-	int		nb_count;
+	char	*index_line;
 
-	nb_count = 0;
 	while (((t_token*)(token_lst->content))->type != END)
 	{
 		if (((t_token*)(token_lst->content))->type == NB)
 		{
-			if (set_height_width(machine, token_lst, nb_count) == FALSE)
-				break ;
-			nb_count++;
+			index_line = ((t_token*)(token_lst->content))->value;
+			if (is_index_width_ok(machine, index_line) == FALSE)
+				return (FALSE);
 		}
 		token_lst = token_lst->next;
 	}
-	if (((t_token*)(token_lst->content))->type != END)
-		machine->state = ST_ERROR;
+	return (TRUE);
 }
 
-void		get_map(t_machine *machine)
+int			get_map(t_machine *machine)
 {
-	lexer_parser(machine);
-	if (machine->state != ST_ERROR)
+	static int	width_checked = FALSE;
+	int			ret;
+
+	ret = lexer_parser(machine);
+	if (ret == SUCCESS)
 	{
-		if (((t_token*)(machine->token_lst->next->content))->type == PLATEAU)
+		if (((t_token*)(machine->token_lst->next->content))->type == SPACE)
 		{
-			if (machine->map == NULL)
-				generate_map(machine);
-			else
-				check_map_dimensions(machine, machine->token_lst);
+			if (check_index_width(machine, machine->token_lst) == FALSE)
+				ret = FAILURE;
+			width_checked = TRUE;
 		}
-		else if (((t_token*)(machine->token_lst->next->content))->type == SPACE)
-			check_index_width(machine, machine->token_lst);
-		else if (((t_token*)(machine->token_lst->next->content))->type == NB)
-			fill_map(machine, machine->token_lst);
+		else if (width_checked == FALSE
+		|| fill_map(machine, machine->token_lst) == FALSE)
+		{
+			ret = FAILURE;
+		}
 	}
 	ft_lstdel(&machine->token_lst, del_lst);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:22 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:27 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 13:45:13 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,46 @@ static void	set_player_nb(t_machine *machine)
 	}
 }
 
-void		get_player(t_machine *machine)
+static int	check_player_name(t_machine *machine)
+{
+	char	*braced_player_name;
+	int		ret;
+	
+	ret = TRUE;
+	braced_player_name = ft_asprintf("[%s]", machine->player_name);
+	if (ft_strequ(((t_token*)(machine->token_lst->content))->value,
+		braced_player_name) != TRUE)
+	{
+		ret = FALSE;
+	}
+	ft_strdel(&braced_player_name);
+	return (ret);
+}
+
+int			get_player(t_machine *machine)
 {
 	t_list	*head;
+	int		ret;
 
-	lexer_parser(machine);
-	if (machine->state != ST_ERROR)
+	ret = lexer_parser(machine);
+	if (ret == SUCCESS)
 	{
 		head = machine->token_lst;
 		while (((t_token*)(machine->token_lst->content))->type != END)
 		{
 			set_player_nb(machine);
+			if (((t_token*)(machine->token_lst->content))->type == PLAYER_NAME)
+			{
+				if (check_player_name(machine) == FALSE)
+				{
+					ret = FAILURE;
+					break ;
+				}
+			}
 			machine->token_lst = machine->token_lst->next;
 		}
-		machine->state = ST_GET_MAP;
+		machine->state++;
 		ft_lstdel(&head, del_lst);
 	}
+	return (ret);
 }

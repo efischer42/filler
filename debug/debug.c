@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:09:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:09:30 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:29:58 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void init_token_tab(char **token_tab)
 	token_tab[END] = "END";
 	token_tab[PLAYER_NAME] = "PLAYER_NAME";
 	token_tab[NB] = "NB";
-	token_tab[LINE] = "LINE";
+	token_tab[MAP_LINE] = "MAP LINE";
+	token_tab[PIECE_LINE] = "PIECE LINE";
 }
 
 void		debug(t_list *lst)
@@ -42,7 +43,7 @@ void		debug(t_list *lst)
 		print = NULL;
 		value = NULL;
 		type = ((t_token*)(lst->content))->type;
-		if (type == PLAYER_NAME || type == NB || type == LINE)
+		if (type == PLAYER_NAME || type == NB || type == MAP_LINE || type == PIECE_LINE)
 			value = ((t_token*)(lst->content))->value;
 		print = ft_asprintf("%s = [%s]\n", token_tab[type], value);
 		ft_putstr_fd(print, 2);

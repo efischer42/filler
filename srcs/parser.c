@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:35 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 13:53:12 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 13:54:28 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ static void	init_enum_tab1(enum e_token **enum_tab)
 
 static void	init_enum_tab2(enum e_token **enum_tab)
 {
-	static enum e_token	token_space[] = {PLAYER_NAME, NB, LINE, SPACE, TAB_END};
+	static enum e_token	token_space[] = {PLAYER_NAME, NB, MAP_LINE,
+								SPACE, TAB_END};
 	static enum e_token	token_start[] = {DOLLARS, PLATEAU, SPACE, NB, PIECE,
-								LINE, TAB_END};
+								PIECE_LINE, TAB_END};
 	static enum e_token	token_player_name[] = {END, TAB_END};
 	static enum e_token	token_nb[] = {SPACE, COLON, END, TAB_END};
 	static enum e_token	token_line[] = {END, TAB_END};
@@ -43,7 +44,8 @@ static void	init_enum_tab2(enum e_token **enum_tab)
 	enum_tab[END] = NULL;
 	enum_tab[PLAYER_NAME] = token_player_name;
 	enum_tab[NB] = token_nb;
-	enum_tab[LINE] = token_line;
+	enum_tab[MAP_LINE] = token_line;
+	enum_tab[PIECE_LINE] = token_line;
 }
 
 static int	check_tokens(enum e_token *enum_tab, enum e_token type)
@@ -52,12 +54,12 @@ static int	check_tokens(enum e_token *enum_tab, enum e_token type)
 	int		ret;
 
 	i = 0;
-	ret = FAILURE;
+	ret = FALSE;
 	while (enum_tab[i] != (enum e_token)TAB_END)
 	{
 		if (enum_tab[i] == type)
 		{
-			ret = SUCCESS;
+			ret = TRUE;
 			break ;
 		}
 		i++;
@@ -65,26 +67,27 @@ static int	check_tokens(enum e_token *enum_tab, enum e_token type)
 	return (ret);
 }
 
-void		parser(t_machine *machine, t_list *token_lst)
+int			parser(t_list *token_lst)
 {
 	static enum e_token	*enum_tab[NB_TOKEN] = {NULL};
 	enum e_token		last_type;
+	int					ret;
 
+	ret = SUCCESS;
 	if (enum_tab[0] == NULL)
 	{
 		init_enum_tab1(enum_tab);
 		init_enum_tab2(enum_tab);
 	}
-	while (((t_token*)(token_lst->content))->type != END)
+	while (((t_token*)(token_lst->content))->type != END && ret == SUCCESS)
 	{
 		last_type = ((t_token*)(token_lst->content))->type;
 		token_lst = token_lst->next;
 		if (check_tokens(enum_tab[last_type],
-			((t_token*)(token_lst->content))->type) == FAILURE)
+			((t_token*)(token_lst->content))->type) == FALSE)
 		{
-			ft_putendl_fd("Parse error", 2);
-			machine->state = ST_ERROR;
-			break ;
+			ret = FAILURE;
 		}
 	}
+	return (ret);
 }

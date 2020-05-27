@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:47:22 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 13:03:28 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	fill_line_mx(t_machine *machine, int line, t_map *map)
 	}
 }
 
-void		generate_mx(t_machine *machine)
+int			generate_mx(t_machine *machine)
 {
 	t_map	*map;
 	int		i;
@@ -34,18 +34,18 @@ void		generate_mx(t_machine *machine)
 	map = machine->map;
 	machine->mx = (t_map***)malloc(sizeof(t_map**) * machine->map_height);
 	if (machine->mx == NULL)
-		return ;
+		return (FAILURE);
 	while (i < machine->map_height && map != NULL)
 	{
 		machine->mx[i] = (t_map**)malloc(sizeof(t_map*) * machine->map_width);
 		if (machine->mx[i] == NULL)
 		{
 			del_mx(machine);
-			machine->state = ST_ERROR;
-			return ;
+			return (FAILURE);
 		}
 		fill_line_mx(machine, i, map);
 		map = map->down;
 		i++;
 	}
+	return (SUCCESS);
 }

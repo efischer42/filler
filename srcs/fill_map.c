@@ -6,20 +6,21 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:09:56 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:26:45 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:35:41 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	check_index_height(t_list *token_lst, size_t i)
+static int	check_index_height(t_machine *machine, t_list *token_lst, int i)
 {
-	size_t	len;
-	size_t	nb;
-	int		ret;
+	static int	index = 0;
+	size_t		len;
+	int			nb;
+	int			ret;
 
 	ret = FALSE;
-	if (((t_token*)(token_lst->content))->type == NB)
+	if (i == index && i < machine->map_height)
 	{
 		len = ft_strlen(((t_token*)(token_lst->content))->value);
 		if (len == INDEX_HEIGHT_FORMAT)
@@ -29,32 +30,38 @@ static int	check_index_height(t_list *token_lst, size_t i)
 				ret = TRUE;
 		}
 	}
+	index++;
 	return (ret);
 }
 
-void		fill_map(t_machine *machine, t_list *token_lst)
+int			fill_map(t_machine *machine, t_list *token_lst)
 {
-	while (((t_token*)(token_lst->content))->type != END)
+	int		checked_index;
+	int		ret;
+
+	ret = TRUE;
+	checked_index = FALSE;
+	while (((t_token*)(token_lst->content))->type != END && ret == TRUE)
 	{
 		if (((t_token*)(token_lst->content))->type == NB)
 		{
-			if (check_index_height(token_lst, machine->map->y) == FALSE)
-			{
-				ft_putendl_fd("Map height index ERROR", 2);
-				machine->state = ST_ERROR;
-			}
+			ret = check_index_height(machine, token_lst, machine->map->y);
+			checked_index = TRUE;
 		}
-		else if (((t_token*)(token_lst->content))->type == LINE)
+		else if (((t_token*)(token_lst->content))->type == MAP_LINE)
 		{
 			if (machine->map->y + 1 == machine->map_height)
 			{
-				fill_line(machine, token_lst);
-				machine->state = ST_GET_PIECE;
+				ret = fill_line(machine, token_lst);
+				machine->state++;
 				machine->map = machine->head_map;
 			}
 			else
-				fill_line(machine, token_lst);
+				ret = fill_line(machine, token_lst);
 		}
 		token_lst = token_lst->next;
 	}
+	if (checked_index == FALSE)
+		ret = FALSE;
+	return (ret);
 }

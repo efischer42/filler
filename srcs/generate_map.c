@@ -6,22 +6,35 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:07 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:34:20 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 13:39:48 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void		data_map(t_map *map, t_map *line, int y, int x)
+static void	set_map_dimensions(t_machine *machine, int nb_count, t_list *lst)
 {
-	ft_bzero(map, sizeof(*map));
-	map->x = x;
-	map->y = y;
-	if (line != NULL)
+	if (nb_count == 0)
+		machine->map_height = ft_atoi(((t_token*)(lst->content))->value);
+	else
+		machine->map_width = ft_atoi(((t_token*)(lst->content))->value);
+}
+
+static void	get_map_dimensions(t_machine *machine, t_list *token_lst)
+{
+	int		nb_count;
+
+	nb_count = 0;
+	while (((t_token*)(token_lst->content))->type != END)
 	{
-		line->down = map;
-		map->up = line;
+		if (((t_token*)(token_lst->content))->type == NB)
+		{
+			set_map_dimensions(machine, nb_count, token_lst);
+			nb_count++;
+		}
+		token_lst = token_lst->next;
 	}
+	machine->dist = (machine->map_height + machine->map_width) * 1 / 20;
 }
 
 static void	map_zone(t_machine *machine, t_map *map)
@@ -42,27 +55,7 @@ static void	map_zone(t_machine *machine, t_map *map)
 	}
 }
 
-void		add_map(t_map **line, t_map *new_map)
-{
-	t_map	*head;
-
-	if (line != NULL && new_map != NULL)
-	{
-		head = *line;
-		if (*line == NULL)
-			*line = new_map;
-		else
-		{
-			while ((*line)->right != NULL)
-				*line = (*line)->right;
-			(*line)->right = new_map;
-			new_map->left = *line;
-			*line = head;
-		}
-	}
-}
-
-static void	generate_line(t_map **new_line, t_map *last_line, int y,
+static int	generate_line(t_map **new_line, t_map *last_line, int y,
 					t_machine *machine)
 {
 	t_map	*new_map;
@@ -72,35 +65,38 @@ static void	generate_line(t_map **new_line, t_map *last_line, int y,
 	while (i < machine->map_width)
 	{
 		new_map = (t_map*)malloc(sizeof(t_map));
-		if (new_map != NULL)
-		{
-			data_map(new_map, last_line, y, i);
-			map_zone(machine, new_map);
-			if (last_line != NULL)
-				last_line = last_line->right;
-			add_map(new_line, new_map);
-		}
+		if (new_map == NULL)
+			return (FAILURE);
+		data_map(new_map, last_line, y, i);
+		map_zone(machine, new_map);
+		if (last_line != NULL)
+			last_line = last_line->right;
+		add_map(new_line, new_map);
 		i++;
 	}
+	return (SUCCESS);
 }
 
-void		generate_map(t_machine *machine)
+int			generate_map(t_machine *machine)
 {
 	t_map	*new_line;
 	t_map	*last_line;
 	int		i;
+	int		ret;
 
 	i = 0;
+	ret = SUCCESS;
 	last_line = NULL;
 	get_map_dimensions(machine, machine->token_lst);
-	while (i < machine->map_height)
+	while (i < machine->map_height && ret != FAILURE)
 	{
 		new_line = NULL;
-		generate_line(&new_line, last_line, i, machine);
+		ret = generate_line(&new_line, last_line, i, machine);
 		if (machine->head_map == NULL)
 			machine->head_map = new_line;
 		last_line = new_line;
 		i++;
 	}
 	machine->map = machine->head_map;
+	return (ret);
 }

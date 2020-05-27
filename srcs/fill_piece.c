@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:00 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:02 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 13:01:48 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_line(t_list *token_lst, size_t width)
 	int		ret;
 
 	ret = FALSE;
-	if (((t_token*)(token_lst->content))->type == LINE)
+	if (((t_token*)(token_lst->content))->type == PIECE_LINE)
 	{
 		len = ft_strlen(((t_token*)(token_lst->content))->value);
 		if (len == width)
@@ -60,7 +60,7 @@ void		fill_piece(t_machine *machine, t_list *token_lst)
 {
 	while (((t_token*)(token_lst->content))->type != END)
 	{
-		if (((t_token*)(token_lst->content))->type == LINE)
+		if (((t_token*)(token_lst->content))->type == PIECE_LINE)
 			fill_piece_line(machine, token_lst);
 		token_lst = token_lst->next;
 	}

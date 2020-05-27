@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:30 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:10:31 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:42:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ static void	init_grammar(char **grammar, char *player_name)
 	grammar[START] = NULL;
 	grammar[END] = NULL;
 	grammar[NB] = NULL;
-	grammar[LINE] = NULL;
+	grammar[MAP_LINE] = NULL;
+	grammar[PIECE_LINE] = NULL;
 }
 
-static void	init_token_lst(t_list **token_lst, enum e_token type)
+static int	init_token_lst(t_list **token_lst, enum e_token type)
 {
 	t_token	token;
 	t_list	*lst_new;
@@ -37,24 +38,27 @@ static void	init_token_lst(t_list **token_lst, enum e_token type)
 	ft_bzero(&token, sizeof(token));
 	token.type = type;
 	lst_new = ft_lstnew(&token, sizeof(token));
-	if (lst_new != NULL)
-		ft_lstaddend(token_lst, lst_new);
+	if (lst_new == NULL)
+		return (FAILURE);
+	ft_lstaddend(token_lst, lst_new);
+	return (SUCCESS);
 }
 
-static void	get_next_token(t_machine *machine, t_token *token, size_t *pos,
-				char *input)
+static int	get_next_token(t_machine *machine, t_token *token, size_t *pos)
 {
 	static char	*grammar[NB_TOKEN];
 	size_t		len;
 	size_t		i;
+	int			ret;
 
 	i = 0;
+	ret = SUCCESS;
 	if (grammar[0] == NULL)
 		init_grammar(grammar, machine->player_name);
 	while (i < NB_TOKEN)
 	{
 		len = ft_strlen(grammar[i]);
-		if (ft_strnequ(input + *pos, grammar[i], len) == TRUE)
+		if (ft_strnequ(machine->input + *pos, grammar[i], len) == TRUE)
 		{
 			token->type = i;
 			(*pos) += len;
@@ -63,25 +67,34 @@ static void	get_next_token(t_machine *machine, t_token *token, size_t *pos,
 		i++;
 	}
 	if (i == NB_TOKEN)
-		get_word(machine, input, token, pos);
+		ret = get_word(machine, token, pos);
+	return (ret);
 }
 
-void		lexer(t_machine *machine)
+int			lexer(t_machine *machine)
 {
 	t_token		token;
 	t_list		*lst_new;
 	size_t		pos;
+	int			ret;
 
 	pos = 0;
 	machine->token_lst = NULL;
-	init_token_lst(&machine->token_lst, START);
-	while (machine->input[pos] != '\0' && machine->state != ST_ERROR)
+	ret = init_token_lst(&machine->token_lst, START);
+	while (machine->input[pos] != '\0' && ret == SUCCESS)
 	{
 		ft_bzero(&token, sizeof(token));
-		get_next_token(machine, &token, &pos, machine->input);
-		lst_new = ft_lstnew(&token, sizeof(token));
-		if (lst_new != NULL)
-			ft_lstaddend(&machine->token_lst, lst_new);
+		ret = get_next_token(machine, &token, &pos);
+		if (ret == SUCCESS)
+		{
+			lst_new = ft_lstnew(&token, sizeof(token));
+			if (lst_new == NULL)
+				ret = FAILURE;
+			else
+				ft_lstaddend(&machine->token_lst, lst_new);
+		}
 	}
-	init_token_lst(&machine->token_lst, END);
+	if (ret == SUCCESS)
+		ret = init_token_lst(&machine->token_lst, END);
+	return (ret);
 }

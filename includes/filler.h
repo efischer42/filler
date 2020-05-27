@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 13:54:40 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 02:42:35 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:44:18 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define FROM_DOWN				0x08
 # define TAB_END				-1
 # define NB_TOKEN				14
-# define NB_FCT					3
+# define NB_FCT					5
 # define NB_DIR					8
 # define NB_MAIN_DIR			4
 # define NB_DIR_TO_OBJ			3
@@ -51,7 +51,6 @@
 # include "filler_struct.h"
 
 void	add_map(t_map **line, t_map *new_map);
-void	check_index_width(t_machine *machine, t_list *token_lst);
 void	data_map(t_map *map, t_map *line, int y, int x);
 void	check_map_arounds(t_map *map);
 int		check_path(t_path *path, t_list *lst, t_map *map);
@@ -68,27 +67,27 @@ void	del_path_first_part(t_machine *machine, t_list *lst, t_list *head);
 void	del_path_lst(t_list *path_lst);
 void	error(t_machine *machine);
 int		fill_line(t_machine *machine, t_list *token_lst);
-void	fill_map(t_machine *machine, t_list *token_lst);
+int		fill_map(t_machine *machine, t_list *token_lst);
 void	fill_opponent_zone(t_machine *machine);
 void	fill_piece(t_machine *machine, t_list *token_lst);
 int		find_path(t_machine *machine, t_map *map, t_list **path);
-void	generate_map(t_machine *machine);
-void	generate_mx(t_machine *machine);
-void	generate_piece(t_machine *machine);
-void	get_map(t_machine *machine);
-void	get_map_dimensions(t_machine *machine, t_list *token_lst);
-void	get_piece(t_machine *machine);
-void	get_piece_dimensions(t_machine *machine, t_list *token_lst);
-void	get_player(t_machine *machine);
-void	get_word(t_machine *machine, char *input, t_token *token, size_t *pos);
+int		generate_map(t_machine *machine);
+int		generate_mx(t_machine *machine);
+int		generate_piece(t_machine *machine);
+int		get_map(t_machine *machine);
+int		get_piece(t_machine *machine);
+int		get_piece_dimensions(t_machine *machine);
+int		get_plateau(t_machine *machine);
+int		get_player(t_machine *machine);
+int		get_word(t_machine *machine, t_token *token, size_t *pos);
 void	init_map_dir(t_map **map_dir, t_map *map);
-void	lexer(t_machine *machine);
-void	lexer_parser(t_machine *machine);
-void	parser(t_machine *machine, t_list *token_lst);
-void	path(t_machine *machine, t_map *map);
+int		lexer(t_machine *machine);
+int		lexer_parser(t_machine *machine);
+int		parser(t_list *token_lst);
+int		path(t_machine *machine, t_map *map);
 int		piece_placement(t_machine *machine, t_map *map);
 void	play(t_machine *machine, t_list *path_play);
-void	play_turn(t_machine *machine);
+int		play_turn(t_machine *machine);
 int		retard_play(t_machine *machine, t_map *map);
 void	set_dir(t_machine *machine, t_map *map);
 void	set_edges(t_machine *machine, t_map *map, uint64_t *edge);

@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:28 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 02:44:01 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:45:16 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,49 +32,61 @@ static int	is_piece_line_char(char c)
 	return (ret);
 }
 
-static void	get_player_name(t_token *token, char *input, size_t *pos, size_t i)
+static void	get_player_name(t_machine *machine, t_token *token, size_t *pos,
+				size_t i)
 {
 	token->type = PLAYER_NAME;
-	while (input[*pos + i] != ']' && input[*pos + i] != '\0')
+	while (machine->input[*pos + i] != ']' && machine->input[*pos + i] != '\0')
 		i++;
-	if (input[*pos + i] == ']')
+	if (machine->input[*pos + i] == ']')
 		i++;
-	token->value = ft_strndup(input + *pos, i);
+	token->value = ft_strndup(machine->input + *pos, i);
 	*pos += i;
 }
 
-void		get_word(t_machine *machine, char *input, t_token *token,
-				size_t *pos)
+static void	get_line(t_machine *machine, t_token *token, size_t *pos, size_t i)
+{
+	if (ft_strlen(machine->input + *pos) == (size_t)machine->map_width)
+	{
+		token->type = MAP_LINE;
+		while (is_map_line_char(machine->input[*pos + i]) == TRUE)
+			i++;
+		token->value = ft_strndup(machine->input + *pos, i);
+		*pos += i;
+	}
+	else if (ft_strlen(machine->input + *pos) == (size_t)machine->piece_width)
+	{
+		token->type = PIECE_LINE;
+		while (is_piece_line_char(machine->input[*pos + i]) == TRUE)
+			i++;
+		token->value = ft_strndup(machine->input + *pos, i);
+		*pos += i;
+	}
+	else
+		(*pos)++;
+}
+
+int			get_word(t_machine *machine, t_token *token, size_t *pos)
 {
 	size_t	i;
 
 	i = 0;
-	if (ft_isdigit(input[*pos]) == TRUE)
+	if (ft_isdigit(machine->input[*pos]) == TRUE)
 	{
 		token->type = NB;
-		while (ft_isdigit(input[*pos + i]) == TRUE)
+		while (ft_isdigit(machine->input[*pos + i]) == TRUE)
 			i++;
-		token->value = ft_strndup(input + *pos, i);
+		token->value = ft_strndup(machine->input + *pos, i);
 		*pos += i;
 	}
-	else if (is_map_line_char(input[*pos]) == TRUE)
+	else if (is_map_line_char(machine->input[*pos]) == TRUE
+		|| is_piece_line_char(machine->input[*pos]) == TRUE)
 	{
-		token->type = MAP_LINE;
-		while (is_map_line_char(input[*pos + i]) == TRUE)
-			i++;
-		token->value = ft_strndup(input + *pos, i);
-		*pos += i;
+		get_line(machine, token, pos, i);
 	}
-	else if (is_piece_line_char(input[*pos]) == TRUE)
-	{
-		token->type = PIECE_LINE;
-		while (is_piece_line_char(input[*pos + i]) == TRUE)
-			i++;
-		token->value = ft_strndup(input + *pos, i);
-		*pos += i;
-	}
-	else if (input[*pos] == '[')
-		get_player_name(token, input, pos, i);
+	else if (machine->input[*pos] == '[')
+		get_player_name(machine, token, pos, i);
 	else
-		machine->state = ST_ERROR;
+		return (FAILURE);
+	return (SUCCESS);
 }

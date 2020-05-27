@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:09:41 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 13:30:39 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 12:59:20 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_line(t_list *token_lst, size_t width)
 	int		ret;
 
 	ret = FALSE;
-	if (((t_token*)(token_lst->content))->type == LINE)
+	if (((t_token*)(token_lst->content))->type == MAP_LINE)
 	{
 		len = ft_strlen(((t_token*)(token_lst->content))->value);
 		if (len == width)

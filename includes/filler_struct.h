@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 13:57:18 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 14:02:30 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 11:54:26 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct	s_path
 
 typedef struct	s_machine
 {
-	uint64_t			state;
+	enum e_state		state;
 	uint64_t			opt;
 	uint64_t			edge;
 	t_map				***mx;
@@ -70,10 +70,6 @@ typedef struct	s_machine
 	int					upr_zone;
 	int					downl_zone;
 	int					downr_zone;
-	int					up_zone;
-	int					down_zone;
-	int					left_zone;
-	int					right_zone;
 	int					play_x;
 	int					play_y;
 	char				player;

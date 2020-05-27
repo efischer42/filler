@@ -9,7 +9,6 @@ DFLAGS += -fsanitize=address,undefined
 DFLSGS += -g3
 
 PATHSRCS = srcs/
-SRCS += check_index.c
 SRCS += check_path.c
 SRCS += check_piece_pos.c
 SRCS += cut_path.c
@@ -24,9 +23,10 @@ SRCS += find_path.c
 SRCS += generate_map.c
 SRCS += generate_mx.c
 SRCS += generate_piece.c
-SRCS += get_dimensions.c
 SRCS += get_map.c
 SRCS += get_piece.c
+SRCS += get_piece_dimensions.c
+SRCS += get_plateau.c
 SRCS += get_player.c
 SRCS += get_word.c
 SRCS += lexer.c
@@ -42,6 +42,7 @@ SRCS += set_dir.c
 SRCS += set_main_dir.c
 SRCS += set_objectives.c
 SRCS += sort.c
+SRCS += utils.c
 
 PATHOBJS = objs/
 OBJS = $(patsubst %.c, $(PATHOBJS)%.o, $(SRCS))
