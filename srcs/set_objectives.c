@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:47 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/26 12:20:33 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:14:46 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void		new_objective(t_machine *machine, t_map *map, t_map *opponent,
 		ft_lstadd(&machine->objective_lst, lst_new);
 }
 
-void			set_objectives(t_machine *machine)
+int				set_objectives(t_machine *machine)
 {
 	t_map	*start;
 	t_map	*opponent;
@@ -96,6 +96,8 @@ void			set_objectives(t_machine *machine)
 	start = NULL;
 	opponent = NULL;
 	get_start(machine->map, &start, &opponent);
+	if (start == NULL || opponent == NULL)
+		return (FAILURE);
 	new_objective(machine, machine->mx[0][0], opponent, start);
 	new_objective(machine, machine->mx[0][machine->map_width - 1], opponent,
 		start);
@@ -104,4 +106,5 @@ void			set_objectives(t_machine *machine)
 	new_objective(machine,
 		machine->mx[machine->map_height - 1][machine->map_width - 1], opponent,
 		start);
+	return (SUCCESS);
 }

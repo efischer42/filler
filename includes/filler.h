@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 13:54:40 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 14:44:18 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:15:17 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		play_turn(t_machine *machine);
 int		retard_play(t_machine *machine, t_map *map);
 void	set_dir(t_machine *machine, t_map *map);
 void	set_edges(t_machine *machine, t_map *map, uint64_t *edge);
-void	set_objectives(t_machine *machine);
+int		set_objectives(t_machine *machine);
 void	set_main_dir(t_machine *machine, t_map *map, t_map **map_dir);
 void	sort_dead_objective(t_list **lst1, t_list **lst2, t_list **head);
 void	sort_dead_path(t_list **lst1, t_list **lst2, t_list **head);

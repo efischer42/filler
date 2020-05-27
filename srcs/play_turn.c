@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:40 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 14:15:35 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:17:40 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,20 @@ int			play_turn(t_machine *machine)
 	{
 		if (generate_mx(machine) == FAILURE)
 			return (FAILURE);
-		set_objectives(machine);
+		ret = set_objectives(machine);
 	}
 	if (machine->last_play != NULL)
 		check_objectives(machine);
 	ft_merge_sort(&machine->objective_lst, sort_objective);
 	ft_merge_sort(&machine->objective_lst, sort_dead_objective);
-//	if (ret == SUCCESS)
-//	{
+	if (ret == SUCCESS)
+	{
 		if (machine->last_play != NULL)
 			ret = path(machine, machine->map);
 		if (ret == SUCCESS)
 			play(machine, machine->path_lst);
 		machine->last_play = NULL;
 		clean_map(machine->map);
-//	}
+	}
 	return (ret);
 }
