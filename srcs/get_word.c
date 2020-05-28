@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:28 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 15:45:16 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/28 18:27:42 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	get_player_name(t_machine *machine, t_token *token, size_t *pos,
 
 static void	get_line(t_machine *machine, t_token *token, size_t *pos, size_t i)
 {
-	if (ft_strlen(machine->input + *pos) == (size_t)machine->map_width)
+	if (machine->state == ST_GET_MAP)
 	{
 		token->type = MAP_LINE;
 		while (is_map_line_char(machine->input[*pos + i]) == TRUE)
@@ -54,7 +54,7 @@ static void	get_line(t_machine *machine, t_token *token, size_t *pos, size_t i)
 		token->value = ft_strndup(machine->input + *pos, i);
 		*pos += i;
 	}
-	else if (ft_strlen(machine->input + *pos) == (size_t)machine->piece_width)
+	else if (machine->state == ST_GET_PIECE)
 	{
 		token->type = PIECE_LINE;
 		while (is_piece_line_char(machine->input[*pos + i]) == TRUE)
