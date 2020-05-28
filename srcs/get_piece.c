@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:20 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 15:50:32 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/28 15:13:56 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int		get_piece(t_machine *machine)
 		{
 			fill_piece(machine, machine->token_lst);
 			if (machine->piece == machine->head_piece)
+			{
 				ret = play_turn(machine);
+				machine->state = ST_GET_PLATEAU;
+			}
 		}
 		else
 			ret = FAILURE;

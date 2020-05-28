@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:09:56 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/28 15:00:03 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/28 15:17:04 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	check_index_height(t_machine *machine, t_list *token_lst, int i)
 		}
 	}
 	index++;
+	if (index >= machine->map_height)
+		index = 0;
 	return (ret);
 }
 
