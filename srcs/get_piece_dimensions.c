@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 13:23:40 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 15:39:11 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/28 18:01:05 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			get_piece_dimensions(t_machine *machine)
 	nb_count = 0;
 	ret = lexer_parser(machine);
 	token_lst = machine->token_lst;
-	if (((t_token*)(token_lst->next->content))->type == PIECE)
+	if (ret == SUCCESS && ((t_token*)(token_lst->next->content))->type == PIECE)
 	{
 		while (((t_token*)(token_lst->content))->type != END)
 		{
