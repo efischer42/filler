@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:33 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/28 15:12:17 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/28 16:55:39 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int			main(int ac, char **av)
 	machine.player_name = av[0];
 	while ((ret = get_next_line(STDIN_FILENO, &line)) > 0)
 	{
-		ft_putendl_fd(line, 2);
 		machine.input = line;
 		if (f_tab[machine.state](&machine) == FAILURE)
 			error(&machine);
