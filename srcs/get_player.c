@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:22 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 13:45:13 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/28 14:56:37 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_player_name(t_machine *machine)
 {
 	char	*braced_player_name;
 	int		ret;
-	
+
 	ret = TRUE;
 	braced_player_name = ft_asprintf("[%s]", machine->player_name);
 	if (ft_strequ(((t_token*)(machine->token_lst->content))->value,

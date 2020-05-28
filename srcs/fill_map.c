@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:09:56 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 15:35:41 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/28 15:00:03 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@ static int	check_index_height(t_machine *machine, t_list *token_lst, int i)
 	return (ret);
 }
 
+static int	fill(t_machine *machine, t_list *token_lst)
+{
+	int		ret;
+
+	if (machine->map->y + 1 == machine->map_height)
+	{
+		ret = fill_line(machine, token_lst);
+		machine->state++;
+		machine->map = machine->head_map;
+	}
+	else
+		ret = fill_line(machine, token_lst);
+	return (ret);
+}
+
 int			fill_map(t_machine *machine, t_list *token_lst)
 {
 	int		checked_index;
@@ -49,16 +64,7 @@ int			fill_map(t_machine *machine, t_list *token_lst)
 			checked_index = TRUE;
 		}
 		else if (((t_token*)(token_lst->content))->type == MAP_LINE)
-		{
-			if (machine->map->y + 1 == machine->map_height)
-			{
-				ret = fill_line(machine, token_lst);
-				machine->state++;
-				machine->map = machine->head_map;
-			}
-			else
-				ret = fill_line(machine, token_lst);
-		}
+			ret = fill(machine, token_lst);
 		token_lst = token_lst->next;
 	}
 	if (checked_index == FALSE)

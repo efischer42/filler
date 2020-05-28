@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:10:33 by efischer          #+#    #+#             */
-/*   Updated: 2020/05/27 15:52:08 by efischer         ###   ########.fr       */
+/*   Updated: 2020/05/28 14:55:59 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	free_data(t_machine *machine)
 	del_objective_lst(machine->objective_lst);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_machine		machine;
 	char			*line;
