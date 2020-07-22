@@ -6,5 +6,5 @@ Le joueur occupant le plus de place sur le plateau à la fin de la partie l'empo
 ## Strategie du joueur
 Il va d'abord s'étendre vers les 4 coins du plateau, priorisant ceux plus proches des dernières pièces posées par l'adversaire.
 Puis remplir les espaces aux alentours de l'autre joueur.
-Il dispose également d'une strtégie de remplissage, lorsque l'adversaire est inactif, qui consiste simplement a placer les pièces dans le premier emplacement libre
+Il dispose également d'une strtégie de remplissage, lorsque l'adversaire est inactif, qui consiste simplement à placer les pièces dans le premier emplacement libre
 depuis le coin supérieur gauche du plateau.
